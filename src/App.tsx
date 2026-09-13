@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { products, categories, brands, flavorProfiles, nicotineLevels, reviews, Product, CartItem } from './data/products';
 import { LogoMain, LogoSmall } from './components/Logo';
-import { getCategoryIcon } from './components/CategoryIcons';
 
 // Age Verification Gate
 function AgeGate({ onVerify }: { onVerify: () => void }) {
@@ -81,17 +80,15 @@ function Header({
           >
             فروشگاه
           </button>
-          <button className="text-sm font-medium text-[#4b5563] transition-colors hover:text-[#00C07F]">
+          <button 
+            onClick={() => onNavigate('blog')}
+            className={`text-sm font-medium transition-colors hover:text-[#00C07F] ${currentPage === 'blog' ? 'text-[#00C07F]' : 'text-[#4b5563]'}`}
+          >
             بلاگ
           </button>
           <button 
-            onClick={() => {
-              const contactSection = document.getElementById('contact');
-              if (contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-            className="text-sm font-medium text-[#4b5563] transition-colors hover:text-[#00C07F]"
+            onClick={() => onNavigate('contact')}
+            className={`text-sm font-medium transition-colors hover:text-[#00C07F] ${currentPage === 'contact' ? 'text-[#00C07F]' : 'text-[#4b5563]'}`}
           >
             تماس با ما
           </button>
@@ -229,18 +226,18 @@ function HeroSection() {
       
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <div key={currentSlide} className="animate-fade-in">
-          <span className="inline-block px-4 py-1.5 rounded-full glass text-[#00C07F] text-sm font-medium mb-6 shadow-soft">
+        <div key={currentSlide} className="animate-fade-in-up">
+          <span className="inline-block px-4 py-1.5 rounded-full glass text-[#00C07F] text-sm font-medium mb-6 shadow-soft animate-scale-in">
             ✨ فروشگاه معتبر ویپ و پاد
           </span>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight text-[#1a1a2e]">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight text-[#1a1a2e]" style={{ animation: 'fadeInUp 0.8s ease-out 0.2s both' }}>
             {slides[currentSlide].title}
           </h1>
-          <p className="text-lg md:text-xl text-[#4b5563] mb-8">
+          <p className="text-lg md:text-xl text-[#4b5563] mb-8" style={{ animation: 'fadeInUp 0.8s ease-out 0.4s both' }}>
             {slides[currentSlide].subtitle}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="btn-accent px-8 py-4 rounded-2xl text-lg">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center" style={{ animation: 'fadeInUp 0.8s ease-out 0.6s both' }}>
+            <button className="btn-accent px-8 py-4 rounded-2xl text-lg animate-pulse-soft">
               {slides[currentSlide].cta}
             </button>
             <button className="px-8 py-4 rounded-2xl glass text-[#1a1a2e] font-medium hover:shadow-soft transition-all">
@@ -274,18 +271,30 @@ function CategoryBubbles({ onCategoryClick }: { onCategoryClick: (cat: string) =
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-[#1a1a2e]">
           دسته‌بندی <span className="gradient-text">محصولات</span>
         </h2>
-        <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {categories.map((cat, i) => (
             <button
               key={cat.id}
               onClick={() => onCategoryClick(cat.id)}
-              className={`category-bubble glass rounded-2xl p-4 md:p-6 flex flex-col items-center gap-3 min-w-[120px] shadow-soft opacity-0 animate-slide-up stagger-${i + 1} hover:border-[#00C07F]/30`}
-              style={{ animationFillMode: 'forwards' }}
+              className="group relative overflow-hidden rounded-2xl aspect-square shadow-soft hover:shadow-hover transition-all duration-300 hover:scale-105"
+              style={{
+                animation: `fadeInUp 0.6s ease-out ${i * 0.1}s both`
+              }}
             >
-              <div className="text-[#00C07F]">
-                {getCategoryIcon(cat.id, "w-10 h-10 md:w-12 md:h-12")}
+              {/* Background Image */}
+              <img 
+                src={cat.image} 
+                alt={cat.name}
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+              {/* Content */}
+              <div className="absolute inset-0 flex flex-col items-center justify-end p-4">
+                <h3 className="text-white font-bold text-sm md:text-base text-center drop-shadow-lg">
+                  {cat.name}
+                </h3>
               </div>
-              <span className="text-xs md:text-sm font-medium text-[#4b5563]">{cat.name}</span>
             </button>
           ))}
         </div>
@@ -389,13 +398,19 @@ function FeaturedProducts({ onAddToCart, onViewProduct }: {
           <button className="text-sm text-[#00C07F] hover:underline font-medium">مشاهده همه</button>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {featured.map(product => (
-            <ProductCard 
-              key={product.id} 
-              product={product} 
-              onAddToCart={onAddToCart}
-              onViewProduct={onViewProduct}
-            />
+          {featured.map((product, index) => (
+            <div
+              key={product.id}
+              style={{
+                animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+              }}
+            >
+              <ProductCard 
+                product={product} 
+                onAddToCart={onAddToCart}
+                onViewProduct={onViewProduct}
+              />
+            </div>
           ))}
         </div>
       </div>
@@ -403,7 +418,7 @@ function FeaturedProducts({ onAddToCart, onViewProduct }: {
   );
 }
 
-// Blog Section
+// Blog Page
 function BlogSection() {
   const blogPosts = [
     {
@@ -413,6 +428,7 @@ function BlogSection() {
       date: '۱۴۰۳/۰۹/۲۰',
       category: 'راهنمای خرید',
       readTime: '۵ دقیقه',
+      image: 'https://images.unsplash.com/photo-1560913210-59b747b4a0a0?w=600&h=400&fit=crop',
     },
     {
       id: 2,
@@ -421,6 +437,7 @@ function BlogSection() {
       date: '۱۴۰۳/۰۹/۱۵',
       category: 'آموزشی',
       readTime: '۷ دقیقه',
+      image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=600&h=400&fit=crop',
     },
     {
       id: 3,
@@ -429,24 +446,62 @@ function BlogSection() {
       date: '۱۴۰۳/۰۹/۱۰',
       category: 'معرفی محصول',
       readTime: '۱۰ دقیقه',
+      image: 'https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=600&h=400&fit=crop',
+    },
+    {
+      id: 4,
+      title: 'نکات مهم نگهداری از دستگاه ویپ',
+      excerpt: 'با رعایت این نکات ساده، عمر دستگاه ویپ خود را افزایش دهید و همیشه بهترین تجربه را داشته باشید...',
+      date: '۱۴۰۳/۰۹/۰۵',
+      category: 'آموزشی',
+      readTime: '۶ دقیقه',
+      image: 'https://images.unsplash.com/photo-1585076641399-5c06d1b3365f?w=600&h=400&fit=crop',
+    },
+    {
+      id: 5,
+      title: 'طعم‌های محبوب تابستانی ۲۰۲۴',
+      excerpt: 'معرفی جذاب‌ترین طعم‌های میوه‌ای و خنک که امسال ترند شده‌اند...',
+      date: '۱۴۰۳/۰۸/۲۸',
+      category: 'ترندها',
+      readTime: '۴ دقیقه',
+      image: 'https://images.unsplash.com/photo-1555255707-c07966088b7b?w=600&h=400&fit=crop',
+    },
+    {
+      id: 6,
+      title: 'تفاوت ویپ و سیگار الکترونیکی',
+      excerpt: 'بررسی علمی تفاوت‌های ویپ و سیگار الکترونیکی و تاثیرات هر کدام بر سلامت...',
+      date: '۱۴۰۳/۰۸/۲۰',
+      category: 'آموزشی',
+      readTime: '۸ دقیقه',
+      image: 'https://images.unsplash.com/photo-1576086213369-97a306d36557?w=600&h=400&fit=crop',
     },
   ];
 
   return (
-    <section className="py-16 px-4">
+    <section className="pt-24 pb-12 px-4 min-h-screen">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a2e]">
+        <div className="text-center mb-12">
+          <h1 className="text-3xl md:text-4xl font-black mb-4 text-[#1a1a2e]">
             <span className="gradient-text">بلاگ</span> اسموک سیتی
-          </h2>
-          <button className="text-sm text-[#00C07F] hover:underline font-medium">مشاهده همه</button>
+          </h1>
+          <p className="text-[#6b7280] text-lg">آخرین مطالب، آموزش‌ها و اخبار دنیای ویپینگ</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {blogPosts.map((post) => (
-            <article key={post.id} className="glass rounded-2xl overflow-hidden shadow-soft hover:shadow-hover transition-all cursor-pointer group">
-              <div className="h-48 bg-gradient-to-br from-[#00C07F]/10 to-[#0891B2]/10 flex items-center justify-center">
-                <span className="text-6xl opacity-50 group-hover:opacity-70 transition-opacity">📖</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {blogPosts.map((post, index) => (
+            <article 
+              key={post.id} 
+              className="glass rounded-2xl overflow-hidden shadow-soft hover:shadow-hover transition-all duration-300 cursor-pointer group"
+              style={{
+                animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+              }}
+            >
+              <div className="h-48 overflow-hidden">
+                <img 
+                  src={post.image} 
+                  alt={post.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
               </div>
               <div className="p-5">
                 <div className="flex items-center gap-2 mb-3">
@@ -474,22 +529,24 @@ function BlogSection() {
   );
 }
 
-// Contact Section
+// Contact Page
 function ContactSection() {
   return (
-    <section className="py-16 px-4">
+    <section className="pt-24 pb-12 px-4 min-h-screen">
       <div className="max-w-4xl mx-auto">
-        <div className="glass rounded-3xl p-8 md:p-12 shadow-soft">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-3 text-[#1a1a2e]">
+        <div className="text-center mb-12">
+          <h1 className="text-3xl md:text-4xl font-black mb-4 text-[#1a1a2e]">
             <span className="gradient-text">تماس</span> با ما
-          </h2>
-          <p className="text-[#6b7280] text-center mb-10">ما اینجاییم تا به شما کمک کنیم</p>
-          
+          </h1>
+          <p className="text-[#6b7280] text-lg">ما اینجاییم تا به شما کمک کنیم</p>
+        </div>
+        
+        <div className="glass rounded-3xl p-8 md:p-12 shadow-soft">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Contact Info */}
             <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#00C07F]/10 flex items-center justify-center flex-shrink-0">
+              <div className="flex items-start gap-4 group hover:translate-x-[-4px] transition-transform">
+                <div className="w-12 h-12 rounded-xl bg-[#00C07F]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#00C07F]/20 transition-colors">
                   <i className="fas fa-phone text-[#00C07F]"></i>
                 </div>
                 <div>
@@ -499,8 +556,8 @@ function ContactSection() {
                 </div>
               </div>
               
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#00C07F]/10 flex items-center justify-center flex-shrink-0">
+              <div className="flex items-start gap-4 group hover:translate-x-[-4px] transition-transform">
+                <div className="w-12 h-12 rounded-xl bg-[#00C07F]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#00C07F]/20 transition-colors">
                   <i className="fas fa-envelope text-[#00C07F]"></i>
                 </div>
                 <div>
@@ -510,8 +567,8 @@ function ContactSection() {
                 </div>
               </div>
               
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#00C07F]/10 flex items-center justify-center flex-shrink-0">
+              <div className="flex items-start gap-4 group hover:translate-x-[-4px] transition-transform">
+                <div className="w-12 h-12 rounded-xl bg-[#00C07F]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#00C07F]/20 transition-colors">
                   <i className="fas fa-map-marker-alt text-[#00C07F]"></i>
                 </div>
                 <div>
@@ -520,14 +577,30 @@ function ContactSection() {
                 </div>
               </div>
               
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#00C07F]/10 flex items-center justify-center flex-shrink-0">
+              <div className="flex items-start gap-4 group hover:translate-x-[-4px] transition-transform">
+                <div className="w-12 h-12 rounded-xl bg-[#00C07F]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#00C07F]/20 transition-colors">
                   <i className="fas fa-clock text-[#00C07F]"></i>
                 </div>
                 <div>
                   <h3 className="font-bold text-[#1a1a2e] mb-1">ساعات کاری</h3>
                   <p className="text-[#6b7280] text-sm">شنبه تا پنجشنبه: ۹ صبح تا ۹ شب</p>
                   <p className="text-[#6b7280] text-sm">جمعه: ۱۰ صبح تا ۶ عصر</p>
+                </div>
+              </div>
+              
+              {/* Social Media */}
+              <div className="pt-6 border-t border-[#E5E7EB]">
+                <h3 className="font-bold text-[#1a1a2e] mb-4">ما را در شبکه‌های اجتماعی دنبال کنید</h3>
+                <div className="flex gap-3">
+                  <a href="#" className="w-10 h-10 rounded-xl bg-[#00C07F]/10 flex items-center justify-center hover:bg-[#00C07F]/20 transition-colors group">
+                    <i className="fab fa-instagram text-[#00C07F] group-hover:scale-110 transition-transform"></i>
+                  </a>
+                  <a href="#" className="w-10 h-10 rounded-xl bg-[#00C07F]/10 flex items-center justify-center hover:bg-[#00C07F]/20 transition-colors group">
+                    <i className="fab fa-telegram text-[#00C07F] group-hover:scale-110 transition-transform"></i>
+                  </a>
+                  <a href="#" className="w-10 h-10 rounded-xl bg-[#00C07F]/10 flex items-center justify-center hover:bg-[#00C07F]/20 transition-colors group">
+                    <i className="fab fa-whatsapp text-[#00C07F] group-hover:scale-110 transition-transform"></i>
+                  </a>
                 </div>
               </div>
             </div>
@@ -645,16 +718,21 @@ function ShopPage({
               <button
                 key={cat.id}
                 onClick={() => handleTabChange(cat.id)}
-                className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap flex items-center gap-2 ${
+                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all whitespace-nowrap flex items-center gap-2 overflow-hidden ${
                   activeTab === cat.id 
                     ? 'bg-gradient-to-r from-[#00C07F] to-[#0891B2] text-white shadow-lg shadow-[#00C07F]/20' 
                     : 'glass text-[#4b5563] hover:text-[#1a1a2e] shadow-soft'
                 }`}
               >
-                <span className={activeTab === cat.id ? 'text-white' : 'text-[#00C07F]'}>
-                  {getCategoryIcon(cat.id, "w-5 h-5")}
-                </span>
-                {cat.name} ({getCategoryCount(cat.id)})
+                <div className="relative w-8 h-8 rounded-lg overflow-hidden flex-shrink-0">
+                  <img 
+                    src={cat.image} 
+                    alt={cat.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <span className="hidden sm:inline">{cat.name}</span>
+                <span className="text-xs opacity-70">({getCategoryCount(cat.id)})</span>
               </button>
             ))}
           </div>
@@ -1206,7 +1284,7 @@ function CheckoutPage({ items, onBack }: { items: CartItem[]; onBack: () => void
 }
 
 // Footer
-function Footer() {
+function Footer({ onNavigate }: { onNavigate: (page: string) => void }) {
   return (
     <footer className="glass border-t border-[#E5E7EB] py-12 px-4 mb-16 md:mb-0 shadow-soft">
       <div className="max-w-6xl mx-auto">
@@ -1221,10 +1299,10 @@ function Footer() {
           <div>
             <h4 className="font-bold mb-4 text-[#1a1a2e]">دسترسی سریع</h4>
             <ul className="space-y-2 text-sm text-[#6b7280]">
-              <li><a href="#" className="hover:text-[#00C07F] transition-colors">فروشگاه</a></li>
+              <li><button onClick={() => onNavigate('shop')} className="hover:text-[#00C07F] transition-colors">فروشگاه</button></li>
               <li><a href="#" className="hover:text-[#00C07F] transition-colors">تخفیف‌ها</a></li>
-              <li><a href="#" className="hover:text-[#00C07F] transition-colors">بلاگ</a></li>
-              <li><a href="#contact" className="hover:text-[#00C07F] transition-colors">تماس با ما</a></li>
+              <li><button onClick={() => onNavigate('blog')} className="hover:text-[#00C07F] transition-colors">بلاگ</button></li>
+              <li><button onClick={() => onNavigate('contact')} className="hover:text-[#00C07F] transition-colors">تماس با ما</button></li>
             </ul>
           </div>
           <div>
@@ -1305,9 +1383,19 @@ function BottomNav({
             </span>
           )}
         </button>
-        <button className="flex flex-col items-center gap-1 py-2 px-3 rounded-xl text-[#6b7280]">
-          <i className="fas fa-user text-lg"></i>
-          <span className="text-[10px]">حساب من</span>
+        <button 
+          onClick={() => onNavigate('blog')}
+          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${currentPage === 'blog' ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
+        >
+          <i className="fas fa-blog text-lg"></i>
+          <span className="text-[10px]">بلاگ</span>
+        </button>
+        <button 
+          onClick={() => onNavigate('contact')}
+          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${currentPage === 'contact' ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
+        >
+          <i className="fas fa-phone text-lg"></i>
+          <span className="text-[10px]">تماس</span>
         </button>
       </div>
     </div>
@@ -1408,10 +1496,6 @@ export default function App() {
           <HeroSection />
           <CategoryBubbles onCategoryClick={handleCategoryClick} />
           <FeaturedProducts onAddToCart={handleAddToCart} onViewProduct={handleViewProduct} />
-          <BlogSection />
-          <div id="contact">
-            <ContactSection />
-          </div>
         </main>
       )}
 
@@ -1438,7 +1522,15 @@ export default function App() {
         />
       )}
 
-      <Footer />
+      {currentPage === 'blog' && (
+        <BlogSection />
+      )}
+
+      {currentPage === 'contact' && (
+        <ContactSection />
+      )}
+
+      <Footer onNavigate={handleNavigate} />
 
       <BottomNav 
         cartCount={cartCount}
