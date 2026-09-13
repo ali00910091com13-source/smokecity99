@@ -4,21 +4,21 @@ import { products, categories, brands, flavorProfiles, nicotineLevels, reviews, 
 // Age Verification Gate
 function AgeGate({ onVerify }: { onVerify: () => void }) {
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-xl">
-      <div className="glass-strong rounded-3xl p-8 md:p-12 max-w-md mx-4 text-center animate-fade-in">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#1a1a2e]/80 backdrop-blur-xl">
+      <div className="glass-strong rounded-3xl p-8 md:p-12 max-w-md mx-4 text-center animate-fade-in shadow-soft">
         <div className="text-6xl mb-6 animate-float">🔞</div>
         <h2 className="text-2xl md:text-3xl font-bold mb-4 gradient-text">اسموک سیتی</h2>
-        <p className="text-gray-300 mb-2 text-lg">آیا شما بالای ۱۸ سال سن دارید؟</p>
-        <p className="text-gray-500 text-sm mb-8">ورود شما به معنای تأیید سن قانونی شما است</p>
+        <p className="text-[#4b5563] mb-2 text-lg">آیا شما بالای ۱۸ سال سن دارید؟</p>
+        <p className="text-[#9CA3AF] text-sm mb-8">ورود شما به معنای تأیید سن قانونی شما است</p>
         <div className="flex gap-4 justify-center">
           <button
             onClick={onVerify}
-            className="btn-neon px-8 py-3 rounded-xl text-lg font-bold"
+            className="btn-accent px-8 py-3 rounded-xl text-lg"
           >
             بله، بالای ۱۸ سال هستم
           </button>
         </div>
-        <button className="mt-4 text-gray-500 hover:text-gray-300 transition-colors text-sm">
+        <button className="mt-4 text-[#9CA3AF] hover:text-[#4b5563] transition-colors text-sm">
           خیر، خارج شوید
         </button>
       </div>
@@ -50,13 +50,13 @@ function Header({
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'glass-strong shadow-lg shadow-black/20' : 'bg-transparent'
+      scrolled ? 'glass-strong shadow-soft' : 'bg-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <button onClick={() => onNavigate('home')} className="flex items-center gap-2 group">
           <span className="text-2xl">💨</span>
-          <span className="text-xl md:text-2xl font-black gradient-text group-hover:neon-text transition-all">
+          <span className="text-xl md:text-2xl font-black gradient-text">
             اسموک سیتی
           </span>
         </button>
@@ -65,20 +65,20 @@ function Header({
         <nav className="hidden md:flex items-center gap-6">
           <button 
             onClick={() => onNavigate('home')}
-            className={`text-sm font-medium transition-colors hover:text-[#00F5A0] ${currentPage === 'home' ? 'text-[#00F5A0]' : 'text-gray-300'}`}
+            className={`text-sm font-medium transition-colors hover:text-[#00C07F] ${currentPage === 'home' ? 'text-[#00C07F]' : 'text-[#4b5563]'}`}
           >
             خانه
           </button>
           <button 
             onClick={() => onNavigate('shop')}
-            className={`text-sm font-medium transition-colors hover:text-[#00F5A0] ${currentPage === 'shop' ? 'text-[#00F5A0]' : 'text-gray-300'}`}
+            className={`text-sm font-medium transition-colors hover:text-[#00C07F] ${currentPage === 'shop' ? 'text-[#00C07F]' : 'text-[#4b5563]'}`}
           >
             فروشگاه
           </button>
-          <button className="text-sm font-medium text-gray-300 transition-colors hover:text-[#00F5A0]">
+          <button className="text-sm font-medium text-[#4b5563] transition-colors hover:text-[#00C07F]">
             باشگاه مشتریان
           </button>
-          <button className="text-sm font-medium text-gray-300 transition-colors hover:text-[#00F5A0]">
+          <button className="text-sm font-medium text-[#4b5563] transition-colors hover:text-[#00C07F]">
             تماس با ما
           </button>
         </nav>
@@ -87,17 +87,17 @@ function Header({
         <div className="flex items-center gap-3">
           <button 
             onClick={onSearchOpen}
-            className="w-10 h-10 rounded-xl glass flex items-center justify-center hover:border-[#00F5A0]/30 transition-all"
+            className="w-10 h-10 rounded-xl glass flex items-center justify-center hover:border-[#00C07F]/30 transition-all shadow-soft"
           >
-            <i className="fas fa-search text-gray-300"></i>
+            <i className="fas fa-search text-[#4b5563]"></i>
           </button>
           <button 
             onClick={onCartOpen}
-            className="relative w-10 h-10 rounded-xl glass flex items-center justify-center hover:border-[#00F5A0]/30 transition-all"
+            className="relative w-10 h-10 rounded-xl glass flex items-center justify-center hover:border-[#00C07F]/30 transition-all shadow-soft"
           >
-            <i className="fas fa-shopping-bag text-gray-300"></i>
+            <i className="fas fa-shopping-bag text-[#4b5563]"></i>
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#00F5A0] text-black text-xs font-bold rounded-full flex items-center justify-center animate-bounce-badge">
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#00C07F] text-white text-xs font-bold rounded-full flex items-center justify-center animate-bounce-badge">
                 {cartCount}
               </span>
             )}
@@ -135,20 +135,20 @@ function SearchModal({ isOpen, onClose, onSelectProduct }: {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm" onClick={onClose}>
+    <div className="fixed inset-0 z-[60] bg-[#1a1a2e]/50 backdrop-blur-sm" onClick={onClose}>
       <div className="max-w-2xl mx-auto mt-20 px-4" onClick={e => e.stopPropagation()}>
-        <div className="glass-strong rounded-2xl p-4 animate-fade-in">
+        <div className="glass-strong rounded-2xl p-4 animate-fade-in shadow-soft">
           <div className="flex items-center gap-3 mb-4">
-            <i className="fas fa-search text-[#00F5A0] text-lg"></i>
+            <i className="fas fa-search text-[#00C07F] text-lg"></i>
             <input
               ref={inputRef}
               type="text"
               value={query}
               onChange={e => setQuery(e.target.value)}
               placeholder="جستجوی محصول، برند، دسته‌بندی..."
-              className="flex-1 bg-transparent text-white placeholder-gray-500 outline-none text-lg"
+              className="flex-1 bg-transparent text-[#1a1a2e] placeholder-[#9CA3AF] outline-none text-lg"
             />
-            <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors">
+            <button onClick={onClose} className="text-[#9CA3AF] hover:text-[#1a1a2e] transition-colors">
               <i className="fas fa-times text-xl"></i>
             </button>
           </div>
@@ -161,21 +161,21 @@ function SearchModal({ isOpen, onClose, onSelectProduct }: {
                     <button
                       key={product.id}
                       onClick={() => { onSelectProduct(product); onClose(); }}
-                      className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors text-right"
+                      className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-[#F5F5F7] transition-colors text-right"
                     >
                       <img src={product.image} alt={product.name} className="w-12 h-12 rounded-lg object-cover" />
                       <div className="flex-1">
-                        <p className="text-white text-sm font-medium">{product.name}</p>
-                        <p className="text-gray-500 text-xs">{product.brand} • {categories.find(c => c.id === product.category)?.name}</p>
+                        <p className="text-[#1a1a2e] text-sm font-medium">{product.name}</p>
+                        <p className="text-[#9CA3AF] text-xs">{product.brand} • {categories.find(c => c.id === product.category)?.name}</p>
                       </div>
-                      <span className="text-[#00F5A0] text-sm font-bold">
+                      <span className="text-[#00C07F] text-sm font-bold">
                         {(product.price / 10000).toFixed(0)} هزار
                       </span>
                     </button>
                   ))}
                 </div>
               ) : (
-                <p className="text-center text-gray-500 py-8">محصولی یافت نشد</p>
+                <p className="text-center text-[#9CA3AF] py-8">محصولی یافت نشد</p>
               )}
             </div>
           )}
@@ -208,32 +208,32 @@ function HeroSection() {
         <img 
           src="https://image.qwenlm.ai/generated-images/f955ab2d-7212-4e91-8d74-754eda2d121d/_result.png" 
           alt="" 
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          className="absolute inset-0 w-full h-full object-cover opacity-30"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0C]/60 via-[#0A0A0C]/40 to-[#0A0A0C]"></div>
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[#00F5A0]/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-[#00D9F5]/10 rounded-full blur-3xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/40 to-[#F5F5F7]"></div>
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[#00C07F]/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-[#0891B2]/10 rounded-full blur-3xl"></div>
         </div>
       </div>
       
       {/* Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
         <div key={currentSlide} className="animate-fade-in">
-          <span className="inline-block px-4 py-1 rounded-full glass text-[#00F5A0] text-sm font-medium mb-6">
+          <span className="inline-block px-4 py-1.5 rounded-full glass text-[#00C07F] text-sm font-medium mb-6 shadow-soft">
             ✨ فروشگاه معتبر ویپ و پاد
           </span>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight text-[#1a1a2e]">
             {slides[currentSlide].title}
           </h1>
-          <p className="text-lg md:text-xl text-gray-400 mb-8">
+          <p className="text-lg md:text-xl text-[#4b5563] mb-8">
             {slides[currentSlide].subtitle}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="btn-neon px-8 py-4 rounded-2xl text-lg font-bold">
+            <button className="btn-accent px-8 py-4 rounded-2xl text-lg">
               {slides[currentSlide].cta}
             </button>
-            <button className="px-8 py-4 rounded-2xl glass text-white font-medium hover:border-[#00F5A0]/30 transition-all">
+            <button className="px-8 py-4 rounded-2xl glass text-[#1a1a2e] font-medium hover:shadow-soft transition-all">
               مشاوره رایگان
             </button>
           </div>
@@ -246,7 +246,7 @@ function HeroSection() {
               key={i}
               onClick={() => setCurrentSlide(i)}
               className={`h-2 rounded-full transition-all duration-300 ${
-                i === currentSlide ? 'w-8 bg-[#00F5A0]' : 'w-2 bg-gray-600'
+                i === currentSlide ? 'w-8 bg-[#00C07F]' : 'w-2 bg-[#d1d5db]'
               }`}
             />
           ))}
@@ -261,7 +261,7 @@ function CategoryBubbles({ onCategoryClick }: { onCategoryClick: (cat: string) =
   return (
     <section className="py-12 px-4">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-[#1a1a2e]">
           دسته‌بندی <span className="gradient-text">محصولات</span>
         </h2>
         <div className="flex flex-wrap justify-center gap-4 md:gap-6">
@@ -269,11 +269,11 @@ function CategoryBubbles({ onCategoryClick }: { onCategoryClick: (cat: string) =
             <button
               key={cat.id}
               onClick={() => onCategoryClick(cat.id)}
-              className={`category-bubble glass rounded-2xl p-4 md:p-6 flex flex-col items-center gap-3 min-w-[100px] opacity-0 animate-slide-up stagger-${i + 1}`}
+              className={`category-bubble glass rounded-2xl p-4 md:p-6 flex flex-col items-center gap-3 min-w-[100px] shadow-soft opacity-0 animate-slide-up stagger-${i + 1}`}
               style={{ animationFillMode: 'forwards' }}
             >
               <span className="text-3xl md:text-4xl">{cat.icon}</span>
-              <span className="text-xs md:text-sm font-medium text-gray-300">{cat.name}</span>
+              <span className="text-xs md:text-sm font-medium text-[#4b5563]">{cat.name}</span>
             </button>
           ))}
         </div>
@@ -295,29 +295,29 @@ function ProductCard({ product, onAddToCart, onViewProduct }: {
   return (
     <div className="card-3d glass rounded-2xl overflow-hidden group">
       {/* Image */}
-      <div className="relative overflow-hidden aspect-square bg-gradient-to-br from-[#1A1A22] to-[#0A0A0C]">
+      <div className="relative overflow-hidden aspect-square bg-gradient-to-br from-[#f8fafc] to-[#f1f5f9]">
         <img 
           src={product.image} 
           alt={product.name}
-          className="w-full h-full object-cover product-img-zoom opacity-90 group-hover:opacity-100 transition-opacity"
+          className="w-full h-full object-cover product-img-zoom"
         />
         
         {/* Badges */}
         <div className="absolute top-3 right-3 flex flex-col gap-2">
           {product.isNew && (
-            <span className="px-2 py-1 bg-[#00F5A0] text-black text-xs font-bold rounded-lg">جدید</span>
+            <span className="px-2 py-1 bg-[#00C07F] text-white text-xs font-bold rounded-lg">جدید</span>
           )}
           {product.isBestseller && (
-            <span className="px-2 py-1 bg-[#FFB800] text-black text-xs font-bold rounded-lg">پرفروش</span>
+            <span className="px-2 py-1 bg-[#F59E0B] text-white text-xs font-bold rounded-lg">پرفروش</span>
           )}
           {discount > 0 && (
-            <span className="px-2 py-1 bg-[#FF2D78] text-white text-xs font-bold rounded-lg">{discount}% تخفیف</span>
+            <span className="px-2 py-1 bg-[#EC4899] text-white text-xs font-bold rounded-lg">{discount}% تخفیف</span>
           )}
         </div>
 
         {product.stock <= 5 && product.stock > 0 && (
           <div className="absolute bottom-3 left-3 right-3">
-            <span className="px-2 py-1 bg-red-500/80 text-white text-xs rounded-lg backdrop-blur-sm">
+            <span className="px-2 py-1 bg-red-500/90 text-white text-xs rounded-lg backdrop-blur-sm">
               🔥 فقط {product.stock} عدد باقی‌مانده!
             </span>
           </div>
@@ -326,7 +326,7 @@ function ProductCard({ product, onAddToCart, onViewProduct }: {
         {/* Quick add button */}
         <button
           onClick={(e) => { e.stopPropagation(); onAddToCart(product); }}
-          className="absolute bottom-3 right-3 w-10 h-10 bg-[#00F5A0] text-black rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-lg shadow-[#00F5A0]/20"
+          className="absolute bottom-3 right-3 w-10 h-10 bg-[#00C07F] text-white rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-lg shadow-[#00C07F]/20"
         >
           <i className="fas fa-plus"></i>
         </button>
@@ -334,12 +334,12 @@ function ProductCard({ product, onAddToCart, onViewProduct }: {
 
       {/* Info */}
       <div className="p-4 cursor-pointer" onClick={() => onViewProduct(product)}>
-        <p className="text-xs text-gray-500 mb-1">{product.brand}</p>
-        <h3 className="text-sm font-bold text-white mb-2 line-clamp-2">{product.name}</h3>
+        <p className="text-xs text-[#9CA3AF] mb-1">{product.brand}</p>
+        <h3 className="text-sm font-bold text-[#1a1a2e] mb-2 line-clamp-2">{product.name}</h3>
         
         <div className="flex items-center gap-1 mb-3">
-          <i className="fas fa-star text-[#FFB800] text-xs"></i>
-          <span className="text-xs text-gray-400">{product.rating} ({product.reviews})</span>
+          <i className="fas fa-star text-[#F59E0B] text-xs"></i>
+          <span className="text-xs text-[#9CA3AF]">{product.rating} ({product.reviews})</span>
         </div>
 
         <div className="flex items-center justify-between">
@@ -347,10 +347,10 @@ function ProductCard({ product, onAddToCart, onViewProduct }: {
             <span className="text-lg font-black gradient-text">
               {(product.price / 10000).toFixed(0)}
             </span>
-            <span className="text-xs text-gray-400 mr-1">هزار تومان</span>
+            <span className="text-xs text-[#9CA3AF] mr-1">هزار تومان</span>
           </div>
           {product.originalPrice && (
-            <span className="text-xs text-gray-600 line-through">
+            <span className="text-xs text-[#9CA3AF] line-through">
               {(product.originalPrice / 10000).toFixed(0)}
             </span>
           )}
@@ -371,10 +371,10 @@ function FeaturedProducts({ onAddToCart, onViewProduct }: {
     <section className="py-12 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a2e]">
             محصولات <span className="gradient-text">ویژه</span> ✨
           </h2>
-          <button className="text-sm text-[#00F5A0] hover:underline">مشاهده همه</button>
+          <button className="text-sm text-[#00C07F] hover:underline font-medium">مشاهده همه</button>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {featured.map(product => (
@@ -403,23 +403,23 @@ function ClubSection() {
   return (
     <section className="py-16 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="glass rounded-3xl p-8 md:p-12 relative overflow-hidden">
+        <div className="glass rounded-3xl p-8 md:p-12 relative overflow-hidden shadow-soft">
           {/* Background decoration */}
-          <div className="absolute top-0 left-0 w-64 h-64 bg-[#00F5A0]/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#00D9F5]/5 rounded-full blur-3xl"></div>
+          <div className="absolute top-0 left-0 w-64 h-64 bg-[#00C07F]/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#0891B2]/5 rounded-full blur-3xl"></div>
           
           <div className="relative z-10">
-            <h2 className="text-2xl md:text-3xl font-bold text-center mb-3">
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-3 text-[#1a1a2e]">
               باشگاه مشتریان <span className="gradient-text">اسموک سیتی</span>
             </h2>
-            <p className="text-gray-400 text-center mb-10">مزایای عضویت در خانواده اسموک سیتی</p>
+            <p className="text-[#6b7280] text-center mb-10">مزایای عضویت در خانواده اسموک سیتی</p>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {benefits.map((b, i) => (
-                <div key={i} className="text-center p-4 rounded-2xl hover:bg-white/5 transition-colors">
+                <div key={i} className="text-center p-4 rounded-2xl hover:bg-[#F5F5F7] transition-colors">
                   <span className="text-4xl mb-4 block">{b.icon}</span>
-                  <h3 className="font-bold text-white mb-2">{b.title}</h3>
-                  <p className="text-sm text-gray-400">{b.desc}</p>
+                  <h3 className="font-bold text-[#1a1a2e] mb-2">{b.title}</h3>
+                  <p className="text-sm text-[#6b7280]">{b.desc}</p>
                 </div>
               ))}
             </div>
@@ -430,7 +430,7 @@ function ClubSection() {
   );
 }
 
-// Shop Page with Filters
+// Shop Page with Filters & Tabs
 function ShopPage({ 
   initialCategory,
   onAddToCart, 
@@ -440,13 +440,27 @@ function ShopPage({
   onAddToCart: (product: Product) => void;
   onViewProduct: (product: Product) => void;
 }) {
-  const [selectedCategory, setSelectedCategory] = useState(initialCategory || '');
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory || 'all');
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedFlavor, setSelectedFlavor] = useState('');
   const [selectedNicotine, setSelectedNicotine] = useState('');
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000000]);
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState('popular');
+  const [activeTab, setActiveTab] = useState('all');
+
+  // Sync initial category with tab
+  useEffect(() => {
+    if (initialCategory) {
+      setActiveTab(initialCategory);
+      setSelectedCategory(initialCategory);
+    }
+  }, [initialCategory]);
+
+  const handleTabChange = (tabId: string) => {
+    setActiveTab(tabId);
+    setSelectedCategory(tabId === 'all' ? '' : tabId);
+  };
 
   const filteredProducts = products.filter(p => {
     if (selectedCategory && p.category !== selectedCategory) return false;
@@ -462,21 +476,57 @@ function ShopPage({
     return b.reviews - a.reviews;
   });
 
+  // Count products per category
+  const getCategoryCount = (catId: string) => {
+    if (catId === 'all') return products.length;
+    return products.filter(p => p.category === catId).length;
+  };
+
   return (
     <section className="pt-24 pb-24 md:pb-12 px-4 min-h-screen">
       <div className="max-w-7xl mx-auto">
         {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-black mb-2">
+        <div className="mb-6">
+          <h1 className="text-3xl md:text-4xl font-black mb-2 text-[#1a1a2e]">
             <span className="gradient-text">فروشگاه</span> اسموک سیتی
           </h1>
-          <p className="text-gray-400">{filteredProducts.length} محصول</p>
+          <p className="text-[#6b7280]">{filteredProducts.length} محصول</p>
+        </div>
+
+        {/* Category Tabs */}
+        <div className="mb-6 overflow-x-auto no-scrollbar">
+          <div className="flex gap-2 min-w-max pb-2">
+            <button
+              onClick={() => handleTabChange('all')}
+              className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap ${
+                activeTab === 'all' 
+                  ? 'bg-gradient-to-r from-[#00C07F] to-[#0891B2] text-white shadow-lg shadow-[#00C07F]/20' 
+                  : 'glass text-[#4b5563] hover:text-[#1a1a2e] shadow-soft'
+              }`}
+            >
+              همه ({getCategoryCount('all')})
+            </button>
+            {categories.map(cat => (
+              <button
+                key={cat.id}
+                onClick={() => handleTabChange(cat.id)}
+                className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all whitespace-nowrap flex items-center gap-2 ${
+                  activeTab === cat.id 
+                    ? 'bg-gradient-to-r from-[#00C07F] to-[#0891B2] text-white shadow-lg shadow-[#00C07F]/20' 
+                    : 'glass text-[#4b5563] hover:text-[#1a1a2e] shadow-soft'
+                }`}
+              >
+                <span>{cat.icon}</span>
+                {cat.name} ({getCategoryCount(cat.id)})
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Filter Toggle (Mobile) */}
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="md:hidden w-full glass rounded-xl p-3 mb-4 flex items-center justify-center gap-2 text-sm"
+          className="md:hidden w-full glass rounded-xl p-3 mb-4 flex items-center justify-center gap-2 text-sm text-[#4b5563] shadow-soft"
         >
           <i className="fas fa-sliders-h"></i>
           فیلترها و مرتب‌سازی
@@ -484,21 +534,21 @@ function ShopPage({
 
         <div className="flex gap-6">
           {/* Sidebar Filters */}
-          <aside className={`${showFilters ? 'fixed inset-0 z-50 bg-[#0A0A0C] p-4 overflow-y-auto' : 'hidden'} md:block md:relative md:w-64 flex-shrink-0`}>
+          <aside className={`${showFilters ? 'fixed inset-0 z-50 bg-[#F5F5F7] p-4 overflow-y-auto' : 'hidden'} md:block md:relative md:w-64 flex-shrink-0`}>
             {showFilters && (
-              <button onClick={() => setShowFilters(false)} className="md:hidden mb-4 text-gray-400">
+              <button onClick={() => setShowFilters(false)} className="md:hidden mb-4 text-[#4b5563] flex items-center gap-2">
                 <i className="fas fa-times text-xl"></i> بستن فیلترها
               </button>
             )}
             
-            <div className="space-y-6">
+            <div className="space-y-4">
               {/* Sort */}
-              <div className="glass rounded-2xl p-4">
-                <h3 className="font-bold text-sm mb-3 text-gray-300">مرتب‌سازی</h3>
+              <div className="glass rounded-2xl p-4 shadow-soft">
+                <h3 className="font-bold text-sm mb-3 text-[#4b5563]">مرتب‌سازی</h3>
                 <select 
                   value={sortBy}
                   onChange={e => setSortBy(e.target.value)}
-                  className="w-full bg-[#0A0A0C] text-white text-sm rounded-lg p-2 border border-[#2A2A35] outline-none"
+                  className="w-full bg-white text-[#1a1a2e] text-sm rounded-lg p-2.5 border border-[#E5E7EB] outline-none focus:border-[#00C07F] transition-colors"
                 >
                   <option value="popular">محبوب‌ترین</option>
                   <option value="price-low">ارزان‌ترین</option>
@@ -507,35 +557,13 @@ function ShopPage({
                 </select>
               </div>
 
-              {/* Category Filter */}
-              <div className="glass rounded-2xl p-4">
-                <h3 className="font-bold text-sm mb-3 text-gray-300">دسته‌بندی</h3>
-                <div className="space-y-2">
-                  <button
-                    onClick={() => setSelectedCategory('')}
-                    className={`w-full text-right text-sm p-2 rounded-lg transition-colors ${!selectedCategory ? 'bg-[#00F5A0]/10 text-[#00F5A0]' : 'text-gray-400 hover:text-white'}`}
-                  >
-                    همه
-                  </button>
-                  {categories.map(cat => (
-                    <button
-                      key={cat.id}
-                      onClick={() => setSelectedCategory(cat.id === selectedCategory ? '' : cat.id)}
-                      className={`w-full text-right text-sm p-2 rounded-lg transition-colors flex items-center gap-2 ${selectedCategory === cat.id ? 'bg-[#00F5A0]/10 text-[#00F5A0]' : 'text-gray-400 hover:text-white'}`}
-                    >
-                      <span>{cat.icon}</span> {cat.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               {/* Brand Filter */}
-              <div className="glass rounded-2xl p-4">
-                <h3 className="font-bold text-sm mb-3 text-gray-300">برند</h3>
-                <div className="space-y-2 max-h-48 overflow-y-auto no-scrollbar">
+              <div className="glass rounded-2xl p-4 shadow-soft">
+                <h3 className="font-bold text-sm mb-3 text-[#4b5563]">برند</h3>
+                <div className="space-y-1 max-h-48 overflow-y-auto no-scrollbar">
                   <button
                     onClick={() => setSelectedBrand('')}
-                    className={`w-full text-right text-sm p-2 rounded-lg transition-colors ${!selectedBrand ? 'bg-[#00F5A0]/10 text-[#00F5A0]' : 'text-gray-400 hover:text-white'}`}
+                    className={`w-full text-right text-sm p-2 rounded-lg transition-colors ${!selectedBrand ? 'bg-[#00C07F]/10 text-[#00C07F] font-medium' : 'text-[#6b7280] hover:text-[#1a1a2e] hover:bg-[#F5F5F7]'}`}
                   >
                     همه برندها
                   </button>
@@ -543,7 +571,7 @@ function ShopPage({
                     <button
                       key={brand}
                       onClick={() => setSelectedBrand(brand === selectedBrand ? '' : brand)}
-                      className={`w-full text-right text-sm p-2 rounded-lg transition-colors ${selectedBrand === brand ? 'bg-[#00F5A0]/10 text-[#00F5A0]' : 'text-gray-400 hover:text-white'}`}
+                      className={`w-full text-right text-sm p-2 rounded-lg transition-colors ${selectedBrand === brand ? 'bg-[#00C07F]/10 text-[#00C07F] font-medium' : 'text-[#6b7280] hover:text-[#1a1a2e] hover:bg-[#F5F5F7]'}`}
                     >
                       {brand}
                     </button>
@@ -552,14 +580,14 @@ function ShopPage({
               </div>
 
               {/* Flavor Profile */}
-              <div className="glass rounded-2xl p-4">
-                <h3 className="font-bold text-sm mb-3 text-gray-300">طعم‌سنج</h3>
+              <div className="glass rounded-2xl p-4 shadow-soft">
+                <h3 className="font-bold text-sm mb-3 text-[#4b5563]">طعم‌سنج</h3>
                 <div className="flex flex-wrap gap-2">
                   {flavorProfiles.map(fp => (
                     <button
                       key={fp.id}
                       onClick={() => setSelectedFlavor(fp.id === selectedFlavor ? '' : fp.id)}
-                      className={`px-3 py-1.5 rounded-full text-xs transition-all ${selectedFlavor === fp.id ? 'bg-[#00F5A0] text-black font-bold' : 'glass text-gray-400 hover:text-white'}`}
+                      className={`px-3 py-1.5 rounded-full text-xs transition-all ${selectedFlavor === fp.id ? 'bg-[#00C07F] text-white font-bold shadow-md' : 'bg-white border border-[#E5E7EB] text-[#6b7280] hover:border-[#00C07F] hover:text-[#00C07F]'}`}
                     >
                       {fp.icon} {fp.name}
                     </button>
@@ -568,14 +596,14 @@ function ShopPage({
               </div>
 
               {/* Nicotine Level */}
-              <div className="glass rounded-2xl p-4">
-                <h3 className="font-bold text-sm mb-3 text-gray-300">سطح نیکوتین (mg)</h3>
+              <div className="glass rounded-2xl p-4 shadow-soft">
+                <h3 className="font-bold text-sm mb-3 text-[#4b5563]">سطح نیکوتین (mg)</h3>
                 <div className="flex flex-wrap gap-2">
                   {nicotineLevels.map(n => (
                     <button
                       key={n}
                       onClick={() => setSelectedNicotine(n === selectedNicotine ? '' : n)}
-                      className={`w-10 h-10 rounded-xl text-xs font-bold transition-all ${selectedNicotine === n ? 'bg-[#00F5A0] text-black' : 'glass text-gray-400 hover:text-white'}`}
+                      className={`w-10 h-10 rounded-xl text-xs font-bold transition-all ${selectedNicotine === n ? 'bg-[#00C07F] text-white shadow-md' : 'bg-white border border-[#E5E7EB] text-[#6b7280] hover:border-[#00C07F] hover:text-[#00C07F]'}`}
                     >
                       {n}
                     </button>
@@ -584,8 +612,8 @@ function ShopPage({
               </div>
 
               {/* Price Range */}
-              <div className="glass rounded-2xl p-4">
-                <h3 className="font-bold text-sm mb-3 text-gray-300">محدوده قیمت</h3>
+              <div className="glass rounded-2xl p-4 shadow-soft">
+                <h3 className="font-bold text-sm mb-3 text-[#4b5563]">محدوده قیمت</h3>
                 <input
                   type="range"
                   min="0"
@@ -593,9 +621,9 @@ function ShopPage({
                   step="100000"
                   value={priceRange[1]}
                   onChange={e => setPriceRange([priceRange[0], parseInt(e.target.value)])}
-                  className="w-full accent-[#00F5A0]"
+                  className="w-full accent-[#00C07F]"
                 />
-                <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <div className="flex justify-between text-xs text-[#9CA3AF] mt-1">
                   <span>رایگان</span>
                   <span>{(priceRange[1] / 10000).toFixed(0)} هزار تومان</span>
                 </div>
@@ -619,10 +647,10 @@ function ShopPage({
             ) : (
               <div className="text-center py-20">
                 <span className="text-6xl mb-4 block">🔍</span>
-                <p className="text-gray-400 text-lg">محصولی با این فیلترها یافت نشد</p>
+                <p className="text-[#6b7280] text-lg">محصولی با این فیلترها یافت نشد</p>
                 <button 
-                  onClick={() => { setSelectedCategory(''); setSelectedBrand(''); setSelectedFlavor(''); setSelectedNicotine(''); }}
-                  className="mt-4 text-[#00F5A0] hover:underline text-sm"
+                  onClick={() => { setSelectedCategory(''); setSelectedBrand(''); setSelectedFlavor(''); setSelectedNicotine(''); setActiveTab('all'); }}
+                  className="mt-4 text-[#00C07F] hover:underline text-sm font-medium"
                 >
                   حذف فیلترها
                 </button>
@@ -653,7 +681,7 @@ function ProductDetail({ product, onAddToCart, onBack }: {
     <section className="pt-24 pb-24 md:pb-12 px-4 min-h-screen">
       <div className="max-w-6xl mx-auto">
         {/* Back button */}
-        <button onClick={onBack} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6">
+        <button onClick={onBack} className="flex items-center gap-2 text-[#6b7280] hover:text-[#00C07F] transition-colors mb-6">
           <i className="fas fa-arrow-right"></i>
           <span className="text-sm">بازگشت به فروشگاه</span>
         </button>
@@ -661,14 +689,14 @@ function ProductDetail({ product, onAddToCart, onBack }: {
         <div className="grid md:grid-cols-2 gap-8">
           {/* Image Gallery */}
           <div className="space-y-4">
-            <div className="glass rounded-2xl overflow-hidden aspect-square relative group">
+            <div className="glass rounded-2xl overflow-hidden aspect-square relative shadow-soft">
               <img 
                 src={product.images[selectedImage]} 
                 alt={product.name}
                 className="w-full h-full object-cover product-img-zoom"
               />
               {product.originalPrice && (
-                <span className="absolute top-4 right-4 px-3 py-1 bg-[#FF2D78] text-white text-sm font-bold rounded-lg">
+                <span className="absolute top-4 right-4 px-3 py-1 bg-[#EC4899] text-white text-sm font-bold rounded-lg">
                   {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% تخفیف
                 </span>
               )}
@@ -679,8 +707,8 @@ function ProductDetail({ product, onAddToCart, onBack }: {
                   <button
                     key={i}
                     onClick={() => setSelectedImage(i)}
-                    className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${
-                      i === selectedImage ? 'border-[#00F5A0]' : 'border-transparent opacity-60 hover:opacity-100'
+                    className={`w-16 h-16 rounded-xl overflow-hidden border-2 transition-all shadow-soft ${
+                      i === selectedImage ? 'border-[#00C07F]' : 'border-transparent opacity-60 hover:opacity-100'
                     }`}
                   >
                     <img src={img} alt="" className="w-full h-full object-cover" />
@@ -693,41 +721,41 @@ function ProductDetail({ product, onAddToCart, onBack }: {
           {/* Product Info */}
           <div className="space-y-6">
             <div>
-              <p className="text-sm text-[#00F5A0] mb-1">{product.brand}</p>
-              <h1 className="text-2xl md:text-3xl font-black text-white mb-2">{product.name}</h1>
-              <p className="text-sm text-gray-500">{product.nameEn}</p>
+              <p className="text-sm text-[#00C07F] mb-1 font-medium">{product.brand}</p>
+              <h1 className="text-2xl md:text-3xl font-black text-[#1a1a2e] mb-2">{product.name}</h1>
+              <p className="text-sm text-[#9CA3AF]">{product.nameEn}</p>
             </div>
 
             {/* Rating */}
             <div className="flex items-center gap-3">
               <div className="flex gap-0.5">
                 {[1,2,3,4,5].map(i => (
-                  <i key={i} className={`fas fa-star text-sm ${i <= Math.round(product.rating) ? 'text-[#FFB800]' : 'text-gray-700'}`}></i>
+                  <i key={i} className={`fas fa-star text-sm ${i <= Math.round(product.rating) ? 'text-[#F59E0B]' : 'text-[#E5E7EB]'}`}></i>
                 ))}
               </div>
-              <span className="text-sm text-gray-400">{product.rating} از ۵ ({product.reviews} نظر)</span>
+              <span className="text-sm text-[#6b7280]">{product.rating} از ۵ ({product.reviews} نظر)</span>
             </div>
 
             {/* Price */}
             <div className="flex items-end gap-3">
               <span className="text-3xl font-black gradient-text">{(product.price / 10000).toFixed(0)}</span>
-              <span className="text-gray-400 text-sm mb-1">هزار تومان</span>
+              <span className="text-[#6b7280] text-sm mb-1">هزار تومان</span>
               {product.originalPrice && (
-                <span className="text-gray-600 line-through text-sm mb-1">{(product.originalPrice / 10000).toFixed(0)} هزار</span>
+                <span className="text-[#9CA3AF] line-through text-sm mb-1">{(product.originalPrice / 10000).toFixed(0)} هزار</span>
               )}
             </div>
 
             {/* Flavor Selection */}
             {product.flavors && product.flavors.length > 0 && (
               <div>
-                <h3 className="text-sm font-bold text-gray-300 mb-3">انتخاب طعم:</h3>
+                <h3 className="text-sm font-bold text-[#4b5563] mb-3">انتخاب طعم:</h3>
                 <div className="flex flex-wrap gap-2">
                   {product.flavors.map(f => (
                     <button
                       key={f}
                       onClick={() => setSelectedFlavor(f)}
                       className={`px-4 py-2 rounded-xl text-sm transition-all ${
-                        selectedFlavor === f ? 'bg-[#00F5A0] text-black font-bold' : 'glass text-gray-300 hover:text-white'
+                        selectedFlavor === f ? 'bg-[#00C07F] text-white font-bold shadow-md' : 'glass text-[#4b5563] hover:text-[#1a1a2e] shadow-soft'
                       }`}
                     >
                       {f}
@@ -740,14 +768,14 @@ function ProductDetail({ product, onAddToCart, onBack }: {
             {/* Color Selection */}
             {product.colors && product.colors.length > 0 && (
               <div>
-                <h3 className="text-sm font-bold text-gray-300 mb-3">رنگ بدنه:</h3>
+                <h3 className="text-sm font-bold text-[#4b5563] mb-3">رنگ بدنه:</h3>
                 <div className="flex flex-wrap gap-2">
                   {product.colors.map(c => (
                     <button
                       key={c}
                       onClick={() => setSelectedColor(c)}
                       className={`px-4 py-2 rounded-xl text-sm transition-all ${
-                        selectedColor === c ? 'bg-[#00D9F5] text-black font-bold' : 'glass text-gray-300 hover:text-white'
+                        selectedColor === c ? 'bg-[#0891B2] text-white font-bold shadow-md' : 'glass text-[#4b5563] hover:text-[#1a1a2e] shadow-soft'
                       }`}
                     >
                       {c}
@@ -759,27 +787,27 @@ function ProductDetail({ product, onAddToCart, onBack }: {
 
             {/* Quantity */}
             <div>
-              <h3 className="text-sm font-bold text-gray-300 mb-3">تعداد:</h3>
+              <h3 className="text-sm font-bold text-[#4b5563] mb-3">تعداد:</h3>
               <div className="flex items-center gap-3">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-10 h-10 glass rounded-xl flex items-center justify-center hover:text-[#00F5A0] transition-colors">
+                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-10 h-10 glass rounded-xl flex items-center justify-center hover:text-[#00C07F] transition-colors shadow-soft">
                   <i className="fas fa-minus text-sm"></i>
                 </button>
-                <span className="text-xl font-bold w-8 text-center">{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)} className="w-10 h-10 glass rounded-xl flex items-center justify-center hover:text-[#00F5A0] transition-colors">
+                <span className="text-xl font-bold w-8 text-center text-[#1a1a2e]">{quantity}</span>
+                <button onClick={() => setQuantity(quantity + 1)} className="w-10 h-10 glass rounded-xl flex items-center justify-center hover:text-[#00C07F] transition-colors shadow-soft">
                   <i className="fas fa-plus text-sm"></i>
                 </button>
               </div>
             </div>
 
             {/* Stock Status */}
-            <div className={`text-sm ${product.stock <= 5 ? 'text-red-400' : 'text-green-400'}`}>
+            <div className={`text-sm font-medium ${product.stock <= 5 ? 'text-red-500' : 'text-[#00C07F]'}`}>
               {product.stock <= 5 ? `⚠️ فقط ${product.stock} عدد باقی‌مانده` : `✓ موجود در انبار (${product.stock} عدد)`}
             </div>
 
             {/* Add to Cart */}
             <button
               onClick={() => onAddToCart(product, quantity, selectedFlavor, selectedColor)}
-              className="w-full btn-neon py-4 rounded-2xl text-lg font-bold flex items-center justify-center gap-3"
+              className="w-full btn-accent py-4 rounded-2xl text-lg flex items-center justify-center gap-3"
             >
               <i className="fas fa-shopping-bag"></i>
               افزودن به سبد خرید
@@ -789,55 +817,56 @@ function ProductDetail({ product, onAddToCart, onBack }: {
 
         {/* Tabs */}
         <div className="mt-12">
-          <div className="flex gap-1 glass rounded-2xl p-1 mb-6">
+          <div className="flex gap-1 glass rounded-2xl p-1.5 mb-6 shadow-soft">
             {[
-              { id: 'specs', label: 'مشخصات فنی' },
-              { id: 'desc', label: 'توضیحات' },
-              { id: 'reviews', label: `نظرات (${productReviews.length})` },
+              { id: 'specs', label: 'مشخصات فنی', icon: 'fa-microchip' },
+              { id: 'desc', label: 'توضیحات', icon: 'fa-file-alt' },
+              { id: 'reviews', label: `نظرات (${productReviews.length})`, icon: 'fa-comments' },
             ].map(tab => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 py-3 rounded-xl text-sm font-medium transition-all ${
-                  activeTab === tab.id ? 'bg-[#00F5A0] text-black' : 'text-gray-400 hover:text-white'
+                className={`flex-1 py-3 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-2 ${
+                  activeTab === tab.id ? 'bg-gradient-to-r from-[#00C07F] to-[#0891B2] text-white shadow-md' : 'text-[#6b7280] hover:text-[#1a1a2e]'
                 }`}
               >
+                <i className={`fas ${tab.icon} text-xs`}></i>
                 {tab.label}
               </button>
             ))}
           </div>
 
-          <div className="glass rounded-2xl p-6">
+          <div className="glass rounded-2xl p-6 shadow-soft">
             {activeTab === 'specs' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {product.battery && <SpecRow label="باتری" value={product.battery} />}
-                {product.wattage && <SpecRow label="توان خروجی" value={product.wattage} />}
-                {product.port && <SpecRow label="پورت شارژ" value={product.port} />}
-                {product.capacity && <SpecRow label="ظرفیت" value={product.capacity} />}
-                {product.nicotine && <SpecRow label="نیکوتین" value={`${product.nicotine} mg`} />}
-                <SpecRow label="برند" value={product.brand} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {product.battery && <SpecRow label="باتری" value={product.battery} icon="fa-battery-full" />}
+                {product.wattage && <SpecRow label="توان خروجی" value={product.wattage} icon="fa-bolt" />}
+                {product.port && <SpecRow label="پورت شارژ" value={product.port} icon="fa-plug" />}
+                {product.capacity && <SpecRow label="ظرفیت" value={product.capacity} icon="fa-flask" />}
+                {product.nicotine && <SpecRow label="نیکوتین" value={`${product.nicotine} mg`} icon="fa-vial" />}
+                <SpecRow label="برند" value={product.brand} icon="fa-tag" />
               </div>
             )}
             {activeTab === 'desc' && (
-              <p className="text-gray-300 leading-8">{product.description}</p>
+              <p className="text-[#4b5563] leading-8 text-sm">{product.description}</p>
             )}
             {activeTab === 'reviews' && (
               <div className="space-y-4">
                 {productReviews.length > 0 ? productReviews.map(review => (
-                  <div key={review.id} className="border-b border-[#2A2A35] pb-4 last:border-0">
+                  <div key={review.id} className="border-b border-[#E5E7EB] pb-4 last:border-0">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-bold text-sm text-white">{review.user}</span>
-                      <span className="text-xs text-gray-500">{review.date}</span>
+                      <span className="font-bold text-sm text-[#1a1a2e]">{review.user}</span>
+                      <span className="text-xs text-[#9CA3AF]">{review.date}</span>
                     </div>
                     <div className="flex gap-0.5 mb-2">
                       {[1,2,3,4,5].map(i => (
-                        <i key={i} className={`fas fa-star text-xs ${i <= review.rating ? 'text-[#FFB800]' : 'text-gray-700'}`}></i>
+                        <i key={i} className={`fas fa-star text-xs ${i <= review.rating ? 'text-[#F59E0B]' : 'text-[#E5E7EB]'}`}></i>
                       ))}
                     </div>
-                    <p className="text-sm text-gray-300">{review.text}</p>
+                    <p className="text-sm text-[#4b5563]">{review.text}</p>
                   </div>
                 )) : (
-                  <p className="text-center text-gray-500 py-8">هنوز نظری ثبت نشده است</p>
+                  <p className="text-center text-[#9CA3AF] py-8">هنوز نظری ثبت نشده است</p>
                 )}
               </div>
             )}
@@ -848,11 +877,14 @@ function ProductDetail({ product, onAddToCart, onBack }: {
   );
 }
 
-function SpecRow({ label, value }: { label: string; value: string }) {
+function SpecRow({ label, value, icon }: { label: string; value: string; icon?: string }) {
   return (
-    <div className="flex items-center justify-between p-3 rounded-xl bg-[#0A0A0C]/50">
-      <span className="text-sm text-gray-400">{label}</span>
-      <span className="text-sm font-bold text-white">{value}</span>
+    <div className="flex items-center justify-between p-3 rounded-xl bg-[#F5F5F7]">
+      <span className="text-sm text-[#6b7280] flex items-center gap-2">
+        {icon && <i className={`fas ${icon} text-[#00C07F] text-xs`}></i>}
+        {label}
+      </span>
+      <span className="text-sm font-bold text-[#1a1a2e]">{value}</span>
     </div>
   );
 }
@@ -879,16 +911,16 @@ function CartSlideOut({
 
   return (
     <div className="fixed inset-0 z-[70]">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose}></div>
-      <div className="absolute top-0 right-0 bottom-0 w-full max-w-md glass-strong animate-slide-in-right overflow-y-auto">
+      <div className="absolute inset-0 bg-[#1a1a2e]/40 backdrop-blur-sm" onClick={onClose}></div>
+      <div className="absolute top-0 right-0 bottom-0 w-full max-w-md glass-strong animate-slide-in-right overflow-y-auto shadow-soft">
         <div className="p-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold">
-              <i className="fas fa-shopping-bag text-[#00F5A0] ml-2"></i>
+            <h2 className="text-xl font-bold text-[#1a1a2e]">
+              <i className="fas fa-shopping-bag text-[#00C07F] ml-2"></i>
               سبد خرید
             </h2>
-            <button onClick={onClose} className="w-10 h-10 glass rounded-xl flex items-center justify-center hover:text-[#FF2D78] transition-colors">
+            <button onClick={onClose} className="w-10 h-10 glass rounded-xl flex items-center justify-center hover:text-[#EC4899] transition-colors shadow-soft">
               <i className="fas fa-times"></i>
             </button>
           </div>
@@ -898,25 +930,25 @@ function CartSlideOut({
             <>
               <div className="space-y-4 mb-6">
                 {items.map(item => (
-                  <div key={item.product.id} className="glass rounded-xl p-4 flex gap-3">
+                  <div key={item.product.id} className="glass rounded-xl p-4 flex gap-3 shadow-soft">
                     <img src={item.product.image} alt={item.product.name} className="w-16 h-16 rounded-lg object-cover" />
                     <div className="flex-1">
-                      <h4 className="text-sm font-bold text-white mb-1 line-clamp-1">{item.product.name}</h4>
+                      <h4 className="text-sm font-bold text-[#1a1a2e] mb-1 line-clamp-1">{item.product.name}</h4>
                       {item.selectedFlavor && (
-                        <p className="text-xs text-gray-500 mb-1">طعم: {item.selectedFlavor}</p>
+                        <p className="text-xs text-[#9CA3AF] mb-1">طعم: {item.selectedFlavor}</p>
                       )}
-                      <p className="text-sm text-[#00F5A0] font-bold">{(item.product.price / 10000).toFixed(0)} هزار تومان</p>
+                      <p className="text-sm text-[#00C07F] font-bold">{(item.product.price / 10000).toFixed(0)} هزار تومان</p>
                     </div>
                     <div className="flex flex-col items-end justify-between">
-                      <button onClick={() => onRemove(item.product.id)} className="text-gray-500 hover:text-[#FF2D78] transition-colors">
+                      <button onClick={() => onRemove(item.product.id)} className="text-[#9CA3AF] hover:text-[#EC4899] transition-colors">
                         <i className="fas fa-trash text-xs"></i>
                       </button>
                       <div className="flex items-center gap-2">
-                        <button onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)} className="w-6 h-6 glass rounded flex items-center justify-center text-xs hover:text-[#00F5A0]">
+                        <button onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)} className="w-6 h-6 glass rounded flex items-center justify-center text-xs hover:text-[#00C07F] shadow-soft">
                           -
                         </button>
-                        <span className="text-sm font-bold w-4 text-center">{item.quantity}</span>
-                        <button onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)} className="w-6 h-6 glass rounded flex items-center justify-center text-xs hover:text-[#00F5A0]">
+                        <span className="text-sm font-bold w-4 text-center text-[#1a1a2e]">{item.quantity}</span>
+                        <button onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)} className="w-6 h-6 glass rounded flex items-center justify-center text-xs hover:text-[#00C07F] shadow-soft">
                           +
                         </button>
                       </div>
@@ -926,17 +958,17 @@ function CartSlideOut({
               </div>
 
               {/* Total */}
-              <div className="glass rounded-xl p-4 mb-4">
+              <div className="glass rounded-xl p-4 mb-4 shadow-soft">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-gray-400 text-sm">جمع کل:</span>
+                  <span className="text-[#6b7280] text-sm">جمع کل:</span>
                   <span className="text-xl font-black gradient-text">{(total / 10000).toFixed(0)} هزار تومان</span>
                 </div>
-                <p className="text-xs text-gray-500">هزینه ارسال در مرحله بعد محاسبه می‌شود</p>
+                <p className="text-xs text-[#9CA3AF]">هزینه ارسال در مرحله بعد محاسبه می‌شود</p>
               </div>
 
               <button 
                 onClick={onCheckout}
-                className="w-full btn-neon py-4 rounded-2xl font-bold text-lg"
+                className="w-full btn-accent py-4 rounded-2xl text-lg"
               >
                 ادامه فرآیند خرید
               </button>
@@ -944,8 +976,8 @@ function CartSlideOut({
           ) : (
             <div className="text-center py-16">
               <span className="text-6xl mb-4 block">🛒</span>
-              <p className="text-gray-400 mb-4">سبد خرید شما خالی است</p>
-              <button onClick={onClose} className="text-[#00F5A0] hover:underline text-sm">
+              <p className="text-[#6b7280] mb-4">سبد خرید شما خالی است</p>
+              <button onClick={onClose} className="text-[#00C07F] hover:underline text-sm font-medium">
                 بازگشت به فروشگاه
               </button>
             </div>
@@ -965,28 +997,28 @@ function CheckoutPage({ items, onBack }: { items: CartItem[]; onBack: () => void
   return (
     <section className="pt-24 pb-24 px-4 min-h-screen">
       <div className="max-w-3xl mx-auto">
-        <button onClick={onBack} className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6">
+        <button onClick={onBack} className="flex items-center gap-2 text-[#6b7280] hover:text-[#00C07F] transition-colors mb-6">
           <i className="fas fa-arrow-right"></i>
           <span className="text-sm">بازگشت</span>
         </button>
 
-        <h1 className="text-2xl md:text-3xl font-black mb-8">
+        <h1 className="text-2xl md:text-3xl font-black mb-8 text-[#1a1a2e]">
           <span className="gradient-text">تسویه حساب</span>
         </h1>
 
         <div className="grid md:grid-cols-2 gap-6">
           {/* Form */}
           <div className="space-y-4">
-            <div className="glass rounded-2xl p-6 space-y-4">
-              <h3 className="font-bold text-lg mb-2">اطلاعات ارسال</h3>
-              <input type="text" placeholder="نام و نام خانوادگی" className="w-full bg-[#0A0A0C] text-white rounded-xl p-3 border border-[#2A2A35] outline-none focus:border-[#00F5A0] transition-colors text-sm" />
-              <input type="tel" placeholder="شماره موبایل" className="w-full bg-[#0A0A0C] text-white rounded-xl p-3 border border-[#2A2A35] outline-none focus:border-[#00F5A0] transition-colors text-sm" />
-              <input type="text" placeholder="آدرس کامل" className="w-full bg-[#0A0A0C] text-white rounded-xl p-3 border border-[#2A2A35] outline-none focus:border-[#00F5A0] transition-colors text-sm" />
-              <input type="text" placeholder="کد پستی" className="w-full bg-[#0A0A0C] text-white rounded-xl p-3 border border-[#2A2A35] outline-none focus:border-[#00F5A0] transition-colors text-sm" />
+            <div className="glass rounded-2xl p-6 space-y-4 shadow-soft">
+              <h3 className="font-bold text-lg mb-2 text-[#1a1a2e]">اطلاعات ارسال</h3>
+              <input type="text" placeholder="نام و نام خانوادگی" className="w-full bg-white text-[#1a1a2e] rounded-xl p-3 border border-[#E5E7EB] outline-none focus:border-[#00C07F] transition-colors text-sm placeholder-[#9CA3AF]" />
+              <input type="tel" placeholder="شماره موبایل" className="w-full bg-white text-[#1a1a2e] rounded-xl p-3 border border-[#E5E7EB] outline-none focus:border-[#00C07F] transition-colors text-sm placeholder-[#9CA3AF]" />
+              <input type="text" placeholder="آدرس کامل" className="w-full bg-white text-[#1a1a2e] rounded-xl p-3 border border-[#E5E7EB] outline-none focus:border-[#00C07F] transition-colors text-sm placeholder-[#9CA3AF]" />
+              <input type="text" placeholder="کد پستی" className="w-full bg-white text-[#1a1a2e] rounded-xl p-3 border border-[#E5E7EB] outline-none focus:border-[#00C07F] transition-colors text-sm placeholder-[#9CA3AF]" />
               <select 
                 value={city}
                 onChange={e => setCity(e.target.value)}
-                className="w-full bg-[#0A0A0C] text-white rounded-xl p-3 border border-[#2A2A35] outline-none focus:border-[#00F5A0] transition-colors text-sm"
+                className="w-full bg-white text-[#1a1a2e] rounded-xl p-3 border border-[#E5E7EB] outline-none focus:border-[#00C07F] transition-colors text-sm"
               >
                 <option value="">انتخاب شهر</option>
                 <option value="tehran">تهران (ارسال اکسپرس)</option>
@@ -1001,32 +1033,32 @@ function CheckoutPage({ items, onBack }: { items: CartItem[]; onBack: () => void
 
           {/* Summary */}
           <div className="space-y-4">
-            <div className="glass rounded-2xl p-6">
-              <h3 className="font-bold text-lg mb-4">خلاصه سفارش</h3>
+            <div className="glass rounded-2xl p-6 shadow-soft">
+              <h3 className="font-bold text-lg mb-4 text-[#1a1a2e]">خلاصه سفارش</h3>
               <div className="space-y-3 mb-4">
                 {items.map(item => (
                   <div key={item.product.id} className="flex justify-between text-sm">
-                    <span className="text-gray-400">{item.product.name} × {item.quantity}</span>
-                    <span className="text-white">{((item.product.price * item.quantity) / 10000).toFixed(0)} هزار</span>
+                    <span className="text-[#6b7280]">{item.product.name} × {item.quantity}</span>
+                    <span className="text-[#1a1a2e] font-medium">{((item.product.price * item.quantity) / 10000).toFixed(0)} هزار</span>
                   </div>
                 ))}
               </div>
-              <div className="border-t border-[#2A2A35] pt-4 space-y-2">
+              <div className="border-t border-[#E5E7EB] pt-4 space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">جمع محصولات</span>
-                  <span className="text-white">{(total / 10000).toFixed(0)} هزار</span>
+                  <span className="text-[#6b7280]">جمع محصولات</span>
+                  <span className="text-[#1a1a2e]">{(total / 10000).toFixed(0)} هزار</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">هزینه ارسال</span>
-                  <span className="text-white">{shippingCost ? `${(shippingCost / 1000).toFixed(0)} هزار` : 'انتخاب نشده'}</span>
+                  <span className="text-[#6b7280]">هزینه ارسال</span>
+                  <span className="text-[#1a1a2e]">{shippingCost ? `${(shippingCost / 1000).toFixed(0)} هزار` : 'انتخاب نشده'}</span>
                 </div>
-                <div className="flex justify-between text-lg font-bold pt-2 border-t border-[#2A2A35]">
+                <div className="flex justify-between text-lg font-bold pt-2 border-t border-[#E5E7EB]">
                   <span className="gradient-text">مبلغ نهایی</span>
                   <span className="gradient-text">{((total + shippingCost) / 10000).toFixed(0)} هزار تومان</span>
                 </div>
               </div>
             </div>
-            <button className="w-full btn-neon py-4 rounded-2xl font-bold text-lg">
+            <button className="w-full btn-accent py-4 rounded-2xl text-lg">
               پرداخت آنلاین
             </button>
           </div>
@@ -1039,7 +1071,7 @@ function CheckoutPage({ items, onBack }: { items: CartItem[]; onBack: () => void
 // Footer
 function Footer() {
   return (
-    <footer className="glass border-t border-[#2A2A35] py-12 px-4 mb-16 md:mb-0">
+    <footer className="glass border-t border-[#E5E7EB] py-12 px-4 mb-16 md:mb-0 shadow-soft">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
@@ -1047,48 +1079,48 @@ function Footer() {
               <span className="text-2xl">💨</span>
               <span className="text-xl font-black gradient-text">اسموک سیتی</span>
             </div>
-            <p className="text-sm text-gray-400 leading-7">فروشگاه معتبر ویپ، پاد و لوازم جانبی با گارانتی اصالت کالا و ارسال سریع به سراسر ایران.</p>
+            <p className="text-sm text-[#6b7280] leading-7">فروشگاه معتبر ویپ، پاد و لوازم جانبی با گارانتی اصالت کالا و ارسال سریع به سراسر ایران.</p>
           </div>
           <div>
-            <h4 className="font-bold mb-4 text-white">دسترسی سریع</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li><a href="#" className="hover:text-[#00F5A0] transition-colors">فروشگاه</a></li>
-              <li><a href="#" className="hover:text-[#00F5A0] transition-colors">تخفیف‌ها</a></li>
-              <li><a href="#" className="hover:text-[#00F5A0] transition-colors">باشگاه مشتریان</a></li>
-              <li><a href="#" className="hover:text-[#00F5A0] transition-colors">بلاگ</a></li>
+            <h4 className="font-bold mb-4 text-[#1a1a2e]">دسترسی سریع</h4>
+            <ul className="space-y-2 text-sm text-[#6b7280]">
+              <li><a href="#" className="hover:text-[#00C07F] transition-colors">فروشگاه</a></li>
+              <li><a href="#" className="hover:text-[#00C07F] transition-colors">تخفیف‌ها</a></li>
+              <li><a href="#" className="hover:text-[#00C07F] transition-colors">باشگاه مشتریان</a></li>
+              <li><a href="#" className="hover:text-[#00C07F] transition-colors">بلاگ</a></li>
             </ul>
           </div>
           <div>
-            <h4 className="font-bold mb-4 text-white">خدمات مشتریان</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li><a href="#" className="hover:text-[#00F5A0] transition-colors">راهنمای خرید</a></li>
-              <li><a href="#" className="hover:text-[#00F5A0] transition-colors">شرایط بازگشت</a></li>
-              <li><a href="#" className="hover:text-[#00F5A0] transition-colors">حریم خصوصی</a></li>
-              <li><a href="#" className="hover:text-[#00F5A0] transition-colors">تماس با ما</a></li>
+            <h4 className="font-bold mb-4 text-[#1a1a2e]">خدمات مشتریان</h4>
+            <ul className="space-y-2 text-sm text-[#6b7280]">
+              <li><a href="#" className="hover:text-[#00C07F] transition-colors">راهنمای خرید</a></li>
+              <li><a href="#" className="hover:text-[#00C07F] transition-colors">شرایط بازگشت</a></li>
+              <li><a href="#" className="hover:text-[#00C07F] transition-colors">حریم خصوصی</a></li>
+              <li><a href="#" className="hover:text-[#00C07F] transition-colors">تماس با ما</a></li>
             </ul>
           </div>
           <div>
-            <h4 className="font-bold mb-4 text-white">ارتباط با ما</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li><i className="fas fa-phone ml-2 text-[#00F5A0]"></i>۰۲۱-۱۲۳۴۵۶۷۸</li>
-              <li><i className="fas fa-envelope ml-2 text-[#00F5A0]"></i>info@smokecity.ir</li>
-              <li><i className="fas fa-map-marker-alt ml-2 text-[#00F5A0]"></i>تهران، خیابان ولیعصر</li>
+            <h4 className="font-bold mb-4 text-[#1a1a2e]">ارتباط با ما</h4>
+            <ul className="space-y-2 text-sm text-[#6b7280]">
+              <li><i className="fas fa-phone ml-2 text-[#00C07F]"></i>۰۲۱-۱۲۳۴۵۶۷۸</li>
+              <li><i className="fas fa-envelope ml-2 text-[#00C07F]"></i>info@smokecity.ir</li>
+              <li><i className="fas fa-map-marker-alt ml-2 text-[#00C07F]"></i>تهران، خیابان ولیعصر</li>
             </ul>
             <div className="flex gap-3 mt-4">
-              <a href="#" className="w-9 h-9 glass rounded-lg flex items-center justify-center hover:text-[#00F5A0] transition-colors">
+              <a href="#" className="w-9 h-9 glass rounded-lg flex items-center justify-center hover:text-[#00C07F] transition-colors shadow-soft">
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="#" className="w-9 h-9 glass rounded-lg flex items-center justify-center hover:text-[#00F5A0] transition-colors">
+              <a href="#" className="w-9 h-9 glass rounded-lg flex items-center justify-center hover:text-[#00C07F] transition-colors shadow-soft">
                 <i className="fab fa-telegram"></i>
               </a>
-              <a href="#" className="w-9 h-9 glass rounded-lg flex items-center justify-center hover:text-[#00F5A0] transition-colors">
+              <a href="#" className="w-9 h-9 glass rounded-lg flex items-center justify-center hover:text-[#00C07F] transition-colors shadow-soft">
                 <i className="fab fa-whatsapp"></i>
               </a>
             </div>
           </div>
         </div>
-        <div className="border-t border-[#2A2A35] mt-8 pt-6 text-center">
-          <p className="text-xs text-gray-500">© ۱۴۰۳ اسموک سیتی. تمامی حقوق محفوظ است. | فروش به افراد زیر ۱۸ سال ممنوع است.</p>
+        <div className="border-t border-[#E5E7EB] mt-8 pt-6 text-center">
+          <p className="text-xs text-[#9CA3AF]">© ۱۴۰۳ اسموک سیتی. تمامی حقوق محفوظ است. | فروش به افراد زیر ۱۸ سال ممنوع است.</p>
         </div>
       </div>
     </footer>
@@ -1109,34 +1141,34 @@ function BottomNav({
 }) {
   return (
     <div className="bottom-nav md:hidden">
-      <div className="glass-strong border-t border-[#2A2A35] px-4 py-2 flex items-center justify-around">
+      <div className="glass-strong border-t border-[#E5E7EB] px-4 py-2 flex items-center justify-around shadow-soft">
         <button 
           onClick={() => onNavigate('home')}
-          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${currentPage === 'home' ? 'text-[#00F5A0]' : 'text-gray-400'}`}
+          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${currentPage === 'home' ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
         >
           <i className="fas fa-home text-lg"></i>
           <span className="text-[10px]">خانه</span>
         </button>
         <button 
           onClick={() => onNavigate('shop')}
-          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${currentPage === 'shop' ? 'text-[#00F5A0]' : 'text-gray-400'}`}
+          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${currentPage === 'shop' ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
         >
           <i className="fas fa-store text-lg"></i>
           <span className="text-[10px]">فروشگاه</span>
         </button>
         <button 
           onClick={onCartOpen}
-          className="relative flex flex-col items-center gap-1 py-2 px-3 rounded-xl text-gray-400"
+          className="relative flex flex-col items-center gap-1 py-2 px-3 rounded-xl text-[#6b7280]"
         >
           <i className="fas fa-shopping-bag text-lg"></i>
           <span className="text-[10px]">سبد خرید</span>
           {cartCount > 0 && (
-            <span className="absolute top-0 right-1 w-5 h-5 bg-[#00F5A0] text-black text-[10px] font-bold rounded-full flex items-center justify-center">
+            <span className="absolute top-0 right-1 w-5 h-5 bg-[#00C07F] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
               {cartCount}
             </span>
           )}
         </button>
-        <button className="flex flex-col items-center gap-1 py-2 px-3 rounded-xl text-gray-400">
+        <button className="flex flex-col items-center gap-1 py-2 px-3 rounded-xl text-[#6b7280]">
           <i className="fas fa-user text-lg"></i>
           <span className="text-[10px]">حساب من</span>
         </button>
@@ -1209,7 +1241,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0C] text-white" dir="rtl">
+    <div className="min-h-screen bg-[#F5F5F7] text-[#1a1a2e]" dir="rtl">
       <Header 
         cartCount={cartCount}
         onCartOpen={() => setCartOpen(true)}
