@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { products, categories, brands, flavorProfiles, nicotineLevels, reviews, Product, CartItem } from './data/products';
 import { LogoMain, LogoSmall } from './components/Logo';
+import { getCategoryIcon } from './components/CategoryIcons';
 
 // Age Verification Gate
 function AgeGate({ onVerify }: { onVerify: () => void }) {
@@ -81,9 +82,17 @@ function Header({
             فروشگاه
           </button>
           <button className="text-sm font-medium text-[#4b5563] transition-colors hover:text-[#00C07F]">
-            باشگاه مشتریان
+            بلاگ
           </button>
-          <button className="text-sm font-medium text-[#4b5563] transition-colors hover:text-[#00C07F]">
+          <button 
+            onClick={() => {
+              const contactSection = document.getElementById('contact');
+              if (contactSection) {
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="text-sm font-medium text-[#4b5563] transition-colors hover:text-[#00C07F]"
+          >
             تماس با ما
           </button>
         </nav>
@@ -270,10 +279,12 @@ function CategoryBubbles({ onCategoryClick }: { onCategoryClick: (cat: string) =
             <button
               key={cat.id}
               onClick={() => onCategoryClick(cat.id)}
-              className={`category-bubble glass rounded-2xl p-4 md:p-6 flex flex-col items-center gap-3 min-w-[100px] shadow-soft opacity-0 animate-slide-up stagger-${i + 1}`}
+              className={`category-bubble glass rounded-2xl p-4 md:p-6 flex flex-col items-center gap-3 min-w-[120px] shadow-soft opacity-0 animate-slide-up stagger-${i + 1} hover:border-[#00C07F]/30`}
               style={{ animationFillMode: 'forwards' }}
             >
-              <span className="text-3xl md:text-4xl">{cat.icon}</span>
+              <div className="text-[#00C07F]">
+                {getCategoryIcon(cat.id, "w-10 h-10 md:w-12 md:h-12")}
+              </div>
               <span className="text-xs md:text-sm font-medium text-[#4b5563]">{cat.name}</span>
             </button>
           ))}
@@ -392,37 +403,160 @@ function FeaturedProducts({ onAddToCart, onViewProduct }: {
   );
 }
 
-// Club Section
-function ClubSection() {
-  const benefits = [
-    { icon: '🛡️', title: 'گارانتی اصالت', desc: 'تمامی محصولات دارای ضمانت اصالت و سلامت' },
-    { icon: '🚀', title: 'ارسال اکسپرس', desc: 'ارسال فوری در تهران و شهرستان‌ها' },
-    { icon: '💎', title: 'باشگاه مشتریان', desc: 'تخفیف‌های ویژه و امتیاز خرید' },
-    { icon: '🎧', title: 'پشتیبانی ۲۴/۷', desc: 'مشاوره تخصصی و پاسخگویی سریع' },
+// Blog Section
+function BlogSection() {
+  const blogPosts = [
+    {
+      id: 1,
+      title: 'راهنمای انتخاب اولین پاد سیستم',
+      excerpt: 'اگر تازه می‌خواهید ویپینگ را شروع کنید، این راهنما به شما کمک می‌کند بهترین انتخاب را داشته باشید...',
+      date: '۱۴۰۳/۰۹/۲۰',
+      category: 'راهنمای خرید',
+      readTime: '۵ دقیقه',
+    },
+    {
+      id: 2,
+      title: 'مقایسه سالت نیکوتین و جویس معمولی',
+      excerpt: 'تفاوت‌های کلیدی بین سالت نیکوتین و جویس معمولی چیست؟ کدام یک برای شما مناسب‌تر است؟',
+      date: '۱۴۰۳/۰۹/۱۵',
+      category: 'آموزشی',
+      readTime: '۷ دقیقه',
+    },
+    {
+      id: 3,
+      title: 'معرفی بهترین برندهای ویپ ۲۰۲۴',
+      excerpt: 'بررسی کامل برندهای معتبر جهانی ویپ و پاد سیستم که در سال ۲۰۲۴ عملکرد درخشانی داشتند...',
+      date: '۱۴۰۳/۰۹/۱۰',
+      category: 'معرفی محصول',
+      readTime: '۱۰ دقیقه',
+    },
   ];
 
   return (
     <section className="py-16 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="glass rounded-3xl p-8 md:p-12 relative overflow-hidden shadow-soft">
-          {/* Background decoration */}
-          <div className="absolute top-0 left-0 w-64 h-64 bg-[#00C07F]/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#0891B2]/5 rounded-full blur-3xl"></div>
-          
-          <div className="relative z-10">
-            <h2 className="text-2xl md:text-3xl font-bold text-center mb-3 text-[#1a1a2e]">
-              باشگاه مشتریان <span className="gradient-text">اسموک سیتی</span>
-            </h2>
-            <p className="text-[#6b7280] text-center mb-10">مزایای عضویت در خانواده اسموک سیتی</p>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {benefits.map((b, i) => (
-                <div key={i} className="text-center p-4 rounded-2xl hover:bg-[#F5F5F7] transition-colors">
-                  <span className="text-4xl mb-4 block">{b.icon}</span>
-                  <h3 className="font-bold text-[#1a1a2e] mb-2">{b.title}</h3>
-                  <p className="text-sm text-[#6b7280]">{b.desc}</p>
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#1a1a2e]">
+            <span className="gradient-text">بلاگ</span> اسموک سیتی
+          </h2>
+          <button className="text-sm text-[#00C07F] hover:underline font-medium">مشاهده همه</button>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {blogPosts.map((post) => (
+            <article key={post.id} className="glass rounded-2xl overflow-hidden shadow-soft hover:shadow-hover transition-all cursor-pointer group">
+              <div className="h-48 bg-gradient-to-br from-[#00C07F]/10 to-[#0891B2]/10 flex items-center justify-center">
+                <span className="text-6xl opacity-50 group-hover:opacity-70 transition-opacity">📖</span>
+              </div>
+              <div className="p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-xs font-medium text-[#00C07F] bg-[#00C07F]/10 px-2 py-1 rounded-full">
+                    {post.category}
+                  </span>
+                  <span className="text-xs text-[#9CA3AF]">{post.readTime}</span>
                 </div>
-              ))}
+                <h3 className="font-bold text-[#1a1a2e] mb-2 group-hover:text-[#00C07F] transition-colors">
+                  {post.title}
+                </h3>
+                <p className="text-sm text-[#6b7280] mb-3 line-clamp-2">{post.excerpt}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-[#9CA3AF]">{post.date}</span>
+                  <span className="text-[#00C07F] text-sm font-medium group-hover:translate-x-[-4px] transition-transform">
+                    ادامه مطلب ←
+                  </span>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Contact Section
+function ContactSection() {
+  return (
+    <section className="py-16 px-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="glass rounded-3xl p-8 md:p-12 shadow-soft">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-3 text-[#1a1a2e]">
+            <span className="gradient-text">تماس</span> با ما
+          </h2>
+          <p className="text-[#6b7280] text-center mb-10">ما اینجاییم تا به شما کمک کنیم</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Contact Info */}
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#00C07F]/10 flex items-center justify-center flex-shrink-0">
+                  <i className="fas fa-phone text-[#00C07F]"></i>
+                </div>
+                <div>
+                  <h3 className="font-bold text-[#1a1a2e] mb-1">تلفن تماس</h3>
+                  <p className="text-[#6b7280] text-sm">۰۲۱-۱۲۳۴۵۶۷۸</p>
+                  <p className="text-[#6b7280] text-sm">۰۹۱۲-۱۲۳۴۵۶۷</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#00C07F]/10 flex items-center justify-center flex-shrink-0">
+                  <i className="fas fa-envelope text-[#00C07F]"></i>
+                </div>
+                <div>
+                  <h3 className="font-bold text-[#1a1a2e] mb-1">ایمیل</h3>
+                  <p className="text-[#6b7280] text-sm">info@smokecity.ir</p>
+                  <p className="text-[#6b7280] text-sm">support@smokecity.ir</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#00C07F]/10 flex items-center justify-center flex-shrink-0">
+                  <i className="fas fa-map-marker-alt text-[#00C07F]"></i>
+                </div>
+                <div>
+                  <h3 className="font-bold text-[#1a1a2e] mb-1">آدرس</h3>
+                  <p className="text-[#6b7280] text-sm">تهران، خیابان ولیعصر، پلاک ۱۲۳</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#00C07F]/10 flex items-center justify-center flex-shrink-0">
+                  <i className="fas fa-clock text-[#00C07F]"></i>
+                </div>
+                <div>
+                  <h3 className="font-bold text-[#1a1a2e] mb-1">ساعات کاری</h3>
+                  <p className="text-[#6b7280] text-sm">شنبه تا پنجشنبه: ۹ صبح تا ۹ شب</p>
+                  <p className="text-[#6b7280] text-sm">جمعه: ۱۰ صبح تا ۶ عصر</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Contact Form */}
+            <div className="space-y-4">
+              <input 
+                type="text" 
+                placeholder="نام و نام خانوادگی" 
+                className="w-full bg-white text-[#1a1a2e] rounded-xl p-3 border border-[#E5E7EB] outline-none focus:border-[#00C07F] transition-colors text-sm placeholder-[#9CA3AF]"
+              />
+              <input 
+                type="tel" 
+                placeholder="شماره تماس" 
+                className="w-full bg-white text-[#1a1a2e] rounded-xl p-3 border border-[#E5E7EB] outline-none focus:border-[#00C07F] transition-colors text-sm placeholder-[#9CA3AF]"
+              />
+              <input 
+                type="email" 
+                placeholder="ایمیل" 
+                className="w-full bg-white text-[#1a1a2e] rounded-xl p-3 border border-[#E5E7EB] outline-none focus:border-[#00C07F] transition-colors text-sm placeholder-[#9CA3AF]"
+              />
+              <textarea 
+                placeholder="پیام شما..." 
+                rows={4}
+                className="w-full bg-white text-[#1a1a2e] rounded-xl p-3 border border-[#E5E7EB] outline-none focus:border-[#00C07F] transition-colors text-sm placeholder-[#9CA3AF] resize-none"
+              />
+              <button className="w-full btn-accent py-3 rounded-xl">
+                ارسال پیام
+              </button>
             </div>
           </div>
         </div>
@@ -517,7 +651,9 @@ function ShopPage({
                     : 'glass text-[#4b5563] hover:text-[#1a1a2e] shadow-soft'
                 }`}
               >
-                <span>{cat.icon}</span>
+                <span className={activeTab === cat.id ? 'text-white' : 'text-[#00C07F]'}>
+                  {getCategoryIcon(cat.id, "w-5 h-5")}
+                </span>
                 {cat.name} ({getCategoryCount(cat.id)})
               </button>
             ))}
@@ -1087,8 +1223,8 @@ function Footer() {
             <ul className="space-y-2 text-sm text-[#6b7280]">
               <li><a href="#" className="hover:text-[#00C07F] transition-colors">فروشگاه</a></li>
               <li><a href="#" className="hover:text-[#00C07F] transition-colors">تخفیف‌ها</a></li>
-              <li><a href="#" className="hover:text-[#00C07F] transition-colors">باشگاه مشتریان</a></li>
               <li><a href="#" className="hover:text-[#00C07F] transition-colors">بلاگ</a></li>
+              <li><a href="#contact" className="hover:text-[#00C07F] transition-colors">تماس با ما</a></li>
             </ul>
           </div>
           <div>
@@ -1272,7 +1408,10 @@ export default function App() {
           <HeroSection />
           <CategoryBubbles onCategoryClick={handleCategoryClick} />
           <FeaturedProducts onAddToCart={handleAddToCart} onViewProduct={handleViewProduct} />
-          <ClubSection />
+          <BlogSection />
+          <div id="contact">
+            <ContactSection />
+          </div>
         </main>
       )}
 
