@@ -33,12 +33,42 @@ export interface CartItem {
 }
 
 export const categories = [
-  { id: 'pod', name: 'پاد سیستم', icon: '💨', color: '#00F5A0' },
-  { id: 'vape', name: 'ویپ', icon: '🌫️', color: '#00D9F5' },
-  { id: 'salt', name: 'سالت نیکوتین', icon: '🧪', color: '#B24BF3' },
-  { id: 'juice', name: 'جویس', icon: '🍹', color: '#FFB800' },
-  { id: 'coil', name: 'کویل', icon: '⚡', color: '#FF2D78' },
-  { id: 'accessory', name: 'لوازم جانبی', icon: '🔧', color: '#00F5A0' },
+  { 
+    id: 'pod', 
+    name: 'پاد سیستم', 
+    image: 'https://images.unsplash.com/photo-1560913210-59b747b4a0a0?w=300&h=300&fit=crop',
+    color: '#00C07F' 
+  },
+  { 
+    id: 'vape', 
+    name: 'ویپ', 
+    image: 'https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=300&h=300&fit=crop',
+    color: '#0891B2' 
+  },
+  { 
+    id: 'salt', 
+    name: 'سالت نیکوتین', 
+    image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=300&h=300&fit=crop',
+    color: '#8B5CF6' 
+  },
+  { 
+    id: 'juice', 
+    name: 'جویس', 
+    image: 'https://images.unsplash.com/photo-1555255707-c07966088b7b?w=300&h=300&fit=crop',
+    color: '#F59E0B' 
+  },
+  { 
+    id: 'coil', 
+    name: 'کویل', 
+    image: 'https://images.unsplash.com/photo-1585076641399-5c06d1b3365f?w=300&h=300&fit=crop',
+    color: '#EC4899' 
+  },
+  { 
+    id: 'accessory', 
+    name: 'لوازم جانبی', 
+    image: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=300&h=300&fit=crop',
+    color: '#00C07F' 
+  },
 ];
 
 export const brands = [
