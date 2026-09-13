@@ -1188,33 +1188,15 @@ export default function App() {
   const [cartOpen, setCartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
-  // Handle hash-based routing for GitHub Pages
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '') || 'home';
-      if (['home', 'shop', 'product', 'checkout'].includes(hash)) {
-        setCurrentPage(hash);
-      }
-    };
-    
-    // Check initial hash
-    handleHashChange();
-    
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
-
   const handleNavigate = (page: string) => {
     setCurrentPage(page);
     setSelectedProduct(null);
-    window.location.hash = page === 'home' ? '' : page;
     window.scrollTo(0, 0);
   };
 
   const handleCategoryClick = (cat: string) => {
     setSelectedCategory(cat);
     setCurrentPage('shop');
-    window.location.hash = 'shop';
     window.scrollTo(0, 0);
   };
 
@@ -1250,7 +1232,6 @@ export default function App() {
   const handleViewProduct = (product: Product) => {
     setSelectedProduct(product);
     setCurrentPage('product');
-    window.location.hash = 'product';
     window.scrollTo(0, 0);
   };
 
@@ -1282,7 +1263,7 @@ export default function App() {
         items={cartItems}
         onUpdateQuantity={handleUpdateQuantity}
         onRemove={handleRemoveFromCart}
-        onCheckout={() => { setCartOpen(false); setCurrentPage('checkout'); window.location.hash = 'checkout'; window.scrollTo(0,0); }}
+        onCheckout={() => { setCartOpen(false); setCurrentPage('checkout'); window.scrollTo(0,0); }}
       />
 
       {/* Pages */}
@@ -1307,14 +1288,14 @@ export default function App() {
         <ProductDetail 
           product={selectedProduct}
           onAddToCart={handleAddToCart}
-          onBack={() => { setCurrentPage('shop'); window.location.hash = 'shop'; window.scrollTo(0,0); }}
+          onBack={() => { setCurrentPage('shop'); window.scrollTo(0,0); }}
         />
       )}
 
       {currentPage === 'checkout' && (
         <CheckoutPage 
           items={cartItems}
-          onBack={() => { setCurrentPage('home'); window.location.hash = ''; window.scrollTo(0,0); }}
+          onBack={() => { setCurrentPage('home'); window.scrollTo(0,0); }}
         />
       )}
 
