@@ -6,7 +6,13 @@ function AgeGate({ onVerify }: { onVerify: () => void }) {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#1a1a2e]/80 backdrop-blur-xl">
       <div className="glass-strong rounded-3xl p-8 md:p-12 max-w-md mx-4 text-center animate-fade-in shadow-soft">
-        <div className="text-6xl mb-6 animate-float">🔞</div>
+        <div className="mb-6 animate-float">
+          <img 
+            src="https://image.qwenlm.ai/generated-images/ea88dea8-761f-4402-adf3-ffc7c6d73e4b/_result.png" 
+            alt="Smoke City Logo" 
+            className="w-24 h-24 mx-auto object-contain"
+          />
+        </div>
         <h2 className="text-2xl md:text-3xl font-bold mb-4 gradient-text">اسموک سیتی</h2>
         <p className="text-[#4b5563] mb-2 text-lg">آیا شما بالای ۱۸ سال سن دارید؟</p>
         <p className="text-[#9CA3AF] text-sm mb-8">ورود شما به معنای تأیید سن قانونی شما است</p>
@@ -54,8 +60,12 @@ function Header({
     }`}>
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
-        <button onClick={() => onNavigate('home')} className="flex items-center gap-2 group">
-          <span className="text-2xl">💨</span>
+        <button onClick={() => onNavigate('home')} className="flex items-center gap-3 group">
+          <img 
+            src="https://image.qwenlm.ai/generated-images/ea88dea8-761f-4402-adf3-ffc7c6d73e4b/_result.png" 
+            alt="Smoke City Logo" 
+            className="w-10 h-10 md:w-12 md:h-12 object-contain group-hover:scale-110 transition-transform"
+          />
           <span className="text-xl md:text-2xl font-black gradient-text">
             اسموک سیتی
           </span>
@@ -1075,8 +1085,12 @@ function Footer() {
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-2xl">💨</span>
+            <div className="flex items-center gap-3 mb-4">
+              <img 
+                src="https://image.qwenlm.ai/generated-images/47dc4e6b-7acf-4641-8be4-d4c478ee90d4/_result.png" 
+                alt="Smoke City Logo" 
+                className="w-12 h-12 object-contain"
+              />
               <span className="text-xl font-black gradient-text">اسموک سیتی</span>
             </div>
             <p className="text-sm text-[#6b7280] leading-7">فروشگاه معتبر ویپ، پاد و لوازم جانبی با گارانتی اصالت کالا و ارسال سریع به سراسر ایران.</p>
