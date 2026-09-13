@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { products, categories, brands, flavorProfiles, nicotineLevels, reviews, Product, CartItem } from './data/products';
+import { LogoMain, LogoSmall } from './components/Logo';
 
 // Age Verification Gate
 function AgeGate({ onVerify }: { onVerify: () => void }) {
@@ -7,11 +8,7 @@ function AgeGate({ onVerify }: { onVerify: () => void }) {
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#1a1a2e]/80 backdrop-blur-xl">
       <div className="glass-strong rounded-3xl p-8 md:p-12 max-w-md mx-4 text-center animate-fade-in shadow-soft">
         <div className="mb-6 animate-float">
-          <img 
-            src="https://image.qwenlm.ai/generated-images/ea88dea8-761f-4402-adf3-ffc7c6d73e4b/_result.png" 
-            alt="Smoke City Logo" 
-            className="w-24 h-24 mx-auto object-contain"
-          />
+          <LogoMain className="w-24 h-24 mx-auto" />
         </div>
         <h2 className="text-2xl md:text-3xl font-bold mb-4 gradient-text">اسموک سیتی</h2>
         <p className="text-[#4b5563] mb-2 text-lg">آیا شما بالای ۱۸ سال سن دارید؟</p>
@@ -61,11 +58,9 @@ function Header({
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <button onClick={() => onNavigate('home')} className="flex items-center gap-3 group">
-          <img 
-            src="https://image.qwenlm.ai/generated-images/ea88dea8-761f-4402-adf3-ffc7c6d73e4b/_result.png" 
-            alt="Smoke City Logo" 
-            className="w-10 h-10 md:w-12 md:h-12 object-contain group-hover:scale-110 transition-transform"
-          />
+          <div className="group-hover:scale-110 transition-transform">
+            <LogoMain />
+          </div>
           <span className="text-xl md:text-2xl font-black gradient-text">
             اسموک سیتی
           </span>
@@ -215,15 +210,11 @@ function HeroSection() {
     <section className="relative h-[80vh] md:h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
-        <img 
-          src="https://image.qwenlm.ai/generated-images/f955ab2d-7212-4e91-8d74-754eda2d121d/_result.png" 
-          alt="" 
-          className="absolute inset-0 w-full h-full object-cover opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/40 to-[#F5F5F7]"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#F5F5F7] via-[#ecfdf5] to-[#F5F5F7]"></div>
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[#00C07F]/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-[#0891B2]/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[#00C07F]/15 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-[#0891B2]/15 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#00C07F]/5 rounded-full blur-3xl"></div>
         </div>
       </div>
       
@@ -1086,11 +1077,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <img 
-                src="https://image.qwenlm.ai/generated-images/47dc4e6b-7acf-4641-8be4-d4c478ee90d4/_result.png" 
-                alt="Smoke City Logo" 
-                className="w-12 h-12 object-contain"
-              />
+              <LogoSmall />
               <span className="text-xl font-black gradient-text">اسموک سیتی</span>
             </div>
             <p className="text-sm text-[#6b7280] leading-7">فروشگاه معتبر ویپ، پاد و لوازم جانبی با گارانتی اصالت کالا و ارسال سریع به سراسر ایران.</p>
