@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { products, categories, Product } from '../data/products';
+import { LogoLarge } from '../components/Logo';
 
 // Hero Banner - پوستر تبلیغاتی
 function HeroBanner() {
@@ -507,11 +508,7 @@ function WhySmokeCity() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <div className="inline-block mb-4 animate-float">
-            <img 
-              src="https://uploadkon.ir/uploads/648c14_26Gemini-Generated-Image-.png" 
-              alt="Smoke City Logo" 
-              className="w-20 h-20 mx-auto object-contain"
-            />
+            <LogoLarge className="w-28 h-28 md:w-36 md:h-36" />
           </div>
           <h2 className="text-3xl md:text-4xl font-black text-[#1a1a2e] mb-4">
             چرا <span className="gradient-text">اسموک سیتی</span>؟
