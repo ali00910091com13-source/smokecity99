@@ -172,7 +172,7 @@ body {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #00C07F, #0891B2);
+  background: linear-gradient(135deg, #00C07F, #8B5CF6, #F59E0B);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -185,16 +185,24 @@ body {
   background-clip: text;
 }
 
+.gradient-text-cool {
+  background: linear-gradient(135deg, #0891B2, #8B5CF6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* Button gradient */
 .btn-accent {
-  background: linear-gradient(135deg, #00C07F, #0891B2);
+  background: linear-gradient(135deg, #00C07F, #8B5CF6);
   color: #ffffff;
   font-weight: 700;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 192, 127, 0.25);
 }
 .btn-accent:hover {
-  box-shadow: 0 6px 25px rgba(0, 192, 127, 0.35);
+  background: linear-gradient(135deg, #8B5CF6, #F59E0B);
+  box-shadow: 0 6px 25px rgba(139, 92, 246, 0.35);
   transform: translateY(-2px);
 }
 
