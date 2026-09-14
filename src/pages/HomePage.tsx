@@ -506,18 +506,12 @@ function WhySmokeCity() {
     <section className="py-16 px-4 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <div className="inline-block mb-4">
-            <svg className="w-16 h-16 mx-auto animate-float" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="whyLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#00C07F" />
-                  <stop offset="50%" stopColor="#8B5CF6" />
-                  <stop offset="100%" stopColor="#F59E0B" />
-                </linearGradient>
-              </defs>
-              <path d="M130 50 Q150 50 150 70 Q150 90 130 90 L70 90 Q50 90 50 110 Q50 130 70 130 L130 130 Q150 130 150 150" 
-                stroke="url(#whyLogoGradient)" strokeWidth="14" strokeLinecap="round" fill="none"/>
-            </svg>
+          <div className="inline-block mb-4 animate-float">
+            <img 
+              src="https://uploadkon.ir/uploads/648c14_26Gemini-Generated-Image-.png" 
+              alt="Smoke City Logo" 
+              className="w-20 h-20 mx-auto object-contain"
+            />
           </div>
           <h2 className="text-3xl md:text-4xl font-black text-[#1a1a2e] mb-4">
             چرا <span className="gradient-text">اسموک سیتی</span>؟
