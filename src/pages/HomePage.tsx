@@ -174,12 +174,155 @@ function FeaturedProducts() {
   );
 }
 
+// FAQ Section
+function FAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const faqs = [
+    {
+      question: 'آیا محصولات شما اصل و دارای گارانتی هستند؟',
+      answer: 'بله، تمامی محصولات ما ۱۰۰٪ اصل و اورجینال هستند. هر محصول دارای گارانتی اصالت کالا است و در صورت هرگونه مشکل، قابل بازگشت می‌باشد. ما مستقیماً از نمایندگی‌های رسمی برندها خرید می‌کنیم.'
+    },
+    {
+      question: 'هزینه و زمان ارسال چقدر است؟',
+      answer: 'ارسال به تهران ۲۴ ساعته و هزینه آن ۵۰ هزار تومان است. ارسال به شهرستان‌ها ۲ تا ۳ روز کاری و هزینه آن ۸۰ هزار تومان می‌باشد. برای خریدهای بالای ۲ میلیون تومان، ارسال رایگان است.'
+    },
+    {
+      question: 'چگونه می‌توانم مشاوره خرید بگیرم؟',
+      answer: 'شما می‌توانید از طریق تماس تلفنی، واتساپ، تلگرام یا فرم تماس در سایت با کارشناسان ما در ارتباط باشید. تیم پشتیبانی ما ۲۴ ساعته آماده پاسخگویی و مشاوره رایگان به شماست.'
+    },
+    {
+      question: 'آیا امکان بازگشت کالا وجود دارد؟',
+      answer: 'بله، در صورتی که محصول دارای نقص فنی باشد یا با توضیحات سایت مطابقت نداشته باشد، تا ۷ روز پس از دریافت امکان بازگشت و تعویض وجود دارد. محصول باید در بسته‌بندی اصلی و بدون استفاده باشد.'
+    },
+    {
+      question: 'روش‌های پرداخت چیست؟',
+      answer: 'ما تمامی روش‌های پرداخت آنلاین از طریق درگاه‌های بانکی معتبر را پشتیبانی می‌کنیم. همچنین امکان پرداخت در محل برای تهران و کارت به کارت برای شهرستان‌ها وجود دارد.'
+    }
+  ];
+
+  return (
+    <section className="py-16 px-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-black text-[#1a1a2e] mb-4">
+            سوالات <span className="gradient-text">متداول</span>
+          </h2>
+          <p className="text-[#6b7280] text-lg">پاسخ سوالات رایج مشتریان</p>
+        </div>
+
+        <div className="space-y-4">
+          {faqs.map((faq, index) => (
+            <div
+              key={index}
+              className="glass rounded-2xl shadow-soft overflow-hidden transition-all duration-300"
+              style={{ animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both` }}
+            >
+              <button
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                className="w-full p-6 flex items-center justify-between text-right hover:bg-[#F5F5F7]/50 transition-colors"
+              >
+                <span className="font-bold text-[#1a1a2e] text-lg">{faq.question}</span>
+                <i className={`fas fa-chevron-down text-[#00C07F] transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`}></i>
+              </button>
+              <div className={`overflow-hidden transition-all duration-300 ${openIndex === index ? 'max-h-96' : 'max-h-0'}`}>
+                <div className="p-6 pt-0 text-[#6b7280] leading-8">
+                  {faq.answer}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Why Smoke City Section
+function WhySmokeCity() {
+  const features = [
+    {
+      icon: 'fas fa-headset',
+      title: 'پشتیبانی ۲۴ ساعته',
+      description: 'تیم پشتیبانی ما در تمام ساعات شبانه‌روز آماده پاسخگویی و راهنمایی شماست'
+    },
+    {
+      icon: 'fas fa-shield-alt',
+      title: 'گارانتی اصالت کالا',
+      description: 'تمامی محصولات ۱۰۰٪ اصل و اورجینال با گارانتی معتبر'
+    },
+    {
+      icon: 'fas fa-truck',
+      title: 'ارسال سریع',
+      description: 'ارسال ۲۴ ساعته به تهران و ۲ تا ۳ روز به شهرستان‌ها'
+    },
+    {
+      icon: 'fas fa-undo',
+      title: 'ضمانت بازگشت',
+      description: 'امکان بازگشت کالا تا ۷ روز در صورت عدم رضایت'
+    },
+    {
+      icon: 'fas fa-tags',
+      title: 'بهترین قیمت',
+      description: 'تضمین بهترین قیمت بازار با تخفیف‌های ویژه'
+    },
+    {
+      icon: 'fas fa-gift',
+      title: 'هدایای ویژه',
+      description: 'هدایای ویژه برای مشتریان دائمی و خریدهای بالا'
+    }
+  ];
+
+  return (
+    <section className="py-16 px-4 bg-gradient-to-br from-[#00C07F]/5 to-[#0891B2]/5">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <div className="inline-block mb-4">
+            <svg className="w-16 h-16 mx-auto" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="whyLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#00C07F" />
+                  <stop offset="100%" stopColor="#0891B2" />
+                </linearGradient>
+              </defs>
+              <path d="M130 50 Q150 50 150 70 Q150 90 130 90 L70 90 Q50 90 50 110 Q50 130 70 130 L130 130 Q150 130 150 150" 
+                stroke="url(#whyLogoGradient)" strokeWidth="14" strokeLinecap="round" fill="none"/>
+            </svg>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-black text-[#1a1a2e] mb-4">
+            چرا <span className="gradient-text">اسموک سیتی</span>؟
+          </h2>
+          <p className="text-[#6b7280] text-lg">دلایلی که ما را متمایز می‌کند</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="glass rounded-2xl p-6 shadow-soft hover:shadow-hover transition-all duration-300 hover:scale-105 group"
+              style={{ animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both` }}
+            >
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00C07F]/10 to-[#0891B2]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <i className={`${feature.icon} text-2xl text-[#00C07F]`}></i>
+              </div>
+              <h3 className="font-bold text-[#1a1a2e] text-xl mb-2">{feature.title}</h3>
+              <p className="text-[#6b7280] leading-7">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function HomePage() {
   return (
     <main>
       <HeroSection />
       <CategorySection />
       <FeaturedProducts />
+      <FAQSection />
+      <WhySmokeCity />
     </main>
   );
 }
