@@ -1,4 +1,6 @@
-import { AppProvider, useApp } from './context/AppContext';
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { AppProvider } from './context/AppContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import BottomNav from './components/BottomNav';
@@ -12,25 +14,34 @@ import BlogPostPage from './pages/BlogPostPage';
 import ContactPage from './pages/ContactPage';
 import CheckoutPage from './pages/CheckoutPage';
 
-function AppContent() {
-  const { currentPage } = useApp();
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
+function Layout() {
   return (
     <div className="min-h-screen bg-[#F5F5F7] text-[#1a1a2e]" dir="rtl">
       <Header />
       <SearchModal />
       <CartSlideOut />
-
-      {currentPage === 'home' && <HomePage />}
-      {currentPage === 'shop' && <ShopPage />}
-      {currentPage === 'product' && <ProductDetailPage />}
-      {currentPage === 'blog' && <BlogPage />}
-      {currentPage === 'blogPost' && <BlogPostPage />}
-      {currentPage === 'contact' && <ContactPage />}
-      {currentPage === 'checkout' && <CheckoutPage />}
+      
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/shop" element={<ShopPage />} />
+        <Route path="/product" element={<ProductDetailPage />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/:id" element={<BlogPostPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+      </Routes>
 
       <Footer />
       <BottomNav />
+      <ScrollToTop />
     </div>
   );
 }
@@ -38,7 +49,9 @@ function AppContent() {
 export default function App() {
   return (
     <AppProvider>
-      <AppContent />
+      <HashRouter>
+        <Layout />
+      </HashRouter>
     </AppProvider>
   );
 }

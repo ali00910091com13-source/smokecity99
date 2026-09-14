@@ -1,15 +1,18 @@
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { blogPosts } from '../data/blog';
 
 export default function BlogPostPage() {
-  const { selectedBlogId, setSelectedBlogId, navigate } = useApp();
-  const post = blogPosts.find(p => p.id === selectedBlogId);
+  const { id } = useParams();
+  const { setSelectedBlogId } = useApp();
+  const navigate = useNavigate();
+  const post = blogPosts.find(p => p.id === Number(id));
 
   if (!post) {
     return (
       <div className="pt-24 pb-12 px-4 min-h-screen text-center">
         <p className="text-[#6b7280]">مقاله‌ای یافت نشد</p>
-        <button onClick={() => navigate('blog')} className="mt-4 text-[#00C07F] hover:underline">بازگشت به بلاگ</button>
+        <button onClick={() => navigate('/blog')} className="mt-4 text-[#00C07F] hover:underline">بازگشت به بلاگ</button>
       </div>
     );
   }
@@ -19,13 +22,11 @@ export default function BlogPostPage() {
   return (
     <section className="pt-24 pb-12 px-4 min-h-screen">
       <div className="max-w-4xl mx-auto">
-        {/* Back button */}
-        <button onClick={() => navigate('blog')} className="flex items-center gap-2 text-[#6b7280] hover:text-[#00C07F] transition-colors mb-6">
+        <button onClick={() => navigate('/blog')} className="flex items-center gap-2 text-[#6b7280] hover:text-[#00C07F] transition-colors mb-6">
           <i className="fas fa-arrow-right"></i>
           <span className="text-sm">بازگشت به بلاگ</span>
         </button>
 
-        {/* Article Header */}
         <div className="animate-fade-in-up">
           <div className="flex items-center gap-3 mb-4">
             <span className="text-xs font-medium text-[#00C07F] bg-[#00C07F]/10 px-3 py-1 rounded-full">
@@ -50,12 +51,10 @@ export default function BlogPostPage() {
           </div>
         </div>
 
-        {/* Featured Image */}
         <div className="rounded-2xl overflow-hidden mb-8 shadow-soft" style={{ animation: 'fadeInUp 0.6s ease-out 0.2s both' }}>
           <img src={post.image} alt={post.title} className="w-full h-64 md:h-96 object-cover" />
         </div>
 
-        {/* Article Content */}
         <article className="glass rounded-2xl p-6 md:p-10 shadow-soft mb-8" style={{ animation: 'fadeInUp 0.6s ease-out 0.4s both' }}>
           <div className="prose prose-lg max-w-none text-[#4b5563] leading-8">
             {post.content.split('\n').map((line, index) => {
@@ -101,7 +100,6 @@ export default function BlogPostPage() {
           </div>
         </article>
 
-        {/* Share buttons */}
         <div className="glass rounded-2xl p-6 shadow-soft mb-8" style={{ animation: 'fadeInUp 0.6s ease-out 0.6s both' }}>
           <h3 className="font-bold text-[#1a1a2e] mb-4">اشتراک‌گذاری مقاله</h3>
           <div className="flex gap-3">
@@ -120,19 +118,16 @@ export default function BlogPostPage() {
           </div>
         </div>
 
-        {/* Related Posts */}
         <div style={{ animation: 'fadeInUp 0.6s ease-out 0.8s both' }}>
           <h2 className="text-2xl font-bold text-[#1a1a2e] mb-6">مقالات مرتبط</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {relatedPosts.map((related, index) => (
-              <article
+              <Link
                 key={related.id}
+                to={`/blog/${related.id}`}
+                onClick={() => setSelectedBlogId(related.id)}
                 className="glass rounded-2xl overflow-hidden shadow-soft hover:shadow-hover transition-all duration-300 cursor-pointer group"
                 style={{ animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both` }}
-                onClick={() => {
-                  setSelectedBlogId(related.id);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
               >
                 <div className="h-32 overflow-hidden">
                   <img src={related.image} alt={related.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
@@ -143,7 +138,7 @@ export default function BlogPostPage() {
                     {related.title}
                   </h3>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>

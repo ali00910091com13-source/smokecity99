@@ -1,12 +1,14 @@
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { blogPosts } from '../data/blog';
 
 export default function BlogPage() {
-  const { setSelectedBlogId, navigate } = useApp();
+  const { setSelectedBlogId } = useApp();
+  const navigate = useNavigate();
 
   const handleReadMore = (postId: number) => {
     setSelectedBlogId(postId);
-    navigate('blogPost');
+    navigate(`/blog/${postId}`);
   };
 
   return (

@@ -1,26 +1,30 @@
+import { Link, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 
 export default function BottomNav() {
-  const { cartItems, setCartOpen, currentPage, navigate } = useApp();
+  const { cartItems, setCartOpen } = useApp();
+  const location = useLocation();
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <div className="bottom-nav md:hidden">
       <div className="glass-strong border-t border-[#E5E7EB] px-4 py-2 flex items-center justify-around shadow-soft">
-        <button
-          onClick={() => navigate('home')}
-          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${currentPage === 'home' ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
+        <Link
+          to="/"
+          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${isActive('/') ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
         >
           <i className="fas fa-home text-lg"></i>
           <span className="text-[10px]">خانه</span>
-        </button>
-        <button
-          onClick={() => navigate('shop')}
-          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${currentPage === 'shop' ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
+        </Link>
+        <Link
+          to="/shop"
+          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${isActive('/shop') ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
         >
           <i className="fas fa-store text-lg"></i>
           <span className="text-[10px]">فروشگاه</span>
-        </button>
+        </Link>
         <button
           onClick={() => setCartOpen(true)}
           className="relative flex flex-col items-center gap-1 py-2 px-3 rounded-xl text-[#6b7280]"
@@ -33,20 +37,20 @@ export default function BottomNav() {
             </span>
           )}
         </button>
-        <button
-          onClick={() => navigate('blog')}
-          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${currentPage === 'blog' || currentPage === 'blogPost' ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
+        <Link
+          to="/blog"
+          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${isActive('/blog') ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
         >
           <i className="fas fa-blog text-lg"></i>
           <span className="text-[10px]">بلاگ</span>
-        </button>
-        <button
-          onClick={() => navigate('contact')}
-          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${currentPage === 'contact' ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
+        </Link>
+        <Link
+          to="/contact"
+          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${isActive('/contact') ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
         >
           <i className="fas fa-phone text-lg"></i>
           <span className="text-[10px]">تماس</span>
-        </button>
+        </Link>
       </div>
     </div>
   );

@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { LogoMain } from './Logo';
 
 export default function Header() {
-  const { cartItems, setCartOpen, setSearchOpen, currentPage, navigate } = useApp();
+  const { cartItems, setCartOpen, setSearchOpen } = useApp();
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -14,47 +16,49 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const isActive = (path: string) => location.pathname === path;
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       scrolled ? 'glass-strong shadow-soft border-b border-[#00C07F]/10' : 'bg-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
-        <button onClick={() => navigate('home')} className="flex items-center gap-3 group">
+        <Link to="/" className="flex items-center gap-3 group">
           <div className="group-hover:scale-110 transition-transform duration-300">
             <LogoMain className="w-14 h-14 md:w-16 md:h-16" />
           </div>
           <span className="text-xl md:text-2xl font-black bg-gradient-to-r from-[#00C07F] via-[#8B5CF6] to-[#F59E0B] bg-clip-text text-transparent">
             اسموک سیتی
           </span>
-        </button>
+        </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-6">
-          <button
-            onClick={() => navigate('home')}
-            className={`text-sm font-medium transition-colors hover:text-[#00C07F] ${currentPage === 'home' ? 'text-[#00C07F]' : 'text-[#4b5563]'}`}
+          <Link
+            to="/"
+            className={`text-sm font-medium transition-colors hover:text-[#00C07F] ${isActive('/') ? 'text-[#00C07F]' : 'text-[#4b5563]'}`}
           >
             خانه
-          </button>
-          <button
-            onClick={() => navigate('shop')}
-            className={`text-sm font-medium transition-colors hover:text-[#00C07F] ${currentPage === 'shop' ? 'text-[#00C07F]' : 'text-[#4b5563]'}`}
+          </Link>
+          <Link
+            to="/shop"
+            className={`text-sm font-medium transition-colors hover:text-[#00C07F] ${isActive('/shop') ? 'text-[#00C07F]' : 'text-[#4b5563]'}`}
           >
             فروشگاه
-          </button>
-          <button
-            onClick={() => navigate('blog')}
-            className={`text-sm font-medium transition-colors hover:text-[#00C07F] ${currentPage === 'blog' || currentPage === 'blogPost' ? 'text-[#00C07F]' : 'text-[#4b5563]'}`}
+          </Link>
+          <Link
+            to="/blog"
+            className={`text-sm font-medium transition-colors hover:text-[#00C07F] ${isActive('/blog') ? 'text-[#00C07F]' : 'text-[#4b5563]'}`}
           >
             بلاگ
-          </button>
-          <button
-            onClick={() => navigate('contact')}
-            className={`text-sm font-medium transition-colors hover:text-[#00C07F] ${currentPage === 'contact' ? 'text-[#00C07F]' : 'text-[#4b5563]'}`}
+          </Link>
+          <Link
+            to="/contact"
+            className={`text-sm font-medium transition-colors hover:text-[#00C07F] ${isActive('/contact') ? 'text-[#00C07F]' : 'text-[#4b5563]'}`}
           >
             تماس با ما
-          </button>
+          </Link>
         </nav>
 
         {/* Actions */}
