@@ -57,19 +57,11 @@ export default function CheckoutPage() {
       shippingInfo: { ...shippingInfo },
     };
     
-    // Save to Firebase if configured, otherwise localStorage
-    if (isFirebaseConfigured()) {
-      try {
-        await addOrder(newOrder);
-      } catch (error) {
-        console.error('Error saving order to Firebase:', error);
-      }
-    } else {
-      // Save to localStorage
-      const savedOrders = localStorage.getItem('smokecity_orders');
-      const orders = savedOrders ? JSON.parse(savedOrders) : [];
-      orders.push(newOrder);
-      localStorage.setItem('smokecity_orders', JSON.stringify(orders));
+    // Save to universal database (cloud or localStorage)
+    try {
+      await ordersAPI.add(newOrder);
+    } catch (error) {
+      console.error('Error saving order:', error);
     }
     
     // Add order to context
