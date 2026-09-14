@@ -2,10 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { products as initialProducts } from '../data/products';
 import { blogPosts as initialBlogPosts } from '../data/blog';
-import { isFirebaseConfigured } from '../firebase/config';
-import { getProducts, saveProduct, updateProductStock, deleteProduct } from '../firebase/products';
-import { getBlogPosts, saveBlogPost, deleteBlogPost } from '../firebase/blog';
-import { getOrders } from '../firebase/orders';
+import { productsAPI, blogAPI, ordersAPI } from '../services/universalDB';
 
 // Admin Panel - Hidden at /admin-x9k2m7p4-q8w3e5r1
 export default function AdminPanel() {
@@ -14,69 +11,34 @@ export default function AdminPanel() {
   const [password, setPassword] = useState('');
   const [activeTab, setActiveTab] = useState<'dashboard' | 'products' | 'blog' | 'orders'>('dashboard');
   const [loading, setLoading] = useState(true);
-  const [useFirebase, setUseFirebase] = useState(false);
   
   // Data
   const [dbProducts, setDbProducts] = useState<any[]>(initialProducts);
   const [dbBlogPosts, setDbBlogPosts] = useState<any[]>(initialBlogPosts);
   const [dbOrders, setDbOrders] = useState<any[]>([]);
 
-  // Initialize
+  // Initialize - Load data from universal database
   useEffect(() => {
-    const initialize = async () => {
-      const firebaseReady = isFirebaseConfigured();
-      setUseFirebase(firebaseReady);
+    const loadData = async () => {
+      try {
+        const [products, blogPosts, orders] = await Promise.all([
+          productsAPI.getAll(),
+          blogAPI.getAll(),
+          ordersAPI.getAll()
+        ]);
 
-      if (firebaseReady) {
-        // Load from Firebase
-        try {
-          const [products, blogPosts, orders] = await Promise.all([
-            getProducts(),
-            getBlogPosts(),
-            getOrders()
-          ]);
-
-          if (products.length > 0) setDbProducts(products);
-          if (blogPosts.length > 0) setDbBlogPosts(blogPosts);
-          if (orders.length > 0) setDbOrders(orders);
-        } catch (error) {
-          console.error('Error loading from Firebase:', error);
-        }
-      } else {
-        // Load from localStorage
-        const savedProducts = localStorage.getItem('smokecity_products');
-        const savedBlog = localStorage.getItem('smokecity_blog');
-        const savedOrders = localStorage.getItem('smokecity_orders');
-
-        if (savedProducts) setDbProducts(JSON.parse(savedProducts));
-        if (savedBlog) setDbBlogPosts(JSON.parse(savedBlog));
-        if (savedOrders) setDbOrders(JSON.parse(savedOrders));
+        if (products.length > 0) setDbProducts(products);
+        if (blogPosts.length > 0) setDbBlogPosts(blogPosts);
+        if (orders.length > 0) setDbOrders(orders);
+      } catch (error) {
+        console.error('Error loading data:', error);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
-    initialize();
+    loadData();
   }, []);
-
-  // Auto-save to localStorage (only if not using Firebase)
-  useEffect(() => {
-    if (!useFirebase && !loading) {
-      localStorage.setItem('smokecity_products', JSON.stringify(dbProducts));
-    }
-  }, [dbProducts, useFirebase, loading]);
-
-  useEffect(() => {
-    if (!useFirebase && !loading) {
-      localStorage.setItem('smokecity_blog', JSON.stringify(dbBlogPosts));
-    }
-  }, [dbBlogPosts, useFirebase, loading]);
-
-  useEffect(() => {
-    if (!useFirebase && !loading) {
-      localStorage.setItem('smokecity_orders', JSON.stringify(dbOrders));
-    }
-  }, [dbOrders, useFirebase, loading]);
 
   // Admin password
   const ADMIN_PASSWORD = 'SmokeCity@Admin2024!';
@@ -109,16 +71,12 @@ export default function AdminPanel() {
       isNew: true,
     };
 
-    if (useFirebase) {
-      await saveProduct(newProduct);
-    }
+    await productsAPI.add(newProduct);
     setDbProducts([...dbProducts, newProduct]);
   };
 
   const handleUpdateStock = async (productId: number, newStock: number) => {
-    if (useFirebase) {
-      await updateProductStock(productId, newStock);
-    }
+    await productsAPI.update(productId, { stock: newStock });
     setDbProducts(dbProducts.map(p => 
       p.id === productId ? { ...p, stock: newStock } : p
     ));
@@ -127,9 +85,7 @@ export default function AdminPanel() {
   const handleDeleteProduct = async (productId: number) => {
     if (!confirm('آیا از حذف این محصول مطمئن هستید؟')) return;
     
-    if (useFirebase) {
-      await deleteProduct(productId);
-    }
+    await productsAPI.delete(productId);
     setDbProducts(dbProducts.filter(p => p.id !== productId));
   };
 
@@ -147,18 +103,14 @@ export default function AdminPanel() {
       author: 'مدیر سایت',
     };
 
-    if (useFirebase) {
-      await saveBlogPost(newPost);
-    }
+    await blogAPI.add(newPost);
     setDbBlogPosts([...dbBlogPosts, newPost]);
   };
 
   const handleDeleteBlogPost = async (postId: number) => {
     if (!confirm('آیا از حذف این مقاله مطمئن هستید؟')) return;
     
-    if (useFirebase) {
-      await deleteBlogPost(postId);
-    }
+    await blogAPI.delete(postId);
     setDbBlogPosts(dbBlogPosts.filter(p => p.id !== postId));
   };
 
@@ -172,12 +124,10 @@ export default function AdminPanel() {
             </div>
             <h1 className="text-2xl font-bold text-gray-800">پنل مدیریت</h1>
             <p className="text-gray-500 text-sm mt-2">اسموک سیتی - دسترسی محدود</p>
-            {useFirebase && (
-              <div className="mt-4 px-4 py-2 bg-green-50 text-green-700 rounded-lg text-xs">
-                <i className="fas fa-database ml-2"></i>
-                متصل به Firebase
-              </div>
-            )}
+            <div className="mt-4 px-4 py-2 bg-green-50 text-green-700 rounded-lg text-xs">
+              <i className="fas fa-database ml-2"></i>
+              دیتابیس ابری فعال
+            </div>
           </div>
           
           <form onSubmit={handleLogin} className="space-y-4">
@@ -219,8 +169,7 @@ export default function AdminPanel() {
               <h1 className="text-xl font-bold text-gray-800">پنل مدیریت</h1>
               <p className="text-xs text-gray-500">
                 اسموک سیتی
-                {useFirebase && <span className="ml-2 text-green-600">• Firebase</span>}
-                {!useFirebase && <span className="ml-2 text-orange-600">• LocalStorage</span>}
+                <span className="ml-2 text-green-600">• Cloud DB</span>
               </p>
             </div>
           </div>

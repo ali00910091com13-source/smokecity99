@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import GoogleLogin from '../components/GoogleLogin';
-import { addOrder } from '../firebase/orders';
-import { isFirebaseConfigured } from '../firebase/config';
+import { ordersAPI } from '../services/universalDB';
 
 export default function CheckoutPage() {
   const { cartItems, userInfo, setUserInfo, shippingInfo, setShippingInfo, addOrder } = useApp();
