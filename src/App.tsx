@@ -14,6 +14,7 @@ import BlogPostPage from './pages/BlogPostPage';
 import ContactPage from './pages/ContactPage';
 import CheckoutPage from './pages/CheckoutPage';
 import AccountPage from './pages/AccountPage';
+import AdminPanel from './pages/AdminPanel';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -24,6 +25,17 @@ function ScrollToTop() {
 }
 
 function Layout() {
+  const location = useLocation();
+  const isAdmin = location.pathname.startsWith('/admin');
+
+  if (isAdmin) {
+    return (
+      <Routes>
+        <Route path="/admin-x9k2m7p4-q8w3e5r1" element={<AdminPanel />} />
+      </Routes>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#F5F5F7] text-[#1a1a2e]" dir="rtl">
       <Header />
