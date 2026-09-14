@@ -22,7 +22,7 @@ export default function Header() {
         {/* Logo */}
         <button onClick={() => navigate('home')} className="flex items-center gap-3 group">
           <div className="group-hover:scale-110 transition-transform duration-300">
-            <LogoMain />
+            <LogoMain className="w-14 h-14 md:w-16 md:h-16" />
           </div>
           <span className="text-xl md:text-2xl font-black bg-gradient-to-r from-[#00C07F] via-[#8B5CF6] to-[#F59E0B] bg-clip-text text-transparent">
             اسموک سیتی

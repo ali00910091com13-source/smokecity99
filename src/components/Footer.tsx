@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <LogoSmall />
+              <LogoSmall className="w-16 h-16" />
               <span className="text-xl font-black bg-gradient-to-r from-[#00C07F] via-[#8B5CF6] to-[#F59E0B] bg-clip-text text-transparent">اسموک سیتی</span>
             </div>
             <p className="text-sm text-gray-300 leading-7">فروشگاه معتبر ویپ، پاد و لوازم جانبی با گارانتی اصالت کالا و ارسال سریع به سراسر ایران.</p>
