@@ -38,18 +38,11 @@ export default function BottomNav() {
           )}
         </button>
         <Link
-          to="/blog"
-          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${isActive('/blog') ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
+          to="/account"
+          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${isActive('/account') ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
         >
-          <i className="fas fa-blog text-lg"></i>
-          <span className="text-[10px]">بلاگ</span>
-        </Link>
-        <Link
-          to="/contact"
-          className={`flex flex-col items-center gap-1 py-2 px-3 rounded-xl transition-all ${isActive('/contact') ? 'text-[#00C07F]' : 'text-[#6b7280]'}`}
-        >
-          <i className="fas fa-phone text-lg"></i>
-          <span className="text-[10px]">تماس</span>
+          <i className="fas fa-user text-lg"></i>
+          <span className="text-[10px]">حساب من</span>
         </Link>
       </div>
     </div>

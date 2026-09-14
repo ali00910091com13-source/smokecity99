@@ -16,6 +16,15 @@ export interface ShippingInfo {
   phone: string;
 }
 
+export interface Order {
+  id: string;
+  date: string;
+  items: CartItem[];
+  total: number;
+  status: 'processing' | 'shipped' | 'delivered';
+  shippingInfo: ShippingInfo;
+}
+
 interface AppContextType {
   selectedProduct: Product | null;
   setSelectedProduct: (product: Product | null) => void;
@@ -35,6 +44,11 @@ interface AppContextType {
   setUserInfo: (user: UserInfo | null) => void;
   shippingInfo: ShippingInfo;
   setShippingInfo: (info: ShippingInfo) => void;
+  orders: Order[];
+  addOrder: (order: Order) => void;
+  likedProducts: number[];
+  toggleLike: (productId: number) => void;
+  isLiked: (productId: number) => boolean;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -54,6 +68,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     receiverName: '',
     phone: '',
   });
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [likedProducts, setLikedProducts] = useState<number[]>([]);
 
   const addToCart = (product: Product, qty: number = 1, flavor?: string, color?: string) => {
     setCartItems(prev => {
@@ -84,6 +100,22 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setCartItems(prev => prev.filter(item => item.product.id !== id));
   };
 
+  const addOrder = (order: Order) => {
+    setOrders(prev => [order, ...prev]);
+  };
+
+  const toggleLike = (productId: number) => {
+    setLikedProducts(prev => 
+      prev.includes(productId) 
+        ? prev.filter(id => id !== productId)
+        : [...prev, productId]
+    );
+  };
+
+  const isLiked = (productId: number) => {
+    return likedProducts.includes(productId);
+  };
+
   return (
     <AppContext.Provider value={{
       selectedProduct, setSelectedProduct,
@@ -94,6 +126,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       searchOpen, setSearchOpen,
       userInfo, setUserInfo,
       shippingInfo, setShippingInfo,
+      orders, addOrder,
+      likedProducts, toggleLike, isLiked,
     }}>
       {children}
     </AppContext.Provider>

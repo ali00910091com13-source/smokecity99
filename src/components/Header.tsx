@@ -80,6 +80,12 @@ export default function Header() {
               </span>
             )}
           </button>
+          <Link
+            to="/account"
+            className={`w-10 h-10 rounded-xl glass flex items-center justify-center hover:border-[#00C07F]/30 transition-all shadow-soft ${isActive('/account') ? 'border-[#00C07F]/30' : ''}`}
+          >
+            <i className="fas fa-user text-[#4b5563]"></i>
+          </Link>
         </div>
       </div>
     </header>
