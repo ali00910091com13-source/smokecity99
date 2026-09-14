@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import GoogleLogin from '../components/GoogleLogin';
+import { addOrder } from '../firebase/orders';
+import { isFirebaseConfigured } from '../firebase/config';
 
 export default function CheckoutPage() {
   const { cartItems, userInfo, setUserInfo, shippingInfo, setShippingInfo, addOrder } = useApp();
@@ -43,7 +45,7 @@ export default function CheckoutPage() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Create order
@@ -56,8 +58,18 @@ export default function CheckoutPage() {
       shippingInfo: { ...shippingInfo },
     };
     
+    // Save to Firebase if configured
+    if (isFirebaseConfigured()) {
+      try {
+        await addOrder(newOrder);
+      } catch (error) {
+        console.error('Error saving order to Firebase:', error);
+      }
+    }
+    
     // Add order to context
-    addOrder(newOrder);
+    const { addOrder: addOrderToContext } = useApp();
+    addOrderToContext(newOrder);
     
     setOrderSubmitted(true);
   };
