@@ -1,12 +1,13 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { blogPosts } from '../data/blog';
+import { useBlogPosts } from '../hooks/useDatabase';
 
 export default function BlogPostPage() {
   const { id } = useParams();
   const { setSelectedBlogId } = useApp();
+  const { blogPosts } = useBlogPosts();
   const navigate = useNavigate();
-  const post = blogPosts.find(p => p.id === Number(id));
+  const post = blogPosts.find((p: any) => p.id === Number(id));
 
   if (!post) {
     return (
@@ -17,7 +18,7 @@ export default function BlogPostPage() {
     );
   }
 
-  const relatedPosts = blogPosts.filter(p => p.id !== post.id).slice(0, 3);
+  const relatedPosts = blogPosts.filter((p: any) => p.id !== post.id).slice(0, 3);
 
   return (
     <section className="pt-24 pb-12 px-4 min-h-screen">
@@ -57,7 +58,7 @@ export default function BlogPostPage() {
 
         <article className="glass rounded-2xl p-6 md:p-10 shadow-soft mb-8" style={{ animation: 'fadeInUp 0.6s ease-out 0.4s both' }}>
           <div className="prose prose-lg max-w-none text-[#4b5563] leading-8">
-            {post.content.split('\n').map((line, index) => {
+            {post.content.split('\n').map((line: string, index: number) => {
               if (line.startsWith('## ')) {
                 return <h2 key={index} className="text-2xl font-bold text-[#1a1a2e] mt-8 mb-4">{line.replace('## ', '')}</h2>;
               }
@@ -121,7 +122,7 @@ export default function BlogPostPage() {
         <div style={{ animation: 'fadeInUp 0.6s ease-out 0.8s both' }}>
           <h2 className="text-2xl font-bold text-[#1a1a2e] mb-6">مقالات مرتبط</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {relatedPosts.map((related, index) => (
+            {relatedPosts.map((related: any, index: number) => (
               <Link
                 key={related.id}
                 to={`/blog/${related.id}`}

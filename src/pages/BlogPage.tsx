@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { blogPosts } from '../data/blog';
+import { useBlogPosts } from '../hooks/useDatabase';
 
 export default function BlogPage() {
   const { setSelectedBlogId } = useApp();
+  const { blogPosts } = useBlogPosts();
   const navigate = useNavigate();
 
   const handleReadMore = (postId: number) => {
@@ -22,7 +23,7 @@ export default function BlogPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogPosts.map((post, index) => (
+          {blogPosts.map((post: any, index: number) => (
             <article
               key={post.id}
               className="glass rounded-2xl overflow-hidden shadow-soft hover:shadow-hover transition-all duration-300 cursor-pointer group"

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { products, categories } from '../data/products';
+import { categories } from '../data/products';
 import { LogoLarge } from '../components/Logo';
 import ProductCard from '../components/ProductCard';
+import { useProducts } from '../hooks/useDatabase';
 
 // Hero Banner
 function HeroBanner() {
@@ -107,9 +108,10 @@ function HeroBanner() {
 // Flash Sale
 function FlashSale() {
   const { addToCart } = useApp();
+  const { products } = useProducts();
   const [timeLeft, setTimeLeft] = useState({ hours: 12, minutes: 45, seconds: 30 });
 
-  const flashProducts = products.slice(0, 4).map(p => ({
+  const flashProducts = products.slice(0, 4).map((p: any) => ({
     ...p,
     flashPrice: Math.round(p.price * 0.6),
     discount: 40
@@ -272,7 +274,8 @@ function CategorySection() {
 // Featured Products
 function FeaturedProducts() {
   const navigate = useNavigate();
-  const featured = products.filter(p => p.isBestseller || p.isNew).slice(0, 4);
+  const { products } = useProducts();
+  const featured = products.filter((p: any) => p.isBestseller || p.isNew).slice(0, 4);
 
   return (
     <section className="py-16 px-4 bg-gradient-to-b from-white to-purple-50">
@@ -289,7 +292,7 @@ function FeaturedProducts() {
           </button>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {featured.map((product, index) => (
+          {featured.map((product: any, index: number) => (
             <div key={product.id} style={{ animation: `fadeInUp 0.6s ease-out ${index * 0.15}s both` }}>
               <ProductCard product={product} />
             </div>
