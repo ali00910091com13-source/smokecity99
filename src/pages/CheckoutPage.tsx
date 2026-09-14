@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import GoogleLogin from '../components/GoogleLogin';
-import { addOrder } from '../firebase/orders';
-import { isFirebaseConfigured } from '../firebase/config';
+import { ordersAPI } from '../services/universalDB';
 
 export default function CheckoutPage() {
   const { cartItems, userInfo, setUserInfo, shippingInfo, setShippingInfo, addOrder } = useApp();
@@ -58,13 +57,19 @@ export default function CheckoutPage() {
       shippingInfo: { ...shippingInfo },
     };
     
-    // Save to Firebase if configured
+    // Save to Firebase if configured, otherwise localStorage
     if (isFirebaseConfigured()) {
       try {
         await addOrder(newOrder);
       } catch (error) {
         console.error('Error saving order to Firebase:', error);
       }
+    } else {
+      // Save to localStorage
+      const savedOrders = localStorage.getItem('smokecity_orders');
+      const orders = savedOrders ? JSON.parse(savedOrders) : [];
+      orders.push(newOrder);
+      localStorage.setItem('smokecity_orders', JSON.stringify(orders));
     }
     
     // Add order to context
