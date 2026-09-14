@@ -3,43 +3,52 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { products as initialProducts } from '../data/products';
 import { blogPosts as initialBlogPosts } from '../data/blog';
+import { getProducts, saveProduct, updateProductStock, deleteProduct } from '../firebase/products';
+import { getBlogPosts, saveBlogPost, deleteBlogPost } from '../firebase/blog';
+import { getOrders, updateOrderStatus } from '../firebase/orders';
+import { isFirebaseConfigured } from '../firebase/config';
 
 // Admin Panel - Hidden at /admin-x9k2m7p4-q8w3e5r1
 export default function AdminPanel() {
   const navigate = useNavigate();
-  const { orders, setUserInfo } = useApp();
+  const { orders, addOrder } = useApp();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
   const [activeTab, setActiveTab] = useState<'dashboard' | 'products' | 'blog' | 'orders'>('dashboard');
+  const [loading, setLoading] = useState(true);
   
-  // Local Storage as Database
-  const [dbProducts, setDbProducts] = useState(() => {
-    const saved = localStorage.getItem('smokecity_products');
-    return saved ? JSON.parse(saved) : initialProducts;
-  });
-  
-  const [dbBlogPosts, setDbBlogPosts] = useState(() => {
-    const saved = localStorage.getItem('smokecity_blog');
-    return saved ? JSON.parse(saved) : initialBlogPosts;
-  });
+  // Firebase Database
+  const [dbProducts, setDbProducts] = useState(initialProducts);
+  const [dbBlogPosts, setDbBlogPosts] = useState(initialBlogPosts);
+  const [dbOrders, setDbOrders] = useState<any[]>([]);
 
-  const [dbOrders, setDbOrders] = useState(() => {
-    const saved = localStorage.getItem('smokecity_orders');
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  // Save to localStorage whenever data changes
+  // Load data from Firebase
   useEffect(() => {
-    localStorage.setItem('smokecity_products', JSON.stringify(dbProducts));
-  }, [dbProducts]);
+    const loadData = async () => {
+      if (!isFirebaseConfigured()) {
+        setLoading(false);
+        return;
+      }
 
-  useEffect(() => {
-    localStorage.setItem('smokecity_blog', JSON.stringify(dbBlogPosts));
-  }, [dbBlogPosts]);
+      try {
+        const [products, blogPosts, orders] = await Promise.all([
+          getProducts(),
+          getBlogPosts(),
+          getOrders()
+        ]);
 
-  useEffect(() => {
-    localStorage.setItem('smokecity_orders', JSON.stringify(dbOrders));
-  }, [dbOrders]);
+        if (products.length > 0) setDbProducts(products);
+        if (blogPosts.length > 0) setDbBlogPosts(blogPosts);
+        if (orders.length > 0) setDbOrders(orders);
+      } catch (error) {
+        console.error('Error loading data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   // Admin password (change this!)
   const ADMIN_PASSWORD = 'SmokeCity@Admin2024!';
@@ -229,7 +238,7 @@ export default function AdminPanel() {
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold text-gray-800">مدیریت محصولات</h2>
                 <button
-                  onClick={() => {
+                  onClick={async () => {
                     const newProduct = {
                       id: Date.now(),
                       name: 'محصول جدید',
@@ -246,7 +255,13 @@ export default function AdminPanel() {
                       description: 'توضیحات محصول',
                       isNew: true,
                     };
-                    setDbProducts([...dbProducts, newProduct]);
+                    
+                    if (isFirebaseConfigured()) {
+                      await saveProduct(newProduct);
+                      setDbProducts([...dbProducts, newProduct]);
+                    } else {
+                      setDbProducts([...dbProducts, newProduct]);
+                    }
                   }}
                   className="btn-accent px-6 py-2 rounded-xl"
                 >
@@ -283,9 +298,13 @@ export default function AdminPanel() {
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
                           <button
-                            onClick={() => {
+                            onClick={async () => {
+                              const newStock = Math.max(0, product.stock - 1);
+                              if (isFirebaseConfigured()) {
+                                await updateProductStock(product.id, newStock);
+                              }
                               setDbProducts(dbProducts.map((p: any) => 
-                                p.id === product.id ? { ...p, stock: Math.max(0, p.stock - 1) } : p
+                                p.id === product.id ? { ...p, stock: newStock } : p
                               ));
                             }}
                             className="w-8 h-8 bg-red-100 text-red-600 rounded-lg hover:bg-red-200"
@@ -294,9 +313,13 @@ export default function AdminPanel() {
                           </button>
                           <span className="text-sm font-medium w-8 text-center">{product.stock}</span>
                           <button
-                            onClick={() => {
+                            onClick={async () => {
+                              const newStock = product.stock + 1;
+                              if (isFirebaseConfigured()) {
+                                await updateProductStock(product.id, newStock);
+                              }
                               setDbProducts(dbProducts.map((p: any) => 
-                                p.id === product.id ? { ...p, stock: p.stock + 1 } : p
+                                p.id === product.id ? { ...p, stock: newStock } : p
                               ));
                             }}
                             className="w-8 h-8 bg-green-100 text-green-600 rounded-lg hover:bg-green-200"
@@ -307,8 +330,11 @@ export default function AdminPanel() {
                       </td>
                       <td className="px-6 py-4">
                         <button
-                          onClick={() => {
+                          onClick={async () => {
                             if (confirm('آیا از حذف این محصول مطمئن هستید؟')) {
+                              if (isFirebaseConfigured()) {
+                                await deleteProduct(product.id);
+                              }
                               setDbProducts(dbProducts.filter((p: any) => p.id !== product.id));
                             }
                           }}
@@ -332,7 +358,7 @@ export default function AdminPanel() {
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold text-gray-800">مدیریت بلاگ</h2>
                 <button
-                  onClick={() => {
+                  onClick={async () => {
                     const newPost = {
                       id: Date.now(),
                       title: 'مقاله جدید',
@@ -344,7 +370,13 @@ export default function AdminPanel() {
                       image: 'https://images.unsplash.com/photo-1560913210-59b747b4a0a0?w=800&h=500&fit=crop',
                       author: 'مدیر سایت',
                     };
-                    setDbBlogPosts([...dbBlogPosts, newPost]);
+                    
+                    if (isFirebaseConfigured()) {
+                      await saveBlogPost(newPost);
+                      setDbBlogPosts([...dbBlogPosts, newPost]);
+                    } else {
+                      setDbBlogPosts([...dbBlogPosts, newPost]);
+                    }
                   }}
                   className="btn-accent px-6 py-2 rounded-xl"
                 >
@@ -369,8 +401,11 @@ export default function AdminPanel() {
                       </div>
                     </div>
                     <button
-                      onClick={() => {
+                      onClick={async () => {
                         if (confirm('آیا از حذف این مقاله مطمئن هستید؟')) {
+                          if (isFirebaseConfigured()) {
+                            await deleteBlogPost(post.id);
+                          }
                           setDbBlogPosts(dbBlogPosts.filter((p: any) => p.id !== post.id));
                         }
                       }}
