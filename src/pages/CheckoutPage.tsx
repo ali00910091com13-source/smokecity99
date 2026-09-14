@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import GoogleLogin from '../components/GoogleLogin';
-import { ordersAPI } from '../services/universalDB';
+import { ordersDB, database } from '../services/database';
 
 export default function CheckoutPage() {
   const { cartItems, userInfo, setUserInfo, shippingInfo, setShippingInfo, addOrder } = useApp();
@@ -57,9 +57,10 @@ export default function CheckoutPage() {
       shippingInfo: { ...shippingInfo },
     };
     
-    // Save to universal database (cloud or localStorage)
+    // Save to IndexedDB database
     try {
-      await ordersAPI.add(newOrder);
+      await database.init();
+      await ordersDB.add(newOrder);
     } catch (error) {
       console.error('Error saving order:', error);
     }

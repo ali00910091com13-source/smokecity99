@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { products, categories, brands, flavorProfiles, nicotineLevels } from '../data/products';
+import { categories, brands, flavorProfiles, nicotineLevels } from '../data/products';
 import ProductCard from '../components/ProductCard';
+import { useProducts } from '../hooks/useDatabase';
 
 export default function ShopPage() {
   const { selectedCategory, setSelectedCategory, addToCart, setSelectedProduct } = useApp();
+  const { products } = useProducts();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(selectedCategory || 'all');
   const [selectedBrand, setSelectedBrand] = useState('');
@@ -26,14 +28,14 @@ export default function ShopPage() {
     setSelectedCategory(tabId === 'all' ? '' : tabId);
   };
 
-  const filteredProducts = products.filter(p => {
+  const filteredProducts = products.filter((p: any) => {
     if (activeTab !== 'all' && p.category !== activeTab) return false;
     if (selectedBrand && p.brand !== selectedBrand) return false;
     if (selectedFlavor && !p.flavorProfile?.includes(selectedFlavor)) return false;
     if (selectedNicotine && p.nicotine !== selectedNicotine) return false;
     if (p.price < priceRange[0] || p.price > priceRange[1]) return false;
     return true;
-  }).sort((a, b) => {
+  }).sort((a: any, b: any) => {
     if (sortBy === 'price-low') return a.price - b.price;
     if (sortBy === 'price-high') return b.price - a.price;
     if (sortBy === 'rating') return b.rating - a.rating;
@@ -42,7 +44,7 @@ export default function ShopPage() {
 
   const getCategoryCount = (catId: string) => {
     if (catId === 'all') return products.length;
-    return products.filter(p => p.category === catId).length;
+    return products.filter((p: any) => p.category === catId).length;
   };
 
 // ProductCard imported from components
