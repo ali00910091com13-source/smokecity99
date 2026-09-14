@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 
 export default function CheckoutPage() {
-  const { cartItems, userInfo, setUserInfo, shippingInfo, setShippingInfo } = useApp();
+  const { cartItems, userInfo, setUserInfo, shippingInfo, setShippingInfo, addOrder } = useApp();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [orderSubmitted, setOrderSubmitted] = useState(false);
@@ -51,6 +51,20 @@ export default function CheckoutPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Create order
+    const newOrder = {
+      id: Math.floor(Math.random() * 1000000).toString(),
+      date: new Date().toLocaleDateString('fa-IR'),
+      items: [...cartItems],
+      total: total + shippingCost,
+      status: 'processing' as const,
+      shippingInfo: { ...shippingInfo },
+    };
+    
+    // Add order to context
+    addOrder(newOrder);
+    
     setOrderSubmitted(true);
   };
 
