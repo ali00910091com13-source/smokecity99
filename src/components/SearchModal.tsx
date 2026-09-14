@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { products, categories } from '../data/products';
 
 export default function SearchModal() {
-  const { searchOpen, setSearchOpen, setSelectedProduct, navigate } = useApp();
+  const { searchOpen, setSearchOpen, setSelectedProduct } = useApp();
+  const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -25,7 +27,7 @@ export default function SearchModal() {
 
   const handleSelect = (product: typeof products[0]) => {
     setSelectedProduct(product);
-    navigate('product');
+    navigate('/product');
     setSearchOpen(false);
   };
 

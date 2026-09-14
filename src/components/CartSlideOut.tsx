@@ -1,7 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 
 export default function CartSlideOut() {
-  const { cartOpen, setCartOpen, cartItems, updateQuantity, removeFromCart, navigate } = useApp();
+  const { cartOpen, setCartOpen, cartItems, updateQuantity, removeFromCart } = useApp();
+  const navigate = useNavigate();
   const total = cartItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
   if (!cartOpen) return null;
@@ -11,7 +13,6 @@ export default function CartSlideOut() {
       <div className="absolute inset-0 bg-[#1a1a2e]/40 backdrop-blur-sm" onClick={() => setCartOpen(false)}></div>
       <div className="absolute top-0 right-0 bottom-0 w-full max-w-md glass-strong animate-slide-in-right overflow-y-auto shadow-soft">
         <div className="p-6">
-          {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-[#1a1a2e]">
               <i className="fas fa-shopping-bag text-[#00C07F] ml-2"></i>
@@ -22,7 +23,6 @@ export default function CartSlideOut() {
             </button>
           </div>
 
-          {/* Items */}
           {cartItems.length > 0 ? (
             <>
               <div className="space-y-4 mb-6">
@@ -54,7 +54,6 @@ export default function CartSlideOut() {
                 ))}
               </div>
 
-              {/* Total */}
               <div className="glass rounded-xl p-4 mb-4 shadow-soft">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-[#6b7280] text-sm">جمع کل:</span>
@@ -64,7 +63,7 @@ export default function CartSlideOut() {
               </div>
 
               <button
-                onClick={() => { setCartOpen(false); navigate('checkout'); }}
+                onClick={() => { setCartOpen(false); navigate('/checkout'); }}
                 className="w-full btn-accent py-4 rounded-2xl text-lg"
               >
                 ادامه فرآیند خرید
@@ -74,7 +73,7 @@ export default function CartSlideOut() {
             <div className="text-center py-16">
               <span className="text-6xl mb-4 block">🛒</span>
               <p className="text-[#6b7280] mb-4">سبد خرید شما خالی است</p>
-              <button onClick={() => { setCartOpen(false); navigate('shop'); }} className="text-[#00C07F] hover:underline text-sm font-medium">
+              <button onClick={() => { setCartOpen(false); navigate('/shop'); }} className="text-[#00C07F] hover:underline text-sm font-medium">
                 بازگشت به فروشگاه
               </button>
             </div>

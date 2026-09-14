@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 
 export default function CheckoutPage() {
-  const { cartItems, navigate } = useApp();
+  const { cartItems } = useApp();
+  const navigate = useNavigate();
   const [city, setCity] = useState('');
   const [formData, setFormData] = useState({
     name: '',
@@ -26,7 +28,7 @@ export default function CheckoutPage() {
         <div className="text-center">
           <span className="text-6xl mb-4 block">🛒</span>
           <p className="text-[#6b7280] mb-4">سبد خرید شما خالی است</p>
-          <button onClick={() => navigate('shop')} className="text-[#00C07F] hover:underline font-medium">
+          <button onClick={() => navigate('/shop')} className="text-[#00C07F] hover:underline font-medium">
             بازگشت به فروشگاه
           </button>
         </div>
@@ -43,7 +45,7 @@ export default function CheckoutPage() {
           </div>
           <h2 className="text-2xl font-bold text-[#1a1a2e] mb-4">سفارش شما ثبت شد!</h2>
           <p className="text-[#6b7280] mb-6">به زودی برای تأیید سفارش با شما تماس خواهیم گرفت</p>
-          <button onClick={() => navigate('home')} className="btn-accent px-8 py-3 rounded-xl">
+          <button onClick={() => navigate('/')} className="btn-accent px-8 py-3 rounded-xl">
             بازگشت به صفحه اصلی
           </button>
         </div>
@@ -54,7 +56,7 @@ export default function CheckoutPage() {
   return (
     <section className="pt-24 pb-24 px-4 min-h-screen">
       <div className="max-w-3xl mx-auto">
-        <button onClick={() => navigate('shop')} className="flex items-center gap-2 text-[#6b7280] hover:text-[#00C07F] transition-colors mb-6">
+        <button onClick={() => navigate('/shop')} className="flex items-center gap-2 text-[#6b7280] hover:text-[#00C07F] transition-colors mb-6">
           <i className="fas fa-arrow-right"></i>
           <span className="text-sm">بازگشت</span>
         </button>
@@ -65,7 +67,6 @@ export default function CheckoutPage() {
 
         <form onSubmit={handleSubmit}>
           <div className="grid md:grid-cols-2 gap-6">
-            {/* Form */}
             <div className="space-y-4">
               <div className="glass rounded-2xl p-6 space-y-4 shadow-soft">
                 <h3 className="font-bold text-lg mb-2 text-[#1a1a2e]">اطلاعات ارسال</h3>
@@ -118,7 +119,6 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Summary */}
             <div className="space-y-4">
               <div className="glass rounded-2xl p-6 shadow-soft">
                 <h3 className="font-bold text-lg mb-4 text-[#1a1a2e]">خلاصه سفارش</h3>

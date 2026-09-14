@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { products, categories, Product } from '../data/products';
 import { LogoLarge } from '../components/Logo';
 
-// Hero Banner - پوستر تبلیغاتی
+// Hero Banner
 function HeroBanner() {
-  const { navigate } = useApp();
+  const navigate = useNavigate();
 
   return (
     <section className="relative min-h-[70vh] md:min-h-[80vh] flex items-center overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 via-purple-500/15 to-orange-500/20"></div>
         <div className="absolute inset-0">
@@ -19,10 +19,8 @@ function HeroBanner() {
         </div>
       </div>
 
-      {/* Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 py-12">
         <div className="grid md:grid-cols-2 gap-8 items-center">
-          {/* Text Side */}
           <div className="text-center md:text-right space-y-6">
             <div className="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-[#00C07F]/20 to-[#8B5CF6]/20 border border-[#00C07F]/30 text-[#00C07F] text-sm font-bold animate-scale-in">
               🔥 پیشنهاد ویژه این هفته
@@ -42,20 +40,19 @@ function HeroBanner() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
               <button 
-                onClick={() => navigate('shop')}
+                onClick={() => navigate('/shop')}
                 className="btn-accent px-8 py-4 rounded-2xl text-lg animate-pulse-soft"
               >
                 مشاهده محصولات
               </button>
               <button 
-                onClick={() => navigate('contact')}
+                onClick={() => navigate('/contact')}
                 className="px-8 py-4 rounded-2xl glass text-[#1a1a2e] font-medium hover:shadow-soft transition-all border border-[#8B5CF6]/30"
               >
                 مشاوره رایگان
               </button>
             </div>
 
-            {/* Stats */}
             <div className="flex gap-6 justify-center md:justify-start pt-4">
               <div className="text-center">
                 <div className="text-2xl font-black text-[#00C07F]">+۱۰۰۰</div>
@@ -72,13 +69,10 @@ function HeroBanner() {
             </div>
           </div>
 
-          {/* Image Side */}
           <div className="relative hidden md:block">
             <div className="relative w-full aspect-square max-w-lg mx-auto">
-              {/* Decorative circles */}
               <div className="absolute inset-0 bg-gradient-to-br from-[#00C07F]/30 to-[#8B5CF6]/30 rounded-full blur-2xl animate-float"></div>
               
-              {/* Main product showcase */}
               <div className="relative z-10 grid grid-cols-2 gap-4 p-8">
                 <div className="glass rounded-3xl p-6 shadow-soft hover:scale-105 transition-transform duration-300 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                   <img src="https://images.unsplash.com/photo-1560913210-59b747b4a0a0?w=300&h=300&fit=crop" alt="Pod" className="w-full h-32 object-cover rounded-2xl mb-3" />
@@ -109,19 +103,14 @@ function HeroBanner() {
   );
 }
 
-// Flash Sale - قیمت شگفت‌انگیز با تایمر
+// Flash Sale
 function FlashSale() {
-  const { addToCart, setSelectedProduct, navigate } = useApp();
-  const [timeLeft, setTimeLeft] = useState({
-    hours: 12,
-    minutes: 45,
-    seconds: 30
-  });
+  const { addToCart } = useApp();
+  const [timeLeft, setTimeLeft] = useState({ hours: 12, minutes: 45, seconds: 30 });
 
-  // Flash sale products
   const flashProducts = products.slice(0, 4).map(p => ({
     ...p,
-    flashPrice: Math.round(p.price * 0.6), // 40% off
+    flashPrice: Math.round(p.price * 0.6),
     discount: 40
   }));
 
@@ -130,17 +119,9 @@ function FlashSale() {
       setTimeLeft(prev => {
         let { hours, minutes, seconds } = prev;
         seconds--;
-        if (seconds < 0) {
-          seconds = 59;
-          minutes--;
-          if (minutes < 0) {
-            minutes = 59;
-            hours--;
-            if (hours < 0) {
-              hours = 23;
-            }
-          }
-        }
+        if (seconds < 0) { seconds = 59; minutes--; }
+        if (minutes < 0) { minutes = 59; hours--; }
+        if (hours < 0) { hours = 23; }
         return { hours, minutes, seconds };
       });
     }, 1000);
@@ -152,7 +133,6 @@ function FlashSale() {
   return (
     <section className="py-16 px-4 bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold mb-4 animate-pulse-soft">
             <i className="fas fa-bolt"></i>
@@ -163,7 +143,6 @@ function FlashSale() {
             <span className="text-red-500">فروش</span> ویژه امروز
           </h2>
           
-          {/* Timer */}
           <div className="flex items-center justify-center gap-3 mb-6" dir="ltr">
             <div className="text-center">
               <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-2xl flex items-center justify-center shadow-lg">
@@ -188,7 +167,6 @@ function FlashSale() {
           </div>
         </div>
 
-        {/* Flash Products Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {flashProducts.map((product, index) => (
             <div
@@ -196,53 +174,36 @@ function FlashSale() {
               className="glass rounded-2xl overflow-hidden shadow-soft hover:shadow-hover transition-all duration-300 hover:scale-105 group relative"
               style={{ animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both` }}
             >
-              {/* Discount Badge */}
               <div className="absolute top-3 right-3 z-10">
                 <div className="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center shadow-lg animate-bounce-badge">
                   <span className="text-white font-black text-sm">{product.discount}%</span>
                 </div>
               </div>
 
-              {/* Image */}
               <div className="relative overflow-hidden aspect-square bg-gradient-to-br from-[#f8fafc] to-[#f1f5f9]">
-                <img 
-                  src={product.image} 
-                  alt={product.name}
-                  className="w-full h-full object-cover product-img-zoom"
-                />
+                <img src={product.image} alt={product.name} className="w-full h-full object-cover product-img-zoom" />
               </div>
 
-              {/* Info */}
               <div className="p-4">
                 <p className="text-xs text-[#9CA3AF] mb-1">{product.brand}</p>
                 <h3 className="text-sm font-bold text-[#1a1a2e] mb-2 line-clamp-2">{product.name}</h3>
                 
-                {/* Price */}
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-lg font-black text-red-500">
-                    {(product.flashPrice / 10000).toFixed(0)}
-                  </span>
+                  <span className="text-lg font-black text-red-500">{(product.flashPrice / 10000).toFixed(0)}</span>
                   <span className="text-xs text-[#9CA3AF]">هزار</span>
-                  <span className="text-xs text-[#9CA3AF] line-through">
-                    {(product.price / 10000).toFixed(0)}
-                  </span>
+                  <span className="text-xs text-[#9CA3AF] line-through">{(product.price / 10000).toFixed(0)}</span>
                 </div>
 
-                {/* Progress bar */}
                 <div className="mb-3">
                   <div className="flex justify-between text-xs text-[#6b7280] mb-1">
                     <span>فروش رفته</span>
                     <span>{70 + index * 5}%</span>
                   </div>
                   <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-red-500 to-orange-500 rounded-full transition-all duration-1000"
-                      style={{ width: `${70 + index * 5}%` }}
-                    ></div>
+                    <div className="h-full bg-gradient-to-r from-red-500 to-orange-500 rounded-full transition-all duration-1000" style={{ width: `${70 + index * 5}%` }}></div>
                   </div>
                 </div>
 
-                {/* Add to Cart Button */}
                 <button
                   onClick={() => addToCart(product)}
                   className="w-full py-2.5 rounded-xl bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold text-sm hover:shadow-lg hover:scale-105 transition-all duration-300"
@@ -261,11 +222,12 @@ function FlashSale() {
 
 // Category Section
 function CategorySection() {
-  const { setSelectedCategory, navigate } = useApp();
+  const { setSelectedCategory } = useApp();
+  const navigate = useNavigate();
 
   const handleCategoryClick = (catId: string) => {
     setSelectedCategory(catId);
-    navigate('shop');
+    navigate('/shop');
   };
 
   const categoryColors = [
@@ -278,7 +240,7 @@ function CategorySection() {
   ];
 
   return (
-    <section className="py-12 px-4 bg-gradient-to-b from-white to-[#F5F5F7]">
+    <section className="py-12 px-4 bg-gradient-to-b from-white to-purple-50">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-[#1a1a2e]">
           دسته‌بندی <span className="gradient-text">محصولات</span>
@@ -306,7 +268,8 @@ function CategorySection() {
 
 // Product Card
 function ProductCard({ product }: { product: Product }) {
-  const { addToCart, setSelectedProduct, navigate } = useApp();
+  const { addToCart, setSelectedProduct } = useApp();
+  const navigate = useNavigate();
   const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
 
   return (
@@ -318,13 +281,6 @@ function ProductCard({ product }: { product: Product }) {
           {product.isBestseller && <span className="px-2 py-1 bg-[#F59E0B] text-white text-xs font-bold rounded-lg">پرفروش</span>}
           {discount > 0 && <span className="px-2 py-1 bg-[#EC4899] text-white text-xs font-bold rounded-lg">{discount}% تخفیف</span>}
         </div>
-        {product.stock <= 5 && product.stock > 0 && (
-          <div className="absolute bottom-3 left-3 right-3">
-            <span className="px-2 py-1 bg-red-500/90 text-white text-xs rounded-lg backdrop-blur-sm">
-              🔥 فقط {product.stock} عدد باقی‌مانده!
-            </span>
-          </div>
-        )}
         <button
           onClick={(e) => { e.stopPropagation(); addToCart(product); }}
           className="absolute bottom-3 right-3 w-10 h-10 bg-[#00C07F] text-white rounded-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-lg shadow-[#00C07F]/20"
@@ -332,7 +288,7 @@ function ProductCard({ product }: { product: Product }) {
           <i className="fas fa-plus"></i>
         </button>
       </div>
-      <div className="p-4 cursor-pointer" onClick={() => { setSelectedProduct(product); navigate('product'); }}>
+      <div className="p-4 cursor-pointer" onClick={() => { setSelectedProduct(product); navigate('/product'); }}>
         <p className="text-xs text-[#9CA3AF] mb-1">{product.brand}</p>
         <h3 className="text-sm font-bold text-[#1a1a2e] mb-2 line-clamp-2">{product.name}</h3>
         <div className="flex items-center gap-1 mb-3">
@@ -353,9 +309,9 @@ function ProductCard({ product }: { product: Product }) {
   );
 }
 
-// Featured Products - فقط 4 محصول
+// Featured Products
 function FeaturedProducts() {
-  const { navigate } = useApp();
+  const navigate = useNavigate();
   const featured = products.filter(p => p.isBestseller || p.isNew).slice(0, 4);
 
   return (
@@ -368,7 +324,7 @@ function FeaturedProducts() {
             </h2>
             <p className="text-[#6b7280]">پرفروش‌ترین محصولات ما</p>
           </div>
-          <button onClick={() => navigate('shop')} className="px-6 py-3 rounded-xl glass text-[#8B5CF6] hover:text-[#6d28d9] font-medium transition-colors shadow-soft">
+          <button onClick={() => navigate('/shop')} className="px-6 py-3 rounded-xl glass text-[#8B5CF6] hover:text-[#6d28d9] font-medium transition-colors shadow-soft">
             مشاهده همه
           </button>
         </div>
@@ -389,26 +345,11 @@ function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const faqs = [
-    {
-      question: 'آیا محصولات شما اصل و دارای گارانتی هستند؟',
-      answer: 'بله، تمامی محصولات ما ۱۰۰٪ اصل و اورجینال هستند. هر محصول دارای گارانتی اصالت کالا است و در صورت هرگونه مشکل، قابل بازگشت می‌باشد. ما مستقیماً از نمایندگی‌های رسمی برندها خرید می‌کنیم.'
-    },
-    {
-      question: 'هزینه و زمان ارسال چقدر است؟',
-      answer: 'ارسال به تهران ۲۴ ساعته و هزینه آن ۵۰ هزار تومان است. ارسال به شهرستان‌ها ۲ تا ۳ روز کاری و هزینه آن ۸۰ هزار تومان می‌باشد. برای خریدهای بالای ۲ میلیون تومان، ارسال رایگان است.'
-    },
-    {
-      question: 'چگونه می‌توانم مشاوره خرید بگیرم؟',
-      answer: 'شما می‌توانید از طریق تماس تلفنی، واتساپ، تلگرام یا فرم تماس در سایت با کارشناسان ما در ارتباط باشید. تیم پشتیبانی ما ۲۴ ساعته آماده پاسخگویی و مشاوره رایگان به شماست.'
-    },
-    {
-      question: 'آیا امکان بازگشت کالا وجود دارد؟',
-      answer: 'بله، در صورتی که محصول دارای نقص فنی باشد یا با توضیحات سایت مطابقت نداشته باشد، تا ۷ روز پس از دریافت امکان بازگشت و تعویض وجود دارد. محصول باید در بسته‌بندی اصلی و بدون استفاده باشد.'
-    },
-    {
-      question: 'روش‌های پرداخت چیست؟',
-      answer: 'ما تمامی روش‌های پرداخت آنلاین از طریق درگاه‌های بانکی معتبر را پشتیبانی می‌کنیم. همچنین امکان پرداخت در محل برای تهران و کارت به کارت برای شهرستان‌ها وجود دارد.'
-    }
+    { question: 'آیا محصولات شما اصل و دارای گارانتی هستند؟', answer: 'بله، تمامی محصولات ما ۱۰۰٪ اصل و اورجینال هستند. هر محصول دارای گارانتی اصالت کالا است و در صورت هرگونه مشکل، قابل بازگشت می‌باشد.' },
+    { question: 'هزینه و زمان ارسال چقدر است؟', answer: 'ارسال به تهران ۲۴ ساعته و هزینه آن ۵۰ هزار تومان است. ارسال به شهرستان‌ها ۲ تا ۳ روز کاری و هزینه آن ۸۰ هزار تومان می‌باشد.' },
+    { question: 'چگونه می‌توانم مشاوره خرید بگیرم؟', answer: 'شما می‌توانید از طریق تماس تلفنی، واتساپ، تلگرام یا فرم تماس در سایت با کارشناسان ما در ارتباط باشید.' },
+    { question: 'آیا امکان بازگشت کالا وجود دارد؟', answer: 'بله، در صورتی که محصول دارای نقص فنی باشد، تا ۷ روز پس از دریافت امکان بازگشت و تعویض وجود دارد.' },
+    { question: 'روش‌های پرداخت چیست؟', answer: 'ما تمامی روش‌های پرداخت آنلاین از طریق درگاه‌های بانکی معتبر را پشتیبانی می‌کنیم. همچنین امکان پرداخت در محل برای تهران وجود دارد.' }
   ];
 
   const faqColors = ['#00C07F', '#8B5CF6', '#F59E0B', '#EC4899', '#0891B2'];
@@ -428,25 +369,17 @@ function FAQSection() {
             <div
               key={index}
               className="glass rounded-2xl shadow-soft overflow-hidden transition-all duration-300 border-r-4"
-              style={{ 
-                animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
-                borderRightColor: faqColors[index]
-              }}
+              style={{ animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`, borderRightColor: faqColors[index] }}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full p-6 flex items-center justify-between text-right hover:bg-[#F5F5F7]/50 transition-colors"
               >
                 <span className="font-bold text-[#1a1a2e] text-lg">{faq.question}</span>
-                <i 
-                  className={`fas fa-chevron-down transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`}
-                  style={{ color: faqColors[index] }}
-                ></i>
+                <i className={`fas fa-chevron-down transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`} style={{ color: faqColors[index] }}></i>
               </button>
               <div className={`overflow-hidden transition-all duration-300 ${openIndex === index ? 'max-h-96' : 'max-h-0'}`}>
-                <div className="p-6 pt-0 text-[#6b7280] leading-8">
-                  {faq.answer}
-                </div>
+                <div className="p-6 pt-0 text-[#6b7280] leading-8">{faq.answer}</div>
               </div>
             </div>
           ))}
@@ -459,48 +392,12 @@ function FAQSection() {
 // Why Smoke City Section
 function WhySmokeCity() {
   const features = [
-    {
-      icon: 'fas fa-headset',
-      title: 'پشتیبانی ۲۴ ساعته',
-      description: 'تیم پشتیبانی ما در تمام ساعات شبانه‌روز آماده پاسخگویی و راهنمایی شماست',
-      color: '#00C07F',
-      bgGradient: 'from-emerald-100 to-teal-100'
-    },
-    {
-      icon: 'fas fa-shield-alt',
-      title: 'گارانتی اصالت کالا',
-      description: 'تمامی محصولات ۱۰۰٪ اصل و اورجینال با گارانتی معتبر',
-      color: '#8B5CF6',
-      bgGradient: 'from-violet-100 to-purple-100'
-    },
-    {
-      icon: 'fas fa-truck',
-      title: 'ارسال سریع',
-      description: 'ارسال ۲۴ ساعته به تهران و ۲ تا ۳ روز به شهرستان‌ها',
-      color: '#F59E0B',
-      bgGradient: 'from-amber-100 to-orange-100'
-    },
-    {
-      icon: 'fas fa-undo',
-      title: 'ضمانت بازگشت',
-      description: 'امکان بازگشت کالا تا ۷ روز در صورت عدم رضایت',
-      color: '#EC4899',
-      bgGradient: 'from-pink-100 to-rose-100'
-    },
-    {
-      icon: 'fas fa-tags',
-      title: 'بهترین قیمت',
-      description: 'تضمین بهترین قیمت بازار با تخفیف‌های ویژه',
-      color: '#0891B2',
-      bgGradient: 'from-cyan-100 to-blue-100'
-    },
-    {
-      icon: 'fas fa-gift',
-      title: 'هدایای ویژه',
-      description: 'هدایای ویژه برای مشتریان دائمی و خریدهای بالا',
-      color: '#F97316',
-      bgGradient: 'from-orange-100 to-red-100'
-    }
+    { icon: 'fas fa-headset', title: 'پشتیبانی ۲۴ ساعته', description: 'تیم پشتیبانی ما در تمام ساعات شبانه‌روز آماده پاسخگویی و راهنمایی شماست', color: '#00C07F', bgGradient: 'from-emerald-100 to-teal-100' },
+    { icon: 'fas fa-shield-alt', title: 'گارانتی اصالت کالا', description: 'تمامی محصولات ۱۰۰٪ اصل و اورجینال با گارانتی معتبر', color: '#8B5CF6', bgGradient: 'from-violet-100 to-purple-100' },
+    { icon: 'fas fa-truck', title: 'ارسال سریع', description: 'ارسال ۲۴ ساعته به تهران و ۲ تا ۳ روز به شهرستان‌ها', color: '#F59E0B', bgGradient: 'from-amber-100 to-orange-100' },
+    { icon: 'fas fa-undo', title: 'ضمانت بازگشت', description: 'امکان بازگشت کالا تا ۷ روز در صورت عدم رضایت', color: '#EC4899', bgGradient: 'from-pink-100 to-rose-100' },
+    { icon: 'fas fa-tags', title: 'بهترین قیمت', description: 'تضمین بهترین قیمت بازار با تخفیف‌های ویژه', color: '#0891B2', bgGradient: 'from-cyan-100 to-blue-100' },
+    { icon: 'fas fa-gift', title: 'هدایای ویژه', description: 'هدایای ویژه برای مشتریان دائمی و خریدهای بالا', color: '#F97316', bgGradient: 'from-orange-100 to-red-100' }
   ];
 
   return (

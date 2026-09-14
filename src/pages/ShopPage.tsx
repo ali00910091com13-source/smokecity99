@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { products, categories, brands, flavorProfiles, nicotineLevels, Product } from '../data/products';
 
 export default function ShopPage() {
-  const { selectedCategory, setSelectedCategory, addToCart, setSelectedProduct, navigate } = useApp();
+  const { selectedCategory, setSelectedCategory, addToCart, setSelectedProduct } = useApp();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(selectedCategory || 'all');
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedFlavor, setSelectedFlavor] = useState('');
@@ -61,7 +63,7 @@ export default function ShopPage() {
             <i className="fas fa-plus"></i>
           </button>
         </div>
-        <div className="p-4 cursor-pointer" onClick={() => { setSelectedProduct(product); navigate('product'); }}>
+        <div className="p-4 cursor-pointer" onClick={() => { setSelectedProduct(product); navigate('/product'); }}>
           <p className="text-xs text-[#9CA3AF] mb-1">{product.brand}</p>
           <h3 className="text-sm font-bold text-[#1a1a2e] mb-2 line-clamp-2">{product.name}</h3>
           <div className="flex items-center gap-1 mb-3">
@@ -92,7 +94,6 @@ export default function ShopPage() {
           <p className="text-[#6b7280]">{filteredProducts.length} محصول</p>
         </div>
 
-        {/* Category Tabs */}
         <div className="mb-6 overflow-x-auto no-scrollbar">
           <div className="flex gap-2 min-w-max pb-2">
             <button
@@ -130,7 +131,6 @@ export default function ShopPage() {
         </button>
 
         <div className="flex gap-6">
-          {/* Sidebar Filters */}
           <aside className={`${showFilters ? 'fixed inset-0 z-50 bg-[#F5F5F7] p-4 overflow-y-auto' : 'hidden'} md:block md:relative md:w-64 flex-shrink-0`}>
             {showFilters && (
               <button onClick={() => setShowFilters(false)} className="md:hidden mb-4 text-[#4b5563] flex items-center gap-2">
@@ -195,7 +195,6 @@ export default function ShopPage() {
             </div>
           </aside>
 
-          {/* Products Grid */}
           <div className="flex-1">
             {filteredProducts.length > 0 ? (
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">

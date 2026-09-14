@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { reviews } from '../data/products';
 
 export default function ProductDetailPage() {
-  const { selectedProduct, addToCart, navigate } = useApp();
+  const { selectedProduct, addToCart } = useApp();
+  const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedFlavor, setSelectedFlavor] = useState(selectedProduct?.flavors?.[0] || '');
   const [selectedColor, setSelectedColor] = useState(selectedProduct?.colors?.[0] || '');
@@ -14,7 +16,7 @@ export default function ProductDetailPage() {
     return (
       <div className="pt-24 pb-12 px-4 min-h-screen text-center">
         <p className="text-[#6b7280]">محصولی انتخاب نشده است</p>
-        <button onClick={() => navigate('shop')} className="mt-4 text-[#00C07F] hover:underline">بازگشت به فروشگاه</button>
+        <button onClick={() => navigate('/shop')} className="mt-4 text-[#00C07F] hover:underline">بازگشت به فروشگاه</button>
       </div>
     );
   }
@@ -24,13 +26,12 @@ export default function ProductDetailPage() {
   return (
     <section className="pt-24 pb-24 md:pb-12 px-4 min-h-screen">
       <div className="max-w-6xl mx-auto">
-        <button onClick={() => navigate('shop')} className="flex items-center gap-2 text-[#6b7280] hover:text-[#00C07F] transition-colors mb-6">
+        <button onClick={() => navigate('/shop')} className="flex items-center gap-2 text-[#6b7280] hover:text-[#00C07F] transition-colors mb-6">
           <i className="fas fa-arrow-right"></i>
           <span className="text-sm">بازگشت به فروشگاه</span>
         </button>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {/* Image Gallery */}
           <div className="space-y-4">
             <div className="glass rounded-2xl overflow-hidden aspect-square relative shadow-soft">
               <img src={selectedProduct.images[selectedImage]} alt={selectedProduct.name} className="w-full h-full object-cover product-img-zoom" />
@@ -51,7 +52,6 @@ export default function ProductDetailPage() {
             )}
           </div>
 
-          {/* Product Info */}
           <div className="space-y-6">
             <div>
               <p className="text-sm text-[#00C07F] mb-1 font-medium">{selectedProduct.brand}</p>
@@ -129,7 +129,6 @@ export default function ProductDetailPage() {
           </div>
         </div>
 
-        {/* Tabs */}
         <div className="mt-12">
           <div className="flex gap-1 glass rounded-2xl p-1.5 mb-6 shadow-soft">
             {[
