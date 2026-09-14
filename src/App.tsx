@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { AppProvider, useApp } from './context/AppContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import BottomNav from './components/BottomNav';
 import SearchModal from './components/SearchModal';
 import CartSlideOut from './components/CartSlideOut';
-import AgeGate from './components/AgeGate';
 import HomePage from './pages/HomePage';
 import ShopPage from './pages/ShopPage';
 import ProductDetailPage from './pages/ProductDetailPage';
@@ -16,11 +14,6 @@ import CheckoutPage from './pages/CheckoutPage';
 
 function AppContent() {
   const { currentPage } = useApp();
-  const [ageVerified, setAgeVerified] = useState(false);
-
-  if (!ageVerified) {
-    return <AgeGate onVerify={() => setAgeVerified(true)} />;
-  }
 
   return (
     <div className="min-h-screen bg-[#F5F5F7] text-[#1a1a2e]" dir="rtl">
