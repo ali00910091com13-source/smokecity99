@@ -1,6 +1,21 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
 import { Product, CartItem } from '../data/products';
 
+export interface UserInfo {
+  email: string;
+  name: string;
+  avatar: string;
+  isLoggedIn: boolean;
+}
+
+export interface ShippingInfo {
+  city: string;
+  address: string;
+  postalCode: string;
+  receiverName: string;
+  phone: string;
+}
+
 interface AppContextType {
   selectedProduct: Product | null;
   setSelectedProduct: (product: Product | null) => void;
@@ -16,6 +31,10 @@ interface AppContextType {
   setCartOpen: (open: boolean) => void;
   searchOpen: boolean;
   setSearchOpen: (open: boolean) => void;
+  userInfo: UserInfo | null;
+  setUserInfo: (user: UserInfo | null) => void;
+  shippingInfo: ShippingInfo;
+  setShippingInfo: (info: ShippingInfo) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -27,6 +46,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [cartOpen, setCartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [shippingInfo, setShippingInfo] = useState<ShippingInfo>({
+    city: '',
+    address: '',
+    postalCode: '',
+    receiverName: '',
+    phone: '',
+  });
 
   const addToCart = (product: Product, qty: number = 1, flavor?: string, color?: string) => {
     setCartItems(prev => {
@@ -65,6 +92,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       cartItems, addToCart, updateQuantity, removeFromCart,
       cartOpen, setCartOpen,
       searchOpen, setSearchOpen,
+      userInfo, setUserInfo,
+      shippingInfo, setShippingInfo,
     }}>
       {children}
     </AppContext.Provider>
