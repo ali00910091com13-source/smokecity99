@@ -164,26 +164,26 @@ function FlashSale() {
           </h2>
           
           {/* Timer */}
-          <div className="flex items-center justify-center gap-3 mb-6">
+          <div className="flex items-center justify-center gap-3 mb-6" dir="ltr">
             <div className="text-center">
-              <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
-                <span className="text-2xl md:text-3xl font-black text-white">{pad(timeLeft.hours)}</span>
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <span className="text-2xl md:text-3xl font-black text-white">{pad(timeLeft.seconds)}</span>
               </div>
-              <span className="text-xs text-[#6b7280] mt-1 block">ساعت</span>
+              <span className="text-xs text-[#6b7280] mt-1 block">ثانیه</span>
             </div>
-            <span className="text-3xl font-black text-red-500">:</span>
+            <span className="text-3xl font-black text-orange-500">:</span>
             <div className="text-center">
               <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl flex items-center justify-center shadow-lg">
                 <span className="text-2xl md:text-3xl font-black text-white">{pad(timeLeft.minutes)}</span>
               </div>
               <span className="text-xs text-[#6b7280] mt-1 block">دقیقه</span>
             </div>
-            <span className="text-3xl font-black text-orange-500">:</span>
+            <span className="text-3xl font-black text-red-500">:</span>
             <div className="text-center">
-              <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-2xl flex items-center justify-center shadow-lg">
-                <span className="text-2xl md:text-3xl font-black text-white">{pad(timeLeft.seconds)}</span>
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <span className="text-2xl md:text-3xl font-black text-white">{pad(timeLeft.hours)}</span>
               </div>
-              <span className="text-xs text-[#6b7280] mt-1 block">ثانیه</span>
+              <span className="text-xs text-[#6b7280] mt-1 block">ساعت</span>
             </div>
           </div>
         </div>
