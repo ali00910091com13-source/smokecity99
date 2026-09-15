@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import BottomNav from './components/BottomNav';
 import SearchModal from './components/SearchModal';
 import CartSlideOut from './components/CartSlideOut';
+import ParticleBackground from './components/ParticleBackground';
 import HomePage from './pages/HomePage';
 import ShopPage from './pages/ShopPage';
 import ProductDetailPage from './pages/ProductDetailPage';
@@ -39,6 +40,7 @@ function Layout() {
 
   return (
     <div className="min-h-screen bg-[#F5F5F7] text-[#1a1a2e]" dir="rtl">
+      <ParticleBackground />
       <Header />
       <SearchModal />
       <CartSlideOut />
