@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 
-// Google Client ID - Real Client ID
+// Google Client ID
 const GOOGLE_CLIENT_ID = '879616245300-bqtll6ar73n6o6lj1k2s5uqauum0vtrf.apps.googleusercontent.com';
 
 declare global {
@@ -85,7 +85,6 @@ export default function GoogleLogin({ onSuccess }: { onSuccess?: () => void }) {
   return (
     <div className="flex flex-col items-center gap-4">
       <div ref={buttonRef}></div>
-      {/* Client ID is configured */}
     </div>
   );
 }
