@@ -1,9 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 
-// Google Client ID - Replace with your actual Google OAuth Client ID
-// Get it from: https://console.cloud.google.com/apis/credentials
-const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+// Google Client ID - Real Client ID
+const GOOGLE_CLIENT_ID = '879616245300-bqtll6ar73n6o6lj1k2s5uqauum0vtrf.apps.googleusercontent.com';
 
 declare global {
   interface Window {
@@ -86,18 +85,7 @@ export default function GoogleLogin({ onSuccess }: { onSuccess?: () => void }) {
   return (
     <div className="flex flex-col items-center gap-4">
       <div ref={buttonRef}></div>
-      {GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com' && (
-        <div className="text-center text-sm text-orange-600 bg-orange-50 p-4 rounded-lg max-w-md">
-          <p className="font-bold mb-2">⚠️ تنظیمات لازم برای ورود با گوگل:</p>
-          <ol className="text-right space-y-1">
-            <li>1. به <a href="https://console.cloud.google.com/apis/credentials" target="_blank" className="text-blue-600 underline">Google Cloud Console</a> بروید</li>
-            <li>2. یک پروژه جدید بسازید یا پروژه موجود را انتخاب کنید</li>
-            <li>3. OAuth 2.0 Client ID بسازید (Web application)</li>
-            <li>4. دامنه خود را در Authorized JavaScript origins اضافه کنید</li>
-            <li>5. Client ID را در فایل <code className="bg-gray-200 px-2 py-1 rounded">src/components/GoogleLogin.tsx</code> جایگزین کنید</li>
-          </ol>
-        </div>
-      )}
+      {/* Client ID is configured */}
     </div>
   );
 }
