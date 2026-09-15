@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useApp } from '../context/AppContext';
 import { categories } from '../data/products';
 import { LogoLarge } from '../components/Logo';
 import ProductCard from '../components/ProductCard';
 import { useProducts } from '../hooks/useDatabase';
+import { fadeInUp, fadeInDown, staggerContainer, staggerItem, scaleIn, float } from '../components/animations';
 
 // Hero Banner
 function HeroBanner() {
@@ -15,90 +17,156 @@ function HeroBanner() {
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 via-purple-500/15 to-orange-500/20"></div>
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-[#00C07F]/20 rounded-full blur-3xl animate-float"></div>
-          <div className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] bg-[#8B5CF6]/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-[#F59E0B]/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+          <motion.div 
+            className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-[#00C07F]/20 rounded-full blur-3xl"
+            animate={{ y: [0, -30, 0], scale: [1, 1.1, 1] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div 
+            className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] bg-[#8B5CF6]/20 rounded-full blur-3xl"
+            animate={{ y: [0, 30, 0], scale: [1, 1.2, 1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          />
+          <motion.div 
+            className="absolute top-1/2 left-1/2 w-[400px] h-[400px] bg-[#F59E0B]/15 rounded-full blur-3xl"
+            animate={{ y: [0, -20, 0], x: [0, 15, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
         </div>
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 py-12">
         <div className="grid md:grid-cols-2 gap-8 items-center">
-          <div className="text-center md:text-right space-y-6">
-            <div className="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-[#00C07F]/20 to-[#8B5CF6]/20 border border-[#00C07F]/30 text-[#00C07F] text-sm font-bold animate-scale-in">
+          <motion.div 
+            className="text-center md:text-right space-y-6"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <motion.div 
+              className="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-[#00C07F]/20 to-[#8B5CF6]/20 border border-[#00C07F]/30 text-[#00C07F] text-sm font-bold"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              whileHover={{ scale: 1.05 }}
+            >
               🔥 پیشنهاد ویژه این هفته
-            </div>
+            </motion.div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-[#1a1a2e]">
+            <motion.h1 
+              className="text-4xl md:text-5xl lg:text-6xl font-black leading-tight text-[#1a1a2e]"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
               <span className="bg-gradient-to-r from-[#00C07F] via-[#8B5CF6] to-[#F59E0B] bg-clip-text text-transparent">
                 تخفیف‌های باورنکردنی
               </span>
               <br />
               <span className="text-[#1a1a2e]">تا ۵۰٪ تخفیف</span>
-            </h1>
+            </motion.h1>
             
-            <p className="text-lg md:text-xl text-[#4b5563] leading-8">
+            <motion.p 
+              className="text-lg md:text-xl text-[#4b5563] leading-8"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
               بهترین برندهای جهانی ویپ و پاد با گارانتی اصالت و ارسال سریع به سراسر ایران
-            </p>
+            </motion.p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-              <button 
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.7 }}
+            >
+              <motion.button 
                 onClick={() => navigate('/shop')}
-                className="btn-accent px-8 py-4 rounded-2xl text-lg animate-pulse-soft"
+                className="btn-accent px-8 py-4 rounded-2xl text-lg"
+                whileHover={{ scale: 1.05, boxShadow: '0 10px 30px rgba(0, 192, 127, 0.4)' }}
+                whileTap={{ scale: 0.95 }}
+                animate={{ boxShadow: ['0 5px 15px rgba(0, 192, 127, 0.3)', '0 10px 30px rgba(0, 192, 127, 0.5)', '0 5px 15px rgba(0, 192, 127, 0.3)'] }}
+                transition={{ duration: 2, repeat: Infinity }}
               >
                 مشاهده محصولات
-              </button>
-              <button 
+              </motion.button>
+              <motion.button 
                 onClick={() => navigate('/contact')}
-                className="px-8 py-4 rounded-2xl glass text-[#1a1a2e] font-medium hover:shadow-soft transition-all border border-[#8B5CF6]/30"
+                className="px-8 py-4 rounded-2xl glass text-[#1a1a2e] font-medium border border-[#8B5CF6]/30"
+                whileHover={{ scale: 1.05, boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
+                whileTap={{ scale: 0.95 }}
               >
                 مشاوره رایگان
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
 
-            <div className="flex gap-6 justify-center md:justify-start pt-4">
-              <div className="text-center">
+            <motion.div 
+              className="flex gap-6 justify-center md:justify-start pt-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
+            >
+              <motion.div 
+                className="text-center"
+                whileHover={{ scale: 1.1 }}
+              >
                 <div className="text-2xl font-black text-[#00C07F]">+۱۰۰۰</div>
                 <div className="text-xs text-[#6b7280]">مشتری راضی</div>
-              </div>
-              <div className="text-center">
+              </motion.div>
+              <motion.div 
+                className="text-center"
+                whileHover={{ scale: 1.1 }}
+              >
                 <div className="text-2xl font-black text-[#8B5CF6]">+۵۰</div>
                 <div className="text-xs text-[#6b7280]">برند معتبر</div>
-              </div>
-              <div className="text-center">
+              </motion.div>
+              <motion.div 
+                className="text-center"
+                whileHover={{ scale: 1.1 }}
+              >
                 <div className="text-2xl font-black text-[#F59E0B]">۲۴/۷</div>
                 <div className="text-xs text-[#6b7280]">پشتیبانی</div>
-              </div>
-            </div>
-          </div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
 
-          <div className="relative hidden md:block">
+          <motion.div 
+            className="relative hidden md:block"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
             <div className="relative w-full aspect-square max-w-lg mx-auto">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#00C07F]/30 to-[#8B5CF6]/30 rounded-full blur-2xl animate-float"></div>
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-br from-[#00C07F]/30 to-[#8B5CF6]/30 rounded-full blur-2xl"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              />
               
               <div className="relative z-10 grid grid-cols-2 gap-4 p-8">
-                <div className="glass rounded-3xl p-6 shadow-soft hover:scale-105 transition-transform duration-300 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                  <img src="https://images.unsplash.com/photo-1560913210-59b747b4a0a0?w=300&h=300&fit=crop" alt="Pod" className="w-full h-32 object-cover rounded-2xl mb-3" />
-                  <p className="text-sm font-bold text-[#1a1a2e]">پاد سیستم</p>
-                  <p className="text-xs text-[#00C07F] font-bold">۳۰٪ تخفیف</p>
-                </div>
-                <div className="glass rounded-3xl p-6 shadow-soft hover:scale-105 transition-transform duration-300 animate-fade-in-up mt-8" style={{ animationDelay: '0.4s' }}>
-                  <img src="https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=300&h=300&fit=crop" alt="Vape" className="w-full h-32 object-cover rounded-2xl mb-3" />
-                  <p className="text-sm font-bold text-[#1a1a2e]">ویپ حرفه‌ای</p>
-                  <p className="text-xs text-[#8B5CF6] font-bold">۲۵٪ تخفیف</p>
-                </div>
-                <div className="glass rounded-3xl p-6 shadow-soft hover:scale-105 transition-transform duration-300 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-                  <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=300&h=300&fit=crop" alt="Salt" className="w-full h-32 object-cover rounded-2xl mb-3" />
-                  <p className="text-sm font-bold text-[#1a1a2e]">سالت نیکوتین</p>
-                  <p className="text-xs text-[#F59E0B] font-bold">۴۰٪ تخفیف</p>
-                </div>
-                <div className="glass rounded-3xl p-6 shadow-soft hover:scale-105 transition-transform duration-300 animate-fade-in-up mt-8" style={{ animationDelay: '0.8s' }}>
-                  <img src="https://images.unsplash.com/photo-1555255707-c07966088b7b?w=300&h=300&fit=crop" alt="Juice" className="w-full h-32 object-cover rounded-2xl mb-3" />
-                  <p className="text-sm font-bold text-[#1a1a2e]">جویس اورجینال</p>
-                  <p className="text-xs text-[#EC4899] font-bold">۳۵٪ تخفیف</p>
-                </div>
+                {[
+                  { img: 'https://images.unsplash.com/photo-1560913210-59b747b4a0a0?w=300&h=300&fit=crop', title: 'پاد سیستم', discount: '۳۰٪', color: '#00C07F', delay: 0.2 },
+                  { img: 'https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=300&h=300&fit=crop', title: 'ویپ حرفه‌ای', discount: '۲۵٪', color: '#8B5CF6', delay: 0.4 },
+                  { img: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=300&h=300&fit=crop', title: 'سالت نیکوتین', discount: '۴۰٪', color: '#F59E0B', delay: 0.6 },
+                  { img: 'https://images.unsplash.com/photo-1555255707-c07966088b7b?w=300&h=300&fit=crop', title: 'جویس اورجینال', discount: '۳۵٪', color: '#EC4899', delay: 0.8 },
+                ].map((item, index) => (
+                  <motion.div
+                    key={index}
+                    className={`glass rounded-3xl p-6 shadow-soft ${index % 2 === 1 ? 'mt-8' : ''}`}
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: item.delay }}
+                    whileHover={{ scale: 1.05, y: -10 }}
+                  >
+                    <img src={item.img} alt={item.title} className="w-full h-32 object-cover rounded-2xl mb-3" />
+                    <p className="text-sm font-bold text-[#1a1a2e]">{item.title}</p>
+                    <p className="text-xs font-bold" style={{ color: item.color }}>{item.discount} تخفیف</p>
+                  </motion.div>
+                ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
