@@ -7,6 +7,7 @@ import { LogoLarge } from '../components/Logo';
 import ProductCard from '../components/ProductCard';
 import { useProducts } from '../hooks/useDatabase';
 import { fadeInUp, fadeInDown, staggerContainer, staggerItem, scaleIn, float } from '../components/animations';
+import { AnimatedSection, StaggerContainer, StaggerItem, FloatingElement, GradientBorder, CountUpNumber } from '../components/AnimatedComponents';
 
 // Hero Banner
 function HeroBanner() {
@@ -205,15 +206,34 @@ function FlashSale() {
     <section className="py-16 px-4 bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold mb-4 animate-pulse-soft">
-            <i className="fas fa-bolt"></i>
-            <span>قیمت شگفت‌انگیز</span>
-            <i className="fas fa-bolt"></i>
+            <motion.div 
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold mb-4"
+              animate={{ 
+                boxShadow: [
+                  '0 0 20px rgba(239, 68, 68, 0.3)',
+                  '0 0 40px rgba(239, 68, 68, 0.5)',
+                  '0 0 20px rgba(239, 68, 68, 0.3)',
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <motion.i 
+                className="fas fa-bolt"
+                animate={{ rotate: [0, 15, -15, 0] }}
+                transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 2 }}
+              />
+              <span>قیمت شگفت‌انگیز</span>
+              <motion.i 
+                className="fas fa-bolt"
+                animate={{ rotate: [0, -15, 15, 0] }}
+                transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 2 }}
+              />
+            </motion.div>
+            <h2 className="text-3xl md:text-4xl font-black text-[#1a1a2e] mb-4">
+              <span className="text-red-500">فروش</span> ویژه امروز
+            </h2>
           </div>
-          <h2 className="text-3xl md:text-4xl font-black text-[#1a1a2e] mb-4">
-            <span className="text-red-500">فروش</span> ویژه امروز
-          </h2>
-          
+
           <div className="flex items-center justify-center gap-3 mb-6" dir="ltr">
             <div className="text-center">
               <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
@@ -286,7 +306,6 @@ function FlashSale() {
             </div>
           ))}
         </div>
-      </div>
     </section>
   );
 }
@@ -407,33 +426,65 @@ function FAQSection() {
   return (
     <section className="py-16 px-4 bg-gradient-to-br from-violet-50 via-white to-amber-50">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-black text-[#1a1a2e] mb-4">
-            سوالات <span className="gradient-text">متداول</span>
-          </h2>
-          <p className="text-[#6b7280] text-lg">پاسخ سوالات رایج مشتریان</p>
-        </div>
-
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className="glass rounded-2xl shadow-soft overflow-hidden transition-all duration-300 border-r-4"
-              style={{ animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`, borderRightColor: faqColors[index] }}
+        <AnimatedSection>
+          <div className="text-center mb-12">
+            <motion.h2 
+              className="text-3xl md:text-4xl font-black text-[#1a1a2e] mb-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
             >
-              <button
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full p-6 flex items-center justify-between text-right hover:bg-[#F5F5F7]/50 transition-colors"
+              سوالات <span className="gradient-text">متداول</span>
+            </motion.h2>
+            <motion.p 
+              className="text-[#6b7280] text-lg"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              پاسخ سوالات رایج مشتریان
+            </motion.p>
+          </div>
+        </AnimatedSection>
+
+        <StaggerContainer className="space-y-4">
+          {faqs.map((faq, index) => (
+            <StaggerItem key={index}>
+              <motion.div
+                className="glass rounded-2xl shadow-soft overflow-hidden transition-all duration-300 border-r-4"
+                style={{ borderRightColor: faqColors[index] }}
+                whileHover={{ x: -5, boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }}
               >
-                <span className="font-bold text-[#1a1a2e] text-lg">{faq.question}</span>
-                <i className={`fas fa-chevron-down transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`} style={{ color: faqColors[index] }}></i>
-              </button>
-              <div className={`overflow-hidden transition-all duration-300 ${openIndex === index ? 'max-h-96' : 'max-h-0'}`}>
-                <div className="p-6 pt-0 text-[#6b7280] leading-8">{faq.answer}</div>
-              </div>
-            </div>
+                <motion.button
+                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                  className="w-full p-6 flex items-center justify-between text-right hover:bg-[#F5F5F7]/50 transition-colors"
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <span className="font-bold text-[#1a1a2e] text-lg">{faq.question}</span>
+                  <motion.i
+                    className={`fas fa-chevron-down`}
+                    style={{ color: faqColors[index] }}
+                    animate={{ rotate: openIndex === index ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.button>
+                <motion.div
+                  initial={false}
+                  animate={{
+                    height: openIndex === index ? 'auto' : 0,
+                    opacity: openIndex === index ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  className="overflow-hidden"
+                >
+                  <div className="p-6 pt-0 text-[#6b7280] leading-8">{faq.answer}</div>
+                </motion.div>
+              </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
@@ -453,31 +504,49 @@ function WhySmokeCity() {
   return (
     <section className="py-16 px-4 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <div className="inline-block mb-4 animate-float">
-            <LogoLarge className="w-28 h-28 md:w-36 md:h-36" />
-          </div>
-          <h2 className="text-3xl md:text-4xl font-black text-[#1a1a2e] mb-4">
-            چرا <span className="gradient-text">اسموک سیتی</span>؟
-          </h2>
-          <p className="text-[#6b7280] text-lg">دلایلی که ما را متمایز می‌کند</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="glass rounded-2xl p-6 shadow-soft hover:shadow-hover transition-all duration-300 hover:scale-105 group"
-              style={{ animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both` }}
-            >
-              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.bgGradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                <i className={`${feature.icon} text-2xl`} style={{ color: feature.color }}></i>
+        <AnimatedSection>
+          <div className="text-center mb-12">
+            <FloatingElement>
+              <div className="inline-block mb-4">
+                <LogoLarge className="w-28 h-28 md:w-36 md:h-36" />
               </div>
-              <h3 className="font-bold text-[#1a1a2e] text-xl mb-2">{feature.title}</h3>
-              <p className="text-[#6b7280] leading-7">{feature.description}</p>
-            </div>
+            </FloatingElement>
+            <h2 className="text-3xl md:text-4xl font-black text-[#1a1a2e] mb-4">
+              چرا <span className="gradient-text">اسموک سیتی</span>؟
+            </h2>
+            <p className="text-[#6b7280] text-lg">دلایلی که ما را متمایز می‌کند</p>
+          </div>
+        </AnimatedSection>
+
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((feature, index) => (
+            <StaggerItem key={index}>
+              <motion.div
+                className="glass rounded-2xl p-6 shadow-soft hover:shadow-hover transition-all duration-300 group relative overflow-hidden"
+                whileHover={{ scale: 1.05, y: -10 }}
+              >
+                <motion.div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity"
+                  style={{ background: `linear-gradient(135deg, ${feature.color}, transparent)` }}
+                />
+                <motion.div
+                  className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.bgGradient} flex items-center justify-center mb-4`}
+                  whileHover={{ scale: 1.2, rotate: 10 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
+                  <motion.i
+                    className={`${feature.icon} text-2xl`}
+                    style={{ color: feature.color }}
+                    animate={{ rotate: [0, 10, -10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  />
+                </motion.div>
+                <h3 className="font-bold text-[#1a1a2e] text-xl mb-2">{feature.title}</h3>
+                <p className="text-[#6b7280] leading-7">{feature.description}</p>
+              </motion.div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
