@@ -260,50 +260,117 @@ function FlashSale() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {flashProducts.map((product, index) => (
-            <div
+            <motion.div
               key={product.id}
-              className="glass rounded-2xl overflow-hidden shadow-soft hover:shadow-hover transition-all duration-300 hover:scale-105 group relative"
-              style={{ animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both` }}
+              className="glass rounded-2xl overflow-hidden shadow-soft hover:shadow-hover transition-all duration-300 group relative hover-lift card-3d-effect"
+              initial={{ opacity: 0, y: 50, rotate: -5 }}
+              whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.15, type: 'spring', stiffness: 100 }}
+              whileHover={{ y: -10, scale: 1.05 }}
             >
-              <div className="absolute top-3 right-3 z-10">
+              <motion.div 
+                className="absolute top-3 right-3 z-10"
+                animate={{ 
+                  scale: [1, 1.2, 1],
+                  rotate: [0, 10, -10, 0]
+                }}
+                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+              >
                 <div className="w-14 h-14 bg-gradient-to-br from-red-500 to-orange-500 rounded-full flex items-center justify-center shadow-lg animate-bounce-badge">
                   <span className="text-white font-black text-sm">{product.discount}%</span>
                 </div>
-              </div>
+              </motion.div>
 
               <div className="relative overflow-hidden aspect-square bg-gradient-to-br from-[#f8fafc] to-[#f1f5f9]">
-                <img src={product.image} alt={product.name} className="w-full h-full object-cover product-img-zoom" />
+                <motion.img 
+                  src={product.image} 
+                  alt={product.name} 
+                  className="w-full h-full object-cover"
+                  whileHover={{ scale: 1.15, rotate: 2 }}
+                  transition={{ duration: 0.4 }}
+                />
               </div>
 
               <div className="p-4">
-                <p className="text-xs text-[#9CA3AF] mb-1">{product.brand}</p>
-                <h3 className="text-sm font-bold text-[#1a1a2e] mb-2 line-clamp-2">{product.name}</h3>
+                <motion.p 
+                  className="text-xs text-[#9CA3AF] mb-1"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
+                >
+                  {product.brand}
+                </motion.p>
+                <motion.h3 
+                  className="text-sm font-bold text-[#1a1a2e] mb-2 line-clamp-2"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 }}
+                >
+                  {product.name}
+                </motion.h3>
                 
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-lg font-black text-red-500">{(product.flashPrice / 10000).toFixed(0)}</span>
+                <motion.div 
+                  className="flex items-center gap-2 mb-3"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 }}
+                >
+                  <motion.span 
+                    className="text-lg font-black text-red-500"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 1, repeat: Infinity, repeatDelay: 2 }}
+                  >
+                    {(product.flashPrice / 10000).toFixed(0)}
+                  </motion.span>
                   <span className="text-xs text-[#9CA3AF]">هزار</span>
                   <span className="text-xs text-[#9CA3AF] line-through">{(product.price / 10000).toFixed(0)}</span>
-                </div>
+                </motion.div>
 
-                <div className="mb-3">
+                <motion.div 
+                  className="mb-3"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.6 }}
+                >
                   <div className="flex justify-between text-xs text-[#6b7280] mb-1">
                     <span>فروش رفته</span>
                     <span>{70 + index * 5}%</span>
                   </div>
                   <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-red-500 to-orange-500 rounded-full transition-all duration-1000" style={{ width: `${70 + index * 5}%` }}></div>
+                    <motion.div 
+                      className="h-full bg-gradient-to-r from-red-500 to-orange-500 rounded-full"
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${70 + index * 5}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1.5, delay: 0.7, ease: 'easeOut' }}
+                    />
                   </div>
-                </div>
+                </motion.div>
 
-                <button
+                <motion.button
                   onClick={() => addToCart(product)}
-                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold text-sm hover:shadow-lg hover:scale-105 transition-all duration-300"
+                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-red-500 to-orange-500 text-white font-bold text-sm btn-ripple"
+                  whileHover={{ scale: 1.05, boxShadow: '0 10px 30px rgba(239, 68, 68, 0.4)' }}
+                  whileTap={{ scale: 0.95 }}
+                  animate={{ 
+                    boxShadow: [
+                      '0 5px 15px rgba(239, 68, 68, 0.3)',
+                      '0 10px 30px rgba(239, 68, 68, 0.5)',
+                      '0 5px 15px rgba(239, 68, 68, 0.3)',
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
                 >
                   <i className="fas fa-shopping-bag ml-2"></i>
                   افزودن به سبد
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
     </section>
@@ -332,23 +399,57 @@ function CategorySection() {
   return (
     <section className="py-12 px-4 bg-gradient-to-b from-white to-purple-50">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 text-[#1a1a2e]">
-          دسته‌بندی <span className="gradient-text">محصولات</span>
-        </h2>
+        <motion.h2 
+          className="text-2xl md:text-3xl font-bold text-center mb-8 text-[#1a1a2e]"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          دسته‌بندی <span className="gradient-text animate-text-shimmer">محصولات</span>
+        </motion.h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {categories.map((cat, i) => (
-            <button
+            <motion.button
               key={cat.id}
               onClick={() => handleCategoryClick(cat.id)}
-              className="group relative overflow-hidden rounded-2xl aspect-square shadow-soft hover:shadow-hover transition-all duration-300 hover:scale-105"
-              style={{ animation: `fadeInUp 0.6s ease-out ${i * 0.1}s both` }}
+              className="group relative overflow-hidden rounded-2xl aspect-square shadow-soft hover:shadow-hover transition-all duration-300 hover-lift card-3d-effect"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              whileHover={{ scale: 1.05, rotate: 2 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <img src={cat.image} alt={cat.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-              <div className={`absolute inset-0 bg-gradient-to-t ${categoryColors[i]} opacity-60 group-hover:opacity-70 transition-opacity`}></div>
-              <div className="absolute inset-0 flex flex-col items-center justify-end p-4">
-                <h3 className="text-white font-bold text-sm md:text-base text-center drop-shadow-lg">{cat.name}</h3>
-              </div>
-            </button>
+              <motion.img 
+                src={cat.image} 
+                alt={cat.name} 
+                className="absolute inset-0 w-full h-full object-cover"
+                whileHover={{ scale: 1.2 }}
+                transition={{ duration: 0.5 }}
+              />
+              <motion.div 
+                className={`absolute inset-0 bg-gradient-to-t ${categoryColors[i]} opacity-60 group-hover:opacity-80 transition-opacity`}
+                animate={{ 
+                  backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
+                }}
+                transition={{ duration: 5, repeat: Infinity }}
+              />
+              <motion.div 
+                className="absolute inset-0 flex flex-col items-center justify-end p-4"
+                initial={{ y: 20, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 + 0.2 }}
+              >
+                <motion.h3 
+                  className="text-white font-bold text-sm md:text-base text-center drop-shadow-lg"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  {cat.name}
+                </motion.h3>
+              </motion.div>
+            </motion.button>
           ))}
         </div>
       </div>
@@ -367,22 +468,54 @@ function FeaturedProducts() {
   return (
     <section className="py-16 px-4 bg-gradient-to-b from-white to-purple-50">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-10">
+        <motion.div 
+          className="flex items-center justify-between mb-10"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           <div>
-            <h2 className="text-3xl md:text-4xl font-black text-[#1a1a2e] mb-2">
-              محصولات <span className="gradient-text">ویژه</span> ✨
-            </h2>
-            <p className="text-[#6b7280]">پرفروش‌ترین محصولات ما</p>
+            <motion.h2 
+              className="text-3xl md:text-4xl font-black text-[#1a1a2e] mb-2"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              محصولات <span className="gradient-text animate-text-shimmer">ویژه</span> ✨
+            </motion.h2>
+            <motion.p 
+              className="text-[#6b7280]"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              پرفروش‌ترین محصولات ما
+            </motion.p>
           </div>
-          <button onClick={() => navigate('/shop')} className="px-6 py-3 rounded-xl glass text-[#8B5CF6] hover:text-[#6d28d9] font-medium transition-colors shadow-soft">
+          <motion.button 
+            onClick={() => navigate('/shop')} 
+            className="px-6 py-3 rounded-xl glass text-[#8B5CF6] hover:text-[#6d28d9] font-medium transition-colors shadow-soft hover-lift"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             مشاهده همه
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {featured.map((product: any, index: number) => (
-            <div key={product.id} style={{ animation: `fadeInUp 0.6s ease-out ${index * 0.15}s both` }}>
+            <motion.div 
+              key={product.id}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              whileHover={{ y: -10 }}
+            >
               <ProductCard product={product} />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
